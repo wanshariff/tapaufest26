@@ -29,7 +29,7 @@ function tapaufest_default_settings() {
 		'tickets_url'    => 'https://tapautix.asia/',
 		'join_url'       => 'https://tapau.asia/',
 		'waitlist_url'   => '',
-		'aftermovie_url' => 'https://tapau.asia/vod/tapaufest-2025-asean-the-aftermovie/',
+		'aftermovie_url' => 'https://player.castr.com/vod/0OnEi4OQE72IphJS',
 		'survey_url'     => '',
 		'takedown_url'   => '',
 		'whatsapp_url'   => '',

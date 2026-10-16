@@ -3,11 +3,11 @@ Theme Name: TAPAUfest 2026
 Theme URI: https://tapaufest.asia/
 Author: TAPAUasia
 Author URI: https://tapau.asia/
-Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak. Gig-poster look from the 2026 logo: kopi brown, cili red, paper cream, thick ink outlines. Pair with the TAPAUfest Core plugin for the lineup, timetable, tickets and FAQ.
+Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak. Kertas Zine look: cream paper, black ink, Bagel Fat One headlines, with cili, gold and specs blue from the 2026 logo as small loud accents. Pair with the TAPAUfest Core plugin for the lineup, timetable, tickets and FAQ.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.0.0
+Version: 1.1.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -18,6 +18,11 @@ Tags: block-patterns, full-site-editing, custom-colors, wide-blocks
 
 body {
 	-webkit-font-smoothing: antialiased;
+	/* Kertas Zine tokens, read by the TAPAUfest Core blocks. */
+	--tf-radius: 6px;
+	--tf-btn-radius: 6px;
+	--tf-shadow: 5px 5px 0 var(--wp--preset--color--ink);
+	--tf-muted: #5a3a20;
 }
 
 body::before {
@@ -26,7 +31,7 @@ body::before {
 	inset: 0 0 auto;
 	height: env(safe-area-inset-top, 0px);
 	z-index: 100;
-	background: var(--wp--preset--color--kopi-deep);
+	background: var(--wp--preset--color--paper-hi);
 }
 
 :focus-visible {
@@ -55,12 +60,12 @@ h3 {
 	}
 }
 .tf-site-header .wp-block-navigation__responsive-container.is-menu-open {
-	background: var(--wp--preset--color--kopi-deep);
-	color: var(--wp--preset--color--paper);
+	background: var(--wp--preset--color--paper-hi);
+	color: var(--wp--preset--color--ink);
 }
 .tf-nav .wp-block-navigation-item__content {
 	padding: 6px 12px;
-	border-radius: 999px;
+	border-radius: 6px;
 	border: 2px solid transparent;
 	text-decoration: none;
 }
@@ -74,16 +79,13 @@ h3 {
 .is-style-tf-band,
 .is-style-tf-paper-band {
 	border-top: 3px solid var(--wp--preset--color--ink);
-}
-.is-style-tf-paper-band {
-	background-color: var(--wp--preset--color--paper);
 	color: var(--wp--preset--color--ink);
 }
-.is-style-tf-paper-band :where(h1, h2) {
-	color: var(--wp--preset--color--cili);
+.is-style-tf-band {
+	background-color: var(--wp--preset--color--paper);
 }
-.is-style-tf-paper-band .tf-eyebrow {
-	color: var(--wp--preset--color--muted);
+.is-style-tf-paper-band {
+	background-color: var(--wp--preset--color--paper-hi);
 }
 
 /* Ink card: paper card with a thick outline and offset shadow. */
@@ -91,13 +93,89 @@ h3 {
 	background-color: var(--wp--preset--color--paper-hi);
 	color: var(--wp--preset--color--ink);
 	border: 3px solid var(--wp--preset--color--ink);
-	border-radius: 18px;
-	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
 	padding: 18px;
 	min-width: 0;
 }
+.is-style-tf-paper-band .is-style-tf-ink-card {
+	background-color: #fff;
+}
 .is-style-tf-ink-card :where(h3) {
-	color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--ink);
+}
+
+/* Photo cards: the photo runs edge to edge on top. */
+.is-style-tf-ink-card.tf-photo-card {
+	padding: 0 0 18px;
+	overflow: hidden;
+}
+.tf-photo-card > :not(.tf-card-photo) {
+	margin-inline: 18px;
+}
+.tf-photo-card > .tf-card-photo {
+	margin: 0 0 14px;
+	aspect-ratio: 4 / 3;
+	border-bottom: 3px solid var(--wp--preset--color--ink);
+}
+.tf-card-photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+/* Photo strip: one big photo, four small. */
+.tf-photo-strip {
+	display: grid;
+	grid-template-columns: 2fr 1fr 1fr;
+	grid-template-rows: repeat(2, minmax(150px, 1fr));
+	gap: 14px;
+	margin-top: var(--wp--preset--spacing--40);
+}
+.tf-photo-strip > .tf-strip-photo {
+	position: relative;
+	margin: 0;
+	min-height: 0;
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
+	overflow: hidden;
+}
+.tf-photo-strip > .tf-strip-photo:first-child {
+	grid-row: span 2;
+}
+.tf-strip-photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.tf-strip-photo figcaption {
+	position: absolute;
+	left: 8px;
+	bottom: 8px;
+	margin: 0;
+	background: var(--wp--preset--color--paper-hi);
+	color: var(--wp--preset--color--ink);
+	border: 2px solid var(--wp--preset--color--ink);
+	border-radius: 4px;
+	font-size: 0.75rem;
+	font-weight: 700;
+	padding: 1px 8px;
+}
+@media (max-width: 700px) {
+	.tf-photo-strip {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 200px 130px;
+	}
+	.tf-photo-strip > .tf-strip-photo:first-child {
+		grid-column: span 2;
+		grid-row: auto;
+	}
+	.tf-photo-strip > .tf-strip-photo:nth-child(n+4) {
+		display: none;
+	}
 }
 .is-style-tf-ink-card :where(p) {
 	margin-block: 6px 0;
@@ -108,12 +186,13 @@ h3 {
 	font-weight: 700;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	color: var(--wp--preset--color--gold);
+	color: var(--wp--preset--color--cili);
 	margin: 0;
 }
 
 .tf-page-head {
 	padding-block: 40px 28px;
+	background-color: var(--wp--preset--color--paper);
 }
 .tf-page-head h1 {
 	margin-block: 6px 0;
@@ -134,8 +213,8 @@ h3 {
 
 .tf-sitemap img {
 	border: 3px solid var(--wp--preset--color--ink);
-	border-radius: 20px;
-	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
 }
 
 .tf-timeline {
@@ -199,10 +278,10 @@ h3 {
 	aspect-ratio: 16 / 9;
 	max-width: 100%;
 	border: 3px solid var(--wp--preset--color--ink);
-	border-radius: 20px;
-	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
-	background: radial-gradient(circle at 30% 30%, #8a4415, var(--wp--preset--color--kopi-deep));
-	color: var(--wp--preset--color--paper);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
+	background: var(--wp--preset--color--ink) center / cover no-repeat;
+	color: var(--wp--preset--color--paper-hi);
 	text-decoration: none;
 	overflow: hidden;
 }
@@ -223,9 +302,14 @@ h3 {
 .tf-reel__cap {
 	position: absolute;
 	left: 16px;
-	right: 16px;
 	bottom: 14px;
+	max-width: calc(100% - 32px);
 	font-weight: 700;
+	background: var(--wp--preset--color--gold);
+	color: var(--wp--preset--color--ink);
+	border: 2px solid var(--wp--preset--color--ink);
+	border-radius: 4px;
+	padding: 2px 10px;
 }
 .tf-stat {
 	margin: 0;
@@ -236,16 +320,16 @@ h3 {
 	font-weight: 400;
 	font-size: 2rem;
 	line-height: 1;
-	color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--ink);
 }
 
 .tf-join {
-	background-color: var(--wp--preset--color--cili);
+	background-color: var(--wp--preset--color--gold);
 	color: var(--wp--preset--color--ink);
 	border-top: 3px solid var(--wp--preset--color--ink);
 }
 .tf-join h2 {
-	color: var(--wp--preset--color--paper-hi);
+	color: var(--wp--preset--color--ink);
 }
 
 .tf-site-footer a {
@@ -286,7 +370,8 @@ h3 {
 	margin: 0;
 }
 .tf-header-bar {
-	background-color: var(--wp--preset--color--kopi-deep);
+	background-color: var(--wp--preset--color--paper-hi);
+	color: var(--wp--preset--color--ink);
 	border-bottom: 3px solid var(--wp--preset--color--ink);
 	padding-block: 8px;
 }
@@ -302,7 +387,8 @@ h3 {
 	min-width: 0;
 }
 .tf-footer-bar {
-	background-color: var(--wp--preset--color--kopi-deep);
+	background-color: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--paper);
 	border-top: 3px solid var(--wp--preset--color--ink);
 	padding-block: 40px 32px;
 	font-size: 0.875rem;
@@ -349,8 +435,8 @@ h3 {
 }
 .tf-artist-photo img {
 	border: 3px solid var(--wp--preset--color--ink);
-	border-radius: 20px;
-	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
 }
 .tf-artist-intro {
 	flex: 1 1 340px;
@@ -379,4 +465,35 @@ main.wp-block-group > .wp-block-post-content {
 		position: static;
 		text-align: center;
 	}
+}
+
+/* ---------- Kertas Zine: block tweaks ---------- */
+.tf-alert {
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--paper-hi);
+}
+.tf-alert__tag {
+	background: var(--wp--preset--color--gold);
+	color: var(--wp--preset--color--ink);
+}
+.tf-hero {
+	background: var(--wp--preset--color--paper);
+	color: var(--wp--preset--color--ink);
+}
+.tf-hero__when {
+	display: inline-block;
+	background: var(--wp--preset--color--gold);
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	padding: 4px 14px;
+}
+.tf-hero__note {
+	color: var(--wp--preset--color--muted);
+}
+.tf-hero__logo {
+	filter: none;
+}
+.tf-footer-bar .tf-tbc {
+	background: var(--wp--preset--color--gold);
 }

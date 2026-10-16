@@ -19,7 +19,7 @@ echo tapaufest_film( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEs
 	home_url( '/recap/' ),
 	array(
 		'[__]'  => __( 'festival-goers', 'tapaufest-2026' ),
-		'16'    => __( 'acts on PENTAS', 'tapaufest-2026' ),
+		'[__]'  => __( 'acts on PENTAS', 'tapaufest-2026' ),
 		'2'     => __( 'nights by the river', 'tapaufest-2026' ),
 	)
 );

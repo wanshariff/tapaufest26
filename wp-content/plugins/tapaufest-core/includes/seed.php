@@ -6,7 +6,8 @@
  * it can be removed in one go. Load it from Settings > TAPAUfest or with
  * `wp tapaufest seed`; remove it with `wp tapaufest unseed`.
  *
- * Artist names, prices and times are placeholders, not the real 2026 lineup.
+ * Artists, photos and the running order come from TAPAUfest 2025 and stand in
+ * until the 2026 lineup is announced. Times, prices and vendors are placeholders.
  *
  * @package TapaufestCore
  */
@@ -14,72 +15,104 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Mock artists: name, country, genre, headliner, bio.
+ * Demo artists: the TAPAUfest 2025 lineup, standing in until the 2026 lineup
+ * is announced. Name, country, genre, headliner, bio, photo file.
  *
  * @return array
  */
 function tapaufest_demo_artists() {
 	return array(
-		array( 'Kopi Senja', 'MY', 'Indie folk', true, 'A six-piece from Ipoh that turns kampung memories into big-sky singalongs. Their debut sold out its vinyl run in a week.' ),
-		array( 'Lautan Neon', 'ID', 'Synth-pop', true, 'Jakarta duo with glittering synths and lyrics about late trains and longer nights. Their first Malaysian festival show.' ),
-		array( 'Bintang Kelip', 'MY', 'Dream pop', false, 'Reverb-heavy dream pop from Kuching.' ),
-		array( 'Static Rambutan', 'SG', 'Garage punk', false, 'Fast, loud, sweaty. Bring earplugs.' ),
-		array( 'Monsoon Club', 'TH', 'City pop', false, 'Bangkok five-piece with horns and a disco heart.' ),
-		array( 'Kampung Disco', 'MY', 'Electronic', false, 'Dangdut samples meet four-on-the-floor. Plays the bonfire set.' ),
-		array( 'Gerimis Sore', 'ID', 'Post-rock', false, 'Long builds, bigger drops. From Bandung.' ),
-		array( 'Satay Noise', 'SG', 'Noise pop', false, 'Fuzz pedals and pop hooks.' ),
-		array( 'Selasih', 'MY', 'Singer-songwriter', false, 'Quiet songs in Malay and English.' ),
-		array( 'Lampu Jalan', 'MY', 'Indie rock', false, 'Penang four-piece with sharp guitars.' ),
-		array( 'Mekong Haze', 'TH', 'Psych rock', false, 'Phin riffs through a wall of fuzz.' ),
-		array( 'Jeepney Ghost', 'PH', 'Shoegaze', false, 'Manila shoegaze, loud and lovely.' ),
-		array( 'Batu Kapur', 'MY', 'Math rock', false, 'Odd time signatures, no apologies.' ),
-		array( 'Ombak Biru', 'MY', 'Surf rock', false, 'Twangy surf rock from Terengganu.' ),
-		array( 'Saigon Static', 'VN', 'Lo-fi pop', false, 'Bedroom pop that grew up.' ),
-		array( 'Pagi Buta', 'ID', 'Folk pop', false, 'Opens Saturday. Come early.' ),
+		array( 'Raksar', 'MY', 'Indie', false, 'Opened Day 1 of TAPAUfest 2025 by the lake in Lenggong.', 'raksar' ),
+		array( 'Skandal', 'ID', 'Indie', false, 'From Yogyakarta. TAPAUfest 2025 was their first show outside Indonesia.', 'skandal' ),
+		array( 'Seru x Wani Ardy', 'MY', 'Music and poetry', false, 'Seru with poet Wani Ardy: songs and spoken word on one stage.', 'seru-x-wani-ardy' ),
+		array( 'KIKI', 'TH', 'Indie', false, 'Brought the Thai indie scene to PENTAS on Day 1.', 'kiki' ),
+		array( 'FUGŌ', 'MY', 'Indie', false, 'Played Day 1 with a special appearance by Heidi Moru.', 'fugo' ),
+		array( 'Sal Priadi', 'ID', 'Singer-songwriter', true, 'Closed Day 1 with a theatrical, all-in set.', 'sal-priadi' ),
+		array( 'Cactus Cactus', 'SG', 'Indie', false, 'Singapore four-piece who opened Day 2.', 'cactus-cactus' ),
+		array( 'Okirama', 'MY', 'Indie', false, 'Their healing-chairs setup caught the sunset on Day 2.', 'okirama' ),
+		array( 'White Chorus', 'ID', 'Indie', false, 'Indonesian band on the Day 2 bill.', 'white-chorus' ),
+		array( 'Insomniacks', 'MY', 'Pop rock', false, 'A Day 2 singalong with one of Malaysia’s best-loved bands.', 'insomniacks' ),
+		array( 'Perunggu', 'ID', 'Rock', false, 'Jakarta rock band, loud and big-hearted.', 'perunggu' ),
+		array( 'Couple', 'MY', 'Indie rock', true, 'Reunited their Top of the Pops lineup for the first time since 2006: a 14-song set for their 30th anniversary.', 'couple' ),
 	);
 }
 
 /**
- * Mock sessions: day index (1|2), stage, start, minutes, artist name or kind:title.
+ * Demo sessions: day index (1|2), stage, start, minutes, artist name or kind:title.
+ * Running order follows TAPAUfest 2025; the times are placeholders.
  *
  * @return array
  */
 function tapaufest_demo_sessions() {
 	return array(
-		array( 1, 'KEMBARA', '08:00', 60, 'outdoor:River morning walk' ),
-		array( 1, 'KEMBARA', '10:00', 90, 'outdoor:Tubing (weather dependent)' ),
-		array( 1, 'BENGKEL', '11:00', 90, 'workshop:Zine-making 101' ),
-		array( 1, 'BENGKEL', '14:00', 60, 'workshop:Record a song on your phone' ),
-		array( 1, 'BENGKEL', '15:30', 90, 'workshop:Gig poster screenprint' ),
-		array( 1, 'LAYAR', '14:00', 60, 'film:Shorts: Kampung ke Kota' ),
-		array( 1, 'LAYAR', '16:00', 70, 'film:Doc: Rumah Gig' ),
+		array( 1, 'KEMBARA', '08:00', 60, 'outdoor:Yoga with Sesi Tikar Mengkuang' ),
+		array( 1, 'KEMBARA', '10:00', 90, 'outdoor:Kayaking (weather dependent)' ),
+		array( 1, 'BENGKEL', '11:00', 90, 'workshop:Rubber-cut printmaking' ),
+		array( 1, 'BENGKEL', '14:00', 60, 'workshop:Talk: building a visual identity' ),
+		array( 1, 'BENGKEL', '15:30', 90, 'workshop:Mini-zine making' ),
+		array( 1, 'LAYAR', '14:00', 60, 'film:SEA Short Film Festival: Vietnam' ),
+		array( 1, 'LAYAR', '16:00', 70, 'film:SEA Short Film Festival: Myanmar' ),
 		array( 1, 'LAYAR', '21:00', 60, 'film:Night shorts' ),
-		array( 1, 'PENTAS', '16:00', 45, 'Pagi Buta' ),
-		array( 1, 'PENTAS', '17:00', 45, 'Selasih' ),
-		array( 1, 'PENTAS', '18:00', 50, 'Static Rambutan' ),
+		array( 1, 'PENTAS', '16:00', 45, 'Raksar' ),
+		array( 1, 'PENTAS', '17:00', 45, 'Skandal' ),
+		array( 1, 'PENTAS', '18:00', 50, 'Seru x Wani Ardy' ),
 		array( 1, 'PENTAS', '19:10', 30, 'prayer:Maghrib break. Surau next to WARUNG.' ),
-		array( 1, 'PENTAS', '19:45', 50, 'Jeepney Ghost' ),
-		array( 1, 'PENTAS', '20:45', 50, 'Monsoon Club' ),
-		array( 1, 'PENTAS', '21:45', 60, 'Bintang Kelip' ),
-		array( 1, 'PENTAS', '23:00', 75, 'Kopi Senja' ),
-		array( 1, 'UNGGUN', '24:30', 60, 'Kampung Disco' ),
+		array( 1, 'PENTAS', '19:45', 50, 'KIKI' ),
+		array( 1, 'PENTAS', '20:50', 60, 'FUGŌ' ),
+		array( 1, 'PENTAS', '22:10', 75, 'Sal Priadi' ),
+		array( 1, 'UNGGUN', '24:00', 60, 'other:Bonfire sets at the campsite' ),
 		array( 2, 'KEMBARA', '07:30', 60, 'outdoor:Sunrise yoga' ),
-		array( 2, 'KEMBARA', '09:30', 120, 'outdoor:Waterfall trail' ),
-		array( 2, 'BENGKEL', '11:00', 60, 'workshop:Music PR for indie bands' ),
-		array( 2, 'BENGKEL', '14:30', 90, 'workshop:Batik tote printing' ),
-		array( 2, 'LAYAR', '14:00', 60, 'film:Shorts: Hujung Minggu' ),
-		array( 2, 'LAYAR', '20:00', 80, 'film:Doc: Jalan Pulang' ),
-		array( 2, 'PENTAS', '15:00', 45, 'Batu Kapur' ),
-		array( 2, 'PENTAS', '16:00', 45, 'Lampu Jalan' ),
-		array( 2, 'PENTAS', '17:00', 45, 'Ombak Biru' ),
-		array( 2, 'PENTAS', '18:00', 50, 'Saigon Static' ),
+		array( 2, 'KEMBARA', '09:30', 90, 'outdoor:Boat ride (weather dependent)' ),
+		array( 2, 'BENGKEL', '11:00', 60, 'workshop:Talk: the ASEAN indie circuit' ),
+		array( 2, 'BENGKEL', '14:30', 90, 'workshop:Zine swap and print jam' ),
+		array( 2, 'LAYAR', '14:00', 60, 'film:SEA Short Film Festival: Malaysia' ),
+		array( 2, 'LAYAR', '20:00', 60, 'film:Night shorts' ),
+		array( 2, 'PENTAS', '16:00', 45, 'Cactus Cactus' ),
+		array( 2, 'PENTAS', '17:00', 45, 'Okirama' ),
+		array( 2, 'PENTAS', '18:00', 50, 'White Chorus' ),
 		array( 2, 'PENTAS', '19:10', 30, 'prayer:Maghrib break. Surau next to WARUNG.' ),
-		array( 2, 'PENTAS', '19:45', 50, 'Satay Noise' ),
-		array( 2, 'PENTAS', '20:45', 50, 'Mekong Haze' ),
-		array( 2, 'PENTAS', '21:45', 60, 'Gerimis Sore' ),
-		array( 2, 'PENTAS', '23:00', 75, 'Lautan Neon' ),
-		array( 2, 'UNGGUN', '24:30', 60, 'other:Open mic by the fire' ),
+		array( 2, 'PENTAS', '19:45', 50, 'Insomniacks' ),
+		array( 2, 'PENTAS', '20:50', 60, 'Perunggu' ),
+		array( 2, 'PENTAS', '22:10', 80, 'Couple' ),
+		array( 2, 'UNGGUN', '24:00', 60, 'other:Bonfire jam, open to all' ),
 	);
+}
+
+/**
+ * Import a bundled demo photo into the media library.
+ *
+ * @param string $file    File name in assets/demo, without extension.
+ * @param int    $post_id Post to attach it to.
+ * @param string $alt     Alt text.
+ * @return int Attachment ID, or 0.
+ */
+function tapaufest_demo_photo( $file, $post_id, $alt ) {
+	$path = TAPAUFEST_DIR . 'assets/demo/' . sanitize_file_name( $file ) . '.webp';
+	if ( ! $file || ! file_exists( $path ) ) {
+		return 0;
+	}
+	$upload = wp_upload_bits( basename( $path ), null, file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local bundled file.
+	if ( ! empty( $upload['error'] ) ) {
+		return 0;
+	}
+	$id = wp_insert_attachment(
+		array(
+			'post_mime_type' => 'image/webp',
+			'post_title'     => $alt,
+			'post_status'    => 'inherit',
+		),
+		$upload['file'],
+		$post_id
+	);
+	if ( ! $id || is_wp_error( $id ) ) {
+		return 0;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
+	update_post_meta( $id, '_wp_attachment_image_alt', $alt );
+	update_post_meta( $id, '_tapaufest_demo', 1 );
+	set_post_thumbnail( $post_id, $id );
+	return $id;
 }
 
 /**
@@ -147,6 +180,7 @@ function tapaufest_seed() {
 				'menu_order'   => $i,
 			)
 		);
+		tapaufest_demo_photo( $a[5], $artist_ids[ $a[0] ], $a[0] . ' (TAPAUfest 2025)' );
 	}
 
 	$days = array(
@@ -249,7 +283,8 @@ function tapaufest_seed() {
 		array( 'warung', 'Satay Corner', 'Satay and ketupat' ),
 		array( 'warung', 'Kedai Hijau', 'Vegetarian rice bowls' ),
 		array( 'warung', 'Ais Kacang Kak Mah', 'Desserts' ),
-		array( 'pasar', 'TAPAUfest merch', 'Tees, totes and caps' ),
+		array( 'pasar', 'TAPAUfest x Humblezing', 'Festival merch. Sold out fast in 2025.' ),
+		array( 'pasar', 'Pekan Pop Up', 'Curators of the 2025 PASAR' ),
 		array( 'pasar', 'Rak Vinyl', 'Indie vinyl and tapes' ),
 		array( 'pasar', 'Zine Corner', 'Zines and prints' ),
 		array( 'pasar', 'Hulu Langat Handmade', 'Local crafts' ),
@@ -311,6 +346,18 @@ function tapaufest_unseed() {
 	);
 	foreach ( $ids as $id ) {
 		wp_delete_post( $id, true );
+	}
+	$media = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
+			'fields'         => 'ids',
+		)
+	);
+	foreach ( $media as $id ) {
+		wp_delete_attachment( $id, true );
 	}
 	$terms = get_terms(
 		array(

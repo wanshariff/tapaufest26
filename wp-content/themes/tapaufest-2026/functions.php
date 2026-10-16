@@ -182,13 +182,60 @@ function tapaufest_page_head( $eyebrow, $title, $lead = '' ) {
  *
  * @param string   $title Card title.
  * @param string[] $paras Paragraphs (may contain safe inline HTML).
+ * @param string   $image Optional 2025 photo name (see tapaufest_photo_url()).
  * @return string
  */
-function tapaufest_card( $title, $paras ) {
-	$out = '<!-- wp:group {"className":"is-style-tf-ink-card","layout":{"type":"default"}} --><div class="wp-block-group is-style-tf-ink-card">';
+function tapaufest_card( $title, $paras, $image = '' ) {
+	$class = $image ? 'is-style-tf-ink-card tf-photo-card' : 'is-style-tf-ink-card';
+	$out   = '<!-- wp:group {"className":"' . $class . '","layout":{"type":"default"}} --><div class="wp-block-group ' . $class . '">';
+	if ( $image ) {
+		$out .= tapaufest_photo( $image, '', 'tf-card-photo' );
+	}
 	$out .= '<!-- wp:heading {"level":3} --><h3 class="wp-block-heading">' . esc_html( $title ) . '</h3><!-- /wp:heading -->';
 	foreach ( (array) $paras as $p ) {
 		$out .= '<!-- wp:paragraph --><p>' . wp_kses_post( $p ) . '</p><!-- /wp:paragraph -->';
+	}
+	return $out . '</div><!-- /wp:group -->';
+}
+
+/**
+ * URL of a photo bundled with the theme (TAPAUfest 2025 shots, stand-ins until 2026 media lands).
+ *
+ * @param string $name File name without extension, in assets/images/2025.
+ * @return string
+ */
+function tapaufest_photo_url( $name ) {
+	return get_theme_file_uri( 'assets/images/2025/' . sanitize_file_name( $name ) . '.webp' );
+}
+
+/**
+ * Image block for a bundled photo.
+ *
+ * @param string $name    Photo name.
+ * @param string $alt     Alt text (empty for decorative).
+ * @param string $class   Extra class.
+ * @param string $caption Optional caption.
+ * @return string
+ */
+function tapaufest_photo( $name, $alt = '', $class = '', $caption = '' ) {
+	$cls = trim( 'wp-block-image size-large ' . $class );
+	$out = '<!-- wp:image {"sizeSlug":"large","className":"' . esc_attr( $class ) . '"} --><figure class="' . esc_attr( $cls ) . '"><img src="' . esc_url( tapaufest_photo_url( $name ) ) . '" alt="' . esc_attr( $alt ) . '" loading="lazy"/>';
+	if ( $caption ) {
+		$out .= '<figcaption class="wp-element-caption">' . esc_html( $caption ) . '</figcaption>';
+	}
+	return $out . '</figure><!-- /wp:image -->';
+}
+
+/**
+ * Photo strip: one big photo and up to four small ones.
+ *
+ * @param array $photos Name => caption pairs. The first is the big one.
+ * @return string
+ */
+function tapaufest_photo_strip( $photos ) {
+	$out = '<!-- wp:group {"className":"tf-photo-strip","layout":{"type":"default"}} --><div class="wp-block-group tf-photo-strip">';
+	foreach ( $photos as $name => $caption ) {
+		$out .= tapaufest_photo( $name, $caption, 'tf-strip-photo', $caption );
 	}
 	return $out . '</div><!-- /wp:group -->';
 }
@@ -219,18 +266,18 @@ function tapaufest_tbc( $text ) {
 /**
  * Festival zones, as shown on the home page and the Experience page.
  *
- * @return array[] Name, description, note.
+ * @return array[] Name, description, note, photo.
  */
 function tapaufest_zones() {
 	return array(
-		array( 'PENTAS', __( 'Main stage. Indie acts from across South East Asia, both nights.', 'tapaufest-2026' ), '' ),
-		array( 'BENGKEL', __( 'Workshops and sharing sessions: zines, phone recording, screenprinting.', 'tapaufest-2026' ), __( 'Sign up on site', 'tapaufest-2026' ) ),
-		array( 'LAYAR', __( 'Indie short films and documentaries.', 'tapaufest-2026' ), '' ),
-		array( 'PASAR', __( 'Indie market: merch, vinyl, zines and crafts.', 'tapaufest-2026' ), '' ),
-		array( 'WARUNG', __( 'All-day makan from local kitchens.', 'tapaufest-2026' ), '' ),
-		array( 'KEMBARA', __( 'River walks, sunrise yoga and a waterfall trail.', 'tapaufest-2026' ), __( 'Weather dependent', 'tapaufest-2026' ) ),
-		array( 'KHEMAH', __( 'Camp two nights at the official festival campsite.', 'tapaufest-2026' ), __( 'With Duo Campers passes', 'tapaufest-2026' ) ),
-		array( 'UNGGUN', __( 'Late bonfire sets at the campsite.', 'tapaufest-2026' ), __( 'After midnight', 'tapaufest-2026' ) ),
+		array( 'PENTAS', __( 'Main stage. Indie acts from across South East Asia, both nights.', 'tapaufest-2026' ), __( '12 acts from 4 countries in 2025', 'tapaufest-2026' ), 'pentas-day' ),
+		array( 'BENGKEL', __( 'Talks, sharing sessions and hands-on workshops.', 'tapaufest-2026' ), __( '2025: rubber-cut printmaking, mini zines', 'tapaufest-2026' ), 'crowd' ),
+		array( 'LAYAR', __( 'Indie short films and documentaries from around the region.', 'tapaufest-2026' ), __( '2025: SEA Short Film Festival picks', 'tapaufest-2026' ), 'layar' ),
+		array( 'PASAR', __( 'Indie market: merch, vinyl, zines and crafts.', 'tapaufest-2026' ), __( '2025: curated by Pekan Pop Up', 'tapaufest-2026' ), 'pasar' ),
+		array( 'WARUNG', __( 'All-day makan and drinks from local kitchens. Free water refills.', 'tapaufest-2026' ), '', 'warung' ),
+		array( 'KEMBARA', __( 'Outdoor programme: yoga, river time and slow mornings.', 'tapaufest-2026' ), __( 'Weather dependent', 'tapaufest-2026' ), 'kembara-yoga' ),
+		array( 'KHEMAH', __( 'Camp two nights at the official festival campsite, or stay nearby.', 'tapaufest-2026' ), __( 'With Duo Campers passes', 'tapaufest-2026' ), 'campsite' ),
+		array( 'UNGGUN', __( 'Late bonfire sets at the campsite.', 'tapaufest-2026' ), __( 'After midnight', 'tapaufest-2026' ), 'pentas-night' ),
 	);
 }
 
@@ -251,7 +298,7 @@ function tapaufest_zone_cards( $limit = 0 ) {
 		if ( $z[2] ) {
 			$paras[] = '<strong class="tf-note">' . esc_html( $z[2] ) . '</strong>';
 		}
-		$cards[] = tapaufest_card( $z[0], $paras );
+		$cards[] = tapaufest_card( $z[0], $paras, isset( $z[3] ) ? $z[3] : '' );
 	}
 	return tapaufest_grid( $cards, '14rem' );
 }
@@ -262,12 +309,13 @@ function tapaufest_zone_cards( $limit = 0 ) {
  * @param string $caption Link caption.
  * @param string $url     Link URL.
  * @param array  $stats   Number => label pairs.
+ * @param string $photo   Background photo name, or '' for none.
  * @return string
  */
-function tapaufest_film( $caption, $url, $stats ) {
+function tapaufest_film( $caption, $url, $stats, $photo = 'pentas-day' ) {
 	$out  = '<!-- wp:columns --><div class="wp-block-columns">';
 	$out .= '<!-- wp:column {"width":"66.66%"} --><div class="wp-block-column" style="flex-basis:66.66%">';
-	$out .= '<!-- wp:html --><a class="tf-reel" href="' . esc_url( $url ) . '"><span class="tf-reel__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0L10 6L0 12z"/></svg></span><span class="tf-reel__cap">' . esc_html( $caption ) . '</span></a><!-- /wp:html -->';
+	$out .= '<!-- wp:html --><a class="tf-reel" href="' . esc_url( $url ) . '"' . ( $photo ? ' style="background-image:linear-gradient(rgba(30,18,8,.25),rgba(30,18,8,.55)),url(' . esc_url( tapaufest_photo_url( $photo ) ) . ')"' : '' ) . '><span class="tf-reel__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0L10 6L0 12z"/></svg></span><span class="tf-reel__cap">' . esc_html( $caption ) . '</span></a><!-- /wp:html -->';
 	$out .= '</div><!-- /wp:column -->';
 	$out .= '<!-- wp:column {"width":"33.33%"} --><div class="wp-block-column" style="flex-basis:33.33%">';
 	foreach ( $stats as $num => $label ) {
