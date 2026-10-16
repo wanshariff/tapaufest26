@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @return string[]
  */
 function tapaufest_block_names() {
-	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta' );
+	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta', 'ticker' );
 }
 
 /**

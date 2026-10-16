@@ -24,6 +24,7 @@ add_action( 'after_setup_theme', 'tapaufest_theme_setup' );
  */
 function tapaufest_theme_assets() {
 	wp_enqueue_style( 'tapaufest-2026', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_script( 'tapaufest-2026-motion', get_theme_file_uri( 'assets/motion.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }
 add_action( 'wp_enqueue_scripts', 'tapaufest_theme_assets' );
 
@@ -470,3 +471,12 @@ function tapaufest_is_recap() {
 function tapaufest_admin_note( $text ) {
 	return current_user_can( 'edit_pages' ) ? tapaufest_tbc( $text ) : '';
 }
+
+/**
+ * Flag motion support before first paint, so the hero entrance doesn't flash.
+ * Visitors who prefer reduced motion never get the class.
+ */
+function tapaufest_motion_flag() {
+	echo "<script>try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('tf-motion')}}catch(e){}</script>\n";
+}
+add_action( 'wp_head', 'tapaufest_motion_flag', 1 );

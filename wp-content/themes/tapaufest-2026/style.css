@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.2.0
+Version: 1.3.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -665,4 +665,179 @@ main.wp-block-group > .wp-block-post-content {
 	.tf-zone-grid .tf-note {
 		font-size: 0.625rem;
 	}
+}
+
+/* ---------- Motion (only with .tf-motion, never for reduced-motion visitors) ---------- */
+@keyframes tf-pop {
+	0% { opacity: 0; transform: scale(0.9) rotate(-4deg); }
+	60% { opacity: 1; transform: scale(1.03) rotate(1deg); }
+	100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes tf-float {
+	0%, 100% { transform: translateY(0) rotate(0); }
+	50% { transform: translateY(-8px) rotate(-1deg); }
+}
+@keyframes tf-drop {
+	0% { opacity: 0; transform: translateY(-14px) rotate(-6deg); }
+	70% { opacity: 1; transform: translateY(2px) rotate(-1deg); }
+	100% { opacity: 1; transform: translateY(0) rotate(-2deg); }
+}
+@keyframes tf-rise {
+	from { opacity: 0; transform: translateY(14px); }
+	to { opacity: 1; transform: none; }
+}
+@keyframes tf-marquee {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+}
+@keyframes tf-pulse {
+	0% { box-shadow: 0 0 0 0 rgba(242, 169, 59, 0.7); }
+	100% { box-shadow: 0 0 0 18px rgba(242, 169, 59, 0); }
+}
+
+/* Hero entrance: logo pops in then floats; the date sticker drops and settles; copy rises. */
+.tf-motion .tf-hero__title {
+	animation: tf-pop 700ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.tf-motion .tf-hero__logo {
+	animation: tf-float 6s ease-in-out 900ms infinite;
+	transform-origin: 50% 60%;
+}
+.tf-motion .tf-hero__when {
+	animation: tf-drop 600ms cubic-bezier(0.2, 0.8, 0.2, 1) 250ms both;
+}
+.tf-motion .tf-hero__where,
+.tf-motion .tf-hero__explainer,
+.tf-motion .tf-hero__pills,
+.tf-motion .tf-hero .tf-ctas,
+.tf-motion .tf-hero .tf-countdown,
+.tf-motion .tf-hero__tags {
+	animation: tf-rise 500ms ease-out both;
+}
+.tf-motion .tf-hero__where { animation-delay: 380ms; }
+.tf-motion .tf-hero__explainer { animation-delay: 460ms; }
+.tf-motion .tf-hero__pills { animation-delay: 540ms; }
+.tf-motion .tf-hero .tf-ctas { animation-delay: 620ms; }
+.tf-motion .tf-hero .tf-countdown { animation-delay: 700ms; }
+.tf-motion .tf-hero__tags { animation-delay: 780ms; }
+.tf-motion .tf-hero__pills li {
+	transition: transform 150ms ease-out, background-color 150ms ease-out;
+}
+.tf-motion .tf-hero__pills li:hover {
+	transform: rotate(-3deg) scale(1.05);
+	background: var(--wp--preset--color--gold);
+}
+
+/* Ticker loop: two identical sets slide by half the track width. */
+.tf-motion .tf-ticker__track {
+	animation: tf-marquee 38s linear infinite;
+}
+.tf-motion .tf-ticker:hover .tf-ticker__track,
+.tf-motion .tf-ticker:focus-within .tf-ticker__track,
+.tf-motion .tf-ticker.is-paused .tf-ticker__track {
+	animation-play-state: paused;
+}
+html:not(.tf-motion) .tf-ticker {
+	overflow-x: auto;
+}
+html:not(.tf-motion) .tf-ticker__set + .tf-ticker__set {
+	display: none;
+}
+
+/* Scroll reveal */
+.tf-motion .tf-reveal {
+	opacity: 0;
+	transform: translateY(18px);
+	transition: opacity 500ms ease-out var(--tf-delay, 0ms), transform 500ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--tf-delay, 0ms);
+}
+.tf-motion .tf-reveal.is-in {
+	opacity: 1;
+	transform: none;
+}
+
+/* Paper "press": cards lift on hover, buttons push into their shadow on press. */
+.tf-motion .tf-artist,
+.tf-motion .tf-tier,
+.tf-motion .tf-photo-card,
+.tf-motion .tf-strip-photo,
+.tf-motion .tf-reel {
+	transition: transform 180ms ease-out, box-shadow 180ms ease-out, opacity 500ms ease-out var(--tf-delay, 0ms);
+}
+.tf-motion .tf-artist.is-in:hover,
+.tf-motion .tf-tier.is-in:hover,
+.tf-motion .tf-photo-card.is-in:hover,
+.tf-motion .tf-strip-photo.is-in:hover,
+.tf-motion .tf-reel.is-in:hover {
+	transform: translate(-3px, -3px);
+	box-shadow: 8px 8px 0 var(--wp--preset--color--ink);
+}
+.tf-motion .tf-btn,
+.tf-motion .wp-block-button__link {
+	transition: transform 120ms ease-out, box-shadow 120ms ease-out, background-color 150ms ease-out;
+}
+.tf-motion .tf-btn:hover,
+.tf-motion .wp-block-button__link:hover {
+	transform: translate(-1px, -1px);
+	box-shadow: 6px 6px 0 var(--wp--preset--color--ink);
+}
+.tf-motion .tf-btn:active,
+.tf-motion .wp-block-button__link:active {
+	transform: translate(4px, 4px);
+	box-shadow: 1px 1px 0 var(--wp--preset--color--ink);
+}
+
+/* Photos ease in a touch on hover. */
+.tf-motion .tf-card__img,
+.tf-motion .tf-card-photo img,
+.tf-motion .tf-strip-photo img {
+	transition: transform 400ms ease-out;
+}
+.tf-motion .tf-artist:hover .tf-card__img,
+.tf-motion .tf-photo-card:hover .tf-card-photo img,
+.tf-motion .tf-strip-photo:hover img {
+	transform: scale(1.05);
+}
+.tf-card-photo,
+.tf-artist__link {
+	overflow: hidden;
+}
+
+/* Aftermovie play button breathes. */
+.tf-motion .tf-reel__play {
+	animation: tf-pulse 2.2s ease-out infinite;
+}
+.tf-motion .tf-reel:hover .tf-reel__play {
+	transform: scale(1.08);
+	transition: transform 180ms ease-out;
+}
+
+/* Mini FAQ chevron and open state */
+.tf-motion .tf-faq__item[open] .tf-faq__answer {
+	animation: tf-rise 300ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tf-ticker {
+		overflow-x: auto;
+	}
+}
+
+@media (max-width: 600px) {
+	.tf-hero__explainer {
+		font-size: 15px;
+		text-align: left;
+		margin-top: 12px;
+	}
+	.tf-hero__pills {
+		display: none;
+	}
+	.tf-hero .tf-countdown {
+		margin-top: 10px;
+	}
+	.tf-hero__tags {
+		margin-top: 14px;
+	}
+}
+.tf-site-header .wp-block-navigation__responsive-container-open {
+	align-items: center;
 }

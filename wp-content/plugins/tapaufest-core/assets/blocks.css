@@ -1117,3 +1117,97 @@
 .tf-toggle button {
 	min-height: 44px;
 }
+
+/* ---------- hero: art + explainer ---------- */
+.tf-hero__copy {
+	max-width: 620px;
+	margin-inline: auto;
+}
+.tf-hero__explainer {
+	margin: 16px auto 0;
+	font-size: 17px;
+	line-height: 1.55;
+	max-width: 54ch;
+	text-wrap: pretty;
+}
+.tf-hero__pills {
+	list-style: none;
+	padding: 0;
+	margin: 16px 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+.tf-hero__pills li {
+	border: 2px solid var(--tf-ink);
+	border-radius: var(--tf-btn-radius, 999px);
+	background: var(--tf-paper-hi);
+	padding: 3px 10px;
+	font-size: 13px;
+	font-weight: 700;
+}
+@media (min-width: 900px) {
+	.tf-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+		align-items: center;
+		gap: 48px;
+		text-align: left;
+		padding-block: 48px 56px;
+	}
+	.tf-hero__logo {
+		width: 100%;
+	}
+	.tf-hero__copy {
+		margin-inline: 0;
+	}
+	.tf-hero__explainer {
+		margin-inline: 0;
+	}
+	.tf-hero__pills,
+	.tf-hero .tf-ctas {
+		justify-content: flex-start;
+	}
+	.tf-hero__when {
+		margin-top: 0;
+	}
+}
+
+/* ---------- lineup ticker ---------- */
+.tf-ticker {
+	background: var(--tf-ink);
+	color: var(--tf-paper);
+	border-block: var(--tf-line);
+	overflow: hidden;
+}
+.tf-ticker__track {
+	display: flex;
+	width: max-content;
+	color: inherit;
+	text-decoration: none;
+}
+.tf-ticker__set {
+	display: flex;
+	flex: none;
+}
+.tf-ticker__item {
+	display: inline-flex;
+	align-items: center;
+	padding: 12px 0;
+	font-family: var(--tf-display);
+	font-size: clamp(20px, 3vw, 28px);
+	line-height: 1;
+	white-space: nowrap;
+}
+.tf-ticker__item::after {
+	content: "";
+	width: 14px;
+	height: 14px;
+	margin-inline: 22px;
+	background: var(--tf-gold);
+	clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+.tf-ticker__track:hover .tf-ticker__item {
+	color: var(--tf-gold);
+}

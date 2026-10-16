@@ -25,6 +25,7 @@ function tapaufest_default_settings() {
 		'day2'           => '2026-12-13',
 		'gates_open'     => '11:00',
 		'venue'          => 'Sungai Congkak, Hulu Langat, Selangor',
+		'explainer'      => 'Two days of South East Asian indie music by the river at Sungai Congkak. Catch bands on PENTAS, films at LAYAR, workshops at BENGKEL, makan at WARUNG and finds at PASAR, then camp under the trees for the bonfire sets. Come solo or bring your geng.',
 		'maps_url'       => 'https://www.google.com/maps/search/Sungai+Congkak+Hulu+Langat',
 		'tickets_url'    => 'https://tapautix.asia/',
 		'join_url'       => 'https://tapau.asia/',
@@ -137,7 +138,7 @@ function tapaufest_days() {
 function tapaufest_alert( $state = '' ) {
 	$state    = $state ? $state : tapaufest_state();
 	$defaults = array(
-		'early'  => array( __( 'Early access', 'tapaufest' ), __( 'The waitlist window is open. Use the code in your email at checkout for the early-bird price.', 'tapaufest' ) ),
+		'early'  => array( __( 'Early access', 'tapaufest' ), __( 'Waitlist window is open. Use your email code at checkout.', 'tapaufest' ) ),
 		'public' => array( __( 'On sale', 'tapaufest' ), __( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' ) ),
 		'live'   => array( __( 'Live', 'tapaufest' ), __( 'Set changes and weather updates post here first.', 'tapaufest' ) ),
 		'recap'  => array( __( 'Recap', 'tapaufest' ), __( 'Photos are up. Find yourself in the Day 1 and Day 2 galleries.', 'tapaufest' ) ),
@@ -203,7 +204,8 @@ function tapaufest_sanitize_settings( $input ) {
 	foreach ( array( 'maps_url', 'tickets_url', 'join_url', 'waitlist_url', 'aftermovie_url', 'survey_url', 'takedown_url', 'whatsapp_url' ) as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) ? esc_url_raw( $input[ $key ] ) : '';
 	}
-	$out['stages'] = isset( $input['stages'] ) ? sanitize_textarea_field( $input['stages'] ) : $defaults['stages'];
+	$out['stages']    = isset( $input['stages'] ) ? sanitize_textarea_field( $input['stages'] ) : $defaults['stages'];
+	$out['explainer'] = isset( $input['explainer'] ) ? sanitize_textarea_field( $input['explainer'] ) : $defaults['explainer'];
 
 	return $out;
 }
@@ -277,6 +279,13 @@ function tapaufest_render_settings_page() {
 						<td><input type="text" class="regular-text" id="tf-<?php echo esc_attr( $key ); ?>" name="tapaufest_settings[<?php echo esc_attr( $key ); ?>]" value="<?php echo esc_attr( $opt[ $key ] ); ?>"></td>
 					</tr>
 				<?php endforeach; ?>
+				<tr>
+					<th scope="row"><label for="tf-explainer"><?php esc_html_e( 'Home page explainer', 'tapaufest' ); ?></label></th>
+					<td>
+						<textarea id="tf-explainer" class="large-text" rows="3" name="tapaufest_settings[explainer]"><?php echo esc_textarea( $opt['explainer'] ); ?></textarea>
+						<p class="description"><?php esc_html_e( 'Two or three sentences under the date in the home page hero: what TAPAUfest is, for someone who has never been.', 'tapaufest' ); ?></p>
+					</td>
+				</tr>
 				<tr>
 					<th scope="row"><label for="tf-stages"><?php esc_html_e( 'Stages', 'tapaufest' ); ?></label></th>
 					<td>
