@@ -9,7 +9,18 @@ defined( 'ABSPATH' ) || exit;
 
 $tf_limit   = isset( $attributes['limit'] ) ? (int) $attributes['limit'] : 0;
 $tf_filters = ! empty( $attributes['filters'] ) && 0 === $tf_limit;
-$tf_artists = array_map( 'tapaufest_artist_data', tapaufest_get_artists( $tf_limit ) );
+$tf_artists = array_map( 'tapaufest_artist_data', tapaufest_get_artists( $tf_limit, ! empty( $attributes['hosts'] ) ) );
+if ( ! empty( $attributes['headlinersFirst'] ) ) {
+	// Stable sort: headliners first, everyone else keeps the running order.
+	$tf_order = array_flip( wp_list_pluck( $tf_artists, 'id' ) );
+	usort(
+		$tf_artists,
+		function ( $a, $b ) use ( $tf_order ) {
+			return ( (int) $b['headliner'] - (int) $a['headliner'] ) ?: ( $tf_order[ $a['id'] ] - $tf_order[ $b['id'] ] );
+		}
+	);
+}
+$tf_class = 'tf-lineup' . ( ! empty( $attributes['strip'] ) ? ' tf-lineup--strip' : '' );
 $tf_days    = tapaufest_days();
 
 if ( ! $tf_artists ) : ?>
@@ -27,9 +38,17 @@ foreach ( $tf_artists as $tf_a ) {
 	}
 }
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-lineup' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-tf-lineup>
+<div <?php echo get_block_wrapper_attributes( array( 'class' => $tf_class ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-tf-lineup>
 	<?php if ( $tf_filters ) : ?>
-		<div class="tf-tools">
+		<div class="tf-filterbar">
+			<?php if ( count( $tf_days ) > 1 ) : ?>
+				<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Day', 'tapaufest' ); ?>">
+					<button type="button" class="tf-chip" data-tf-day="" aria-pressed="true"><?php esc_html_e( 'Both days', 'tapaufest' ); ?></button>
+					<?php foreach ( $tf_days as $tf_date => $tf_label ) : ?>
+						<button type="button" class="tf-chip" data-tf-day="<?php echo esc_attr( $tf_date ); ?>" aria-pressed="false"><?php echo esc_html( $tf_label ); ?></button>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
 			<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Country', 'tapaufest' ); ?>">
 				<button type="button" class="tf-chip" data-tf-country="" aria-pressed="true"><?php esc_html_e( 'All countries', 'tapaufest' ); ?></button>
 				<?php foreach ( $tf_countries as $tf_code => $tf_name ) : ?>
@@ -41,14 +60,6 @@ foreach ( $tf_artists as $tf_a ) {
 				<button type="button" data-tf-view="poster" aria-pressed="false"><?php esc_html_e( 'Poster', 'tapaufest' ); ?></button>
 			</div>
 		</div>
-		<?php if ( count( $tf_days ) > 1 ) : ?>
-			<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Day', 'tapaufest' ); ?>">
-				<button type="button" class="tf-chip" data-tf-day="" aria-pressed="true"><?php esc_html_e( 'Both days', 'tapaufest' ); ?></button>
-				<?php foreach ( $tf_days as $tf_date => $tf_label ) : ?>
-					<button type="button" class="tf-chip" data-tf-day="<?php echo esc_attr( $tf_date ); ?>" aria-pressed="false"><?php echo esc_html( $tf_label ); ?></button>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
 	<?php endif; ?>
 
 	<div class="tf-grid" data-tf-grid>
@@ -76,7 +87,7 @@ foreach ( $tf_artists as $tf_a ) {
 	<?php endif; ?>
 
 	<?php if ( ! empty( $attributes['moreLink'] ) ) : ?>
-		<p class="tf-more"><a href="<?php echo esc_url( get_post_type_archive_link( 'tf_artist' ) ); ?>"><?php esc_html_e( 'Full lineup →', 'tapaufest' ); ?></a></p>
+		<p class="tf-more"><a href="<?php echo esc_url( get_post_type_archive_link( 'tf_artist' ) ); ?>"><?php esc_html_e( 'Filter by day and country', 'tapaufest' ); ?> <?php echo tapaufest_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></p>
 	<?php endif; ?>
 
 	<?php

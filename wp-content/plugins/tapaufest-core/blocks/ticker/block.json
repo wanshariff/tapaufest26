@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/ticker",
+	"title": "Lineup ticker",
+	"category": "tapaufest",
+	"icon": "megaphone",
+	"description": "A scrolling band of artist names, headliners first. Falls back to the festival zones before the lineup is in. Stays still for visitors who prefer reduced motion.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": [
+			"full"
+		]
+	},
+	"attributes": {
+		"label": {
+			"type": "string",
+			"default": "Lineup"
+		}
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

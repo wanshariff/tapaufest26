@@ -6,7 +6,8 @@
  * it can be removed in one go. Load it from Settings > TAPAUfest or with
  * `wp tapaufest seed`; remove it with `wp tapaufest unseed`.
  *
- * Artist names, prices and times are placeholders, not the real 2026 lineup.
+ * Artists, photos, running order and prices follow the tentative TAPAUfest 2026
+ * plan. Workshop and outdoor times and the sample vendors are placeholders.
  *
  * @package TapaufestCore
  */
@@ -14,72 +15,128 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Mock artists: name, country, genre, headliner, bio.
+ * Demo artists: the tentative TAPAUfest 2026 lineup (subject to change), plus
+ * the 2025 hosts as stand-ins. Name, country, genre, headliner, bio, photo file.
  *
  * @return array
  */
 function tapaufest_demo_artists() {
 	return array(
-		array( 'Kopi Senja', 'MY', 'Indie folk', true, 'A six-piece from Ipoh that turns kampung memories into big-sky singalongs. Their debut sold out its vinyl run in a week.' ),
-		array( 'Lautan Neon', 'ID', 'Synth-pop', true, 'Jakarta duo with glittering synths and lyrics about late trains and longer nights. Their first Malaysian festival show.' ),
-		array( 'Bintang Kelip', 'MY', 'Dream pop', false, 'Reverb-heavy dream pop from Kuching.' ),
-		array( 'Static Rambutan', 'SG', 'Garage punk', false, 'Fast, loud, sweaty. Bring earplugs.' ),
-		array( 'Monsoon Club', 'TH', 'City pop', false, 'Bangkok five-piece with horns and a disco heart.' ),
-		array( 'Kampung Disco', 'MY', 'Electronic', false, 'Dangdut samples meet four-on-the-floor. Plays the bonfire set.' ),
-		array( 'Gerimis Sore', 'ID', 'Post-rock', false, 'Long builds, bigger drops. From Bandung.' ),
-		array( 'Satay Noise', 'SG', 'Noise pop', false, 'Fuzz pedals and pop hooks.' ),
-		array( 'Selasih', 'MY', 'Singer-songwriter', false, 'Quiet songs in Malay and English.' ),
-		array( 'Lampu Jalan', 'MY', 'Indie rock', false, 'Penang four-piece with sharp guitars.' ),
-		array( 'Mekong Haze', 'TH', 'Psych rock', false, 'Phin riffs through a wall of fuzz.' ),
-		array( 'Jeepney Ghost', 'PH', 'Shoegaze', false, 'Manila shoegaze, loud and lovely.' ),
-		array( 'Batu Kapur', 'MY', 'Math rock', false, 'Odd time signatures, no apologies.' ),
-		array( 'Ombak Biru', 'MY', 'Surf rock', false, 'Twangy surf rock from Terengganu.' ),
-		array( 'Saigon Static', 'VN', 'Lo-fi pop', false, 'Bedroom pop that grew up.' ),
-		array( 'Pagi Buta', 'ID', 'Folk pop', false, 'Opens Saturday. Come early.' ),
+		array( 'Plague of Happiness x Leaism', 'MY', 'Ska-punk x soul', false, 'A one-off festival mashup: Johor Bahru’s ska-punk brass crew Plague of Happiness with Leaism’s soulful, expressive vocals. Built to kick off the weekend with big brass, dance grooves and a crowd that joins in.', 'plague-of-happiness-x-leaism' ),
+		array( 'Banda Neira', 'ID', 'Folk-pop', false, 'The beloved Indonesian folk-pop duo, known for heartfelt acoustic songwriting and quiet warmth. Their sunset set is made for a slow, full-field sing-along.', 'banda-neira' ),
+		array( 'Battle of the Bands winner', 'MY', 'To be decided', false, 'This slot goes to the winner of our first nationwide Battle of the Bands: a stage for the next big name in Malaysia’s underground indie scene.', '' ),
+		array( 'DOTDOTDOT', 'TH', 'Experimental rock', false, 'A fast-rising Thai outfit mixing modern alternative rock with traditional Isaan sounds. Rhythmic, bold and genre-crossing.', 'dotdotdot' ),
+		array( 'Aizat & Friends', 'MY', 'Singer-songwriter', false, 'Multi-award-winning singer-songwriter Aizat Amdan brings an exclusive “Aizat & Friends” showcase, with guest collaborators joining him on stage.', 'aizat-and-friends' ),
+		array( 'The Panturas', 'ID', 'Surf rock', true, 'Indonesia’s surf-rock heavyweights: wild guitar riffs, vintage beats and full-throttle energy. They close Day 1.', 'the-panturas' ),
+		array( 'Forests', 'SG', 'Math rock', false, 'Singapore’s math-rock trio. Hyper-energetic sets, catchy hooks and emo-pop melodies played with real precision.', 'forests' ),
+		array( 'Straw 林水草', 'MY', 'Indie rock', false, 'Local indie-rock staples with melodic guitars and anthemic hooks built for open fields. 90s-tinged and loud.', 'straw' ),
+		array( 'Thee Marloes', 'ID', 'Soul', false, 'From Surabaya and signed to Brooklyn’s Big Crown Records: vintage 60s soul, smooth R&B and easy grooves for the afternoon.', 'thee-marloes' ),
+		array( 'Empty Page', 'MY', 'Pop-punk', false, 'Punchy, guitar-heavy pop-punk with honest lyrics about growing up. Expect full-crowd sing-alongs.', 'empty-page' ),
+		array( 'Alkateri', 'ID', 'Indie pop', false, 'One of Bandung’s fastest-rising acts, known for their debut album Kontemplasi. Their first show outside Indonesia: bright, 90s-inspired indie pop.', 'alkateri' ),
+		array( 'Noh Salleh', 'MY', 'Singer-songwriter', true, 'A generational voice of Malaysian indie for two decades, from Angin Kencang to his newest collaborations. He closes the festival.', 'noh-salleh' ),
+		array( 'Iedil Dzuhrie', 'MY', 'Host', false, 'Hosted TAPAUfest 2025 and the 2021 online edition. Your voice between sets.', '', 'mc' ),
+		array( 'Nadia Nash', 'MY', 'Host', false, 'Co-hosted TAPAUfest 2025 by the lake in Lenggong.', '', 'mc' ),
 	);
 }
 
 /**
- * Mock sessions: day index (1|2), stage, start, minutes, artist name or kind:title.
+ * Show page descriptions for the demo sessions, keyed by title.
+ *
+ * @return array
+ */
+function tapaufest_demo_session_notes() {
+	return array(
+		'Sesi Tikar Mengkuang and river dip'  => 'Guided morning meditation and stretching by the stream with Sesi Tikar Mengkuang, then a dip in the natural river pools.',
+		'Skytrex canopy adventure'            => 'With Skytrex Sg Congkak: zip-lines and aerial obstacle courses above the forest canopy and the river rapids. Book at the KEMBARA desk.',
+		'Forest trek and nature walk'         => 'A guided walk on the Sungai Congkak trails. Good for birdwatching, plant spotting and slowing down.',
+		'Bike and trail run'                  => 'Morning ride and jungle trail run through the Hulu Langat valley, with local run and cycle clubs.',
+		'Art workshop: rubber-cut printmaking' => 'Carve a stamp, ink it, print it on paper or a tote. All materials provided.',
+		'Panel: the indie ecosystem'          => 'Leaders from the indie scene on building audiences, touring the region and getting heard.',
+		'Sharing session: making it in the scene' => 'Artists and organisers share what they learned the hard way. Bring questions.',
+		'Art workshop: mini-zine making'      => 'Fold, cut, collage and staple your own zine to take home. No experience needed.',
+		'Indie shorts'                        => 'Indie short films and documentaries from around the region in the BENGKEL and LAYAR tent.',
+		'Starlight cinema'                    => 'LAYAR goes open-air under the forest canopy once PENTAS wraps up. Indie films on a big screen. Weather permitting.',
+		'Bonfire sessions at Santuy Campsite' => 'Bonfire sets and jams at the Santuy Campsite, run by the Santrav team, late into the night.',
+	);
+}
+
+/**
+ * Demo sessions: day index (1|2), stage, start, minutes, artist name or kind:title.
+ * PENTAS follows the tentative 2026 festival rundown; other slots are placeholders.
  *
  * @return array
  */
 function tapaufest_demo_sessions() {
 	return array(
-		array( 1, 'KEMBARA', '08:00', 60, 'outdoor:River morning walk' ),
-		array( 1, 'KEMBARA', '10:00', 90, 'outdoor:Tubing (weather dependent)' ),
-		array( 1, 'BENGKEL', '11:00', 90, 'workshop:Zine-making 101' ),
-		array( 1, 'BENGKEL', '14:00', 60, 'workshop:Record a song on your phone' ),
-		array( 1, 'BENGKEL', '15:30', 90, 'workshop:Gig poster screenprint' ),
-		array( 1, 'LAYAR', '14:00', 60, 'film:Shorts: Kampung ke Kota' ),
-		array( 1, 'LAYAR', '16:00', 70, 'film:Doc: Rumah Gig' ),
-		array( 1, 'LAYAR', '21:00', 60, 'film:Night shorts' ),
-		array( 1, 'PENTAS', '16:00', 45, 'Pagi Buta' ),
-		array( 1, 'PENTAS', '17:00', 45, 'Selasih' ),
-		array( 1, 'PENTAS', '18:00', 50, 'Static Rambutan' ),
-		array( 1, 'PENTAS', '19:10', 30, 'prayer:Maghrib break. Surau next to WARUNG.' ),
-		array( 1, 'PENTAS', '19:45', 50, 'Jeepney Ghost' ),
-		array( 1, 'PENTAS', '20:45', 50, 'Monsoon Club' ),
-		array( 1, 'PENTAS', '21:45', 60, 'Bintang Kelip' ),
-		array( 1, 'PENTAS', '23:00', 75, 'Kopi Senja' ),
-		array( 1, 'UNGGUN', '24:30', 60, 'Kampung Disco' ),
-		array( 2, 'KEMBARA', '07:30', 60, 'outdoor:Sunrise yoga' ),
-		array( 2, 'KEMBARA', '09:30', 120, 'outdoor:Waterfall trail' ),
-		array( 2, 'BENGKEL', '11:00', 60, 'workshop:Music PR for indie bands' ),
-		array( 2, 'BENGKEL', '14:30', 90, 'workshop:Batik tote printing' ),
-		array( 2, 'LAYAR', '14:00', 60, 'film:Shorts: Hujung Minggu' ),
-		array( 2, 'LAYAR', '20:00', 80, 'film:Doc: Jalan Pulang' ),
-		array( 2, 'PENTAS', '15:00', 45, 'Batu Kapur' ),
-		array( 2, 'PENTAS', '16:00', 45, 'Lampu Jalan' ),
-		array( 2, 'PENTAS', '17:00', 45, 'Ombak Biru' ),
-		array( 2, 'PENTAS', '18:00', 50, 'Saigon Static' ),
-		array( 2, 'PENTAS', '19:10', 30, 'prayer:Maghrib break. Surau next to WARUNG.' ),
-		array( 2, 'PENTAS', '19:45', 50, 'Satay Noise' ),
-		array( 2, 'PENTAS', '20:45', 50, 'Mekong Haze' ),
-		array( 2, 'PENTAS', '21:45', 60, 'Gerimis Sore' ),
-		array( 2, 'PENTAS', '23:00', 75, 'Lautan Neon' ),
-		array( 2, 'UNGGUN', '24:30', 60, 'other:Open mic by the fire' ),
+		array( 1, 'KEMBARA', '07:30', 90, 'outdoor:Sesi Tikar Mengkuang and river dip' ),
+		array( 1, 'KEMBARA', '10:00', 180, 'outdoor:Skytrex canopy adventure' ),
+		array( 1, 'BENGKEL', '11:00', 90, 'workshop:Art workshop: rubber-cut printmaking' ),
+		array( 1, 'BENGKEL', '14:00', 60, 'workshop:Panel: the indie ecosystem' ),
+		array( 1, 'LAYAR', '13:00', 90, 'film:Indie shorts' ),
+		array( 1, 'LAYAR', '23:45', 90, 'film:Starlight cinema' ),
+		array( 1, 'PENTAS', '17:00', 45, 'Plague of Happiness x Leaism' ),
+		array( 1, 'PENTAS', '18:00', 45, 'Banda Neira' ),
+		array( 1, 'PENTAS', '18:45', 60, 'prayer:Maghrib break' ),
+		array( 1, 'PENTAS', '19:45', 45, 'Battle of the Bands winner' ),
+		array( 1, 'PENTAS', '20:30', 15, 'prayer:Isyak break' ),
+		array( 1, 'PENTAS', '20:45', 45, 'DOTDOTDOT' ),
+		array( 1, 'PENTAS', '21:45', 45, 'Aizat & Friends' ),
+		array( 1, 'PENTAS', '22:45', 45, 'The Panturas' ),
+		array( 1, 'UNGGUN', '24:00', 90, 'other:Bonfire sessions at Santuy Campsite' ),
+		array( 2, 'KEMBARA', '07:00', 90, 'outdoor:Bike and trail run' ),
+		array( 2, 'KEMBARA', '08:00', 90, 'outdoor:Sesi Tikar Mengkuang and river dip' ),
+		array( 2, 'KEMBARA', '10:00', 120, 'outdoor:Forest trek and nature walk' ),
+		array( 2, 'BENGKEL', '11:00', 60, 'workshop:Sharing session: making it in the scene' ),
+		array( 2, 'BENGKEL', '14:00', 90, 'workshop:Art workshop: mini-zine making' ),
+		array( 2, 'LAYAR', '13:00', 90, 'film:Indie shorts' ),
+		array( 2, 'LAYAR', '23:45', 90, 'film:Starlight cinema' ),
+		array( 2, 'PENTAS', '17:00', 45, 'Forests' ),
+		array( 2, 'PENTAS', '18:00', 45, 'Straw 林水草' ),
+		array( 2, 'PENTAS', '18:45', 60, 'prayer:Maghrib break' ),
+		array( 2, 'PENTAS', '19:45', 45, 'Thee Marloes' ),
+		array( 2, 'PENTAS', '20:30', 15, 'prayer:Isyak break' ),
+		array( 2, 'PENTAS', '20:45', 45, 'Empty Page' ),
+		array( 2, 'PENTAS', '21:45', 45, 'Alkateri' ),
+		array( 2, 'PENTAS', '22:45', 45, 'Noh Salleh' ),
+		array( 2, 'UNGGUN', '24:00', 90, 'other:Bonfire sessions at Santuy Campsite' ),
 	);
+}
+
+/**
+ * Import a bundled demo photo into the media library.
+ *
+ * @param string $file    File name in assets/demo, without extension.
+ * @param int    $post_id Post to attach it to.
+ * @param string $alt     Alt text.
+ * @return int Attachment ID, or 0.
+ */
+function tapaufest_demo_photo( $file, $post_id, $alt ) {
+	$path = TAPAUFEST_DIR . 'assets/demo/' . sanitize_file_name( $file ) . '.webp';
+	if ( ! $file || ! file_exists( $path ) ) {
+		return 0;
+	}
+	$upload = wp_upload_bits( basename( $path ), null, file_get_contents( $path ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local bundled file.
+	if ( ! empty( $upload['error'] ) ) {
+		return 0;
+	}
+	$id = wp_insert_attachment(
+		array(
+			'post_mime_type' => 'image/webp',
+			'post_title'     => $alt,
+			'post_status'    => 'inherit',
+		),
+		$upload['file'],
+		$post_id
+	);
+	if ( ! $id || is_wp_error( $id ) ) {
+		return 0;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	wp_update_attachment_metadata( $id, wp_generate_attachment_metadata( $id, $upload['file'] ) );
+	update_post_meta( $id, '_wp_attachment_image_alt', $alt );
+	update_post_meta( $id, '_tapaufest_demo', 1 );
+	set_post_thumbnail( $post_id, $id );
+	return $id;
 }
 
 /**
@@ -120,7 +177,7 @@ function tapaufest_demo_insert( $type, $title, $meta = array(), $args = array() 
 function tapaufest_seed() {
 	$existing = get_posts(
 		array(
-			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'page' ),
+			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'tf_partner', 'page' ),
 			'posts_per_page' => 1,
 			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
 			'fields'         => 'ids',
@@ -139,20 +196,24 @@ function tapaufest_seed() {
 				'tf_country'   => $a[1],
 				'tf_genre'     => $a[2],
 				'tf_headliner' => $a[3],
+				'tf_billing'   => isset( $a[6] ) ? $a[6] : 'act',
 				'tf_profile'   => 'https://tapau.asia/',
 			),
 			array(
 				'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $a[4] ) . '</p><!-- /wp:paragraph -->',
 				'post_excerpt' => $a[4],
+				'post_name'    => sanitize_title( preg_replace( '/[^\x20-\x7E]/', '', $a[0] ) ),
 				'menu_order'   => $i,
 			)
 		);
+		tapaufest_demo_photo( $a[5], $artist_ids[ $a[0] ], $a[0] );
 	}
 
 	$days = array(
 		1 => tapaufest_setting( 'day1' ),
 		2 => tapaufest_setting( 'day2' ),
 	);
+	$tf_notes = tapaufest_demo_session_notes();
 	foreach ( tapaufest_demo_sessions() as $i => $s ) {
 		$is_act = isset( $artist_ids[ $s[4] ] );
 		$parts  = $is_act ? array( 'act', $s[4] ) : explode( ':', $s[4], 2 );
@@ -167,15 +228,19 @@ function tapaufest_seed() {
 				'tf_kind'   => $parts[0],
 				'tf_artist' => $is_act ? $artist_ids[ $s[4] ] : 0,
 			),
-			array( 'menu_order' => $i )
+			array(
+				'menu_order'   => $i,
+				'post_content' => isset( $tf_notes[ $parts[1] ] ) ? '<!-- wp:paragraph --><p>' . esc_html( $tf_notes[ $parts[1] ] ) . '</p><!-- /wp:paragraph -->' : '',
+				'post_excerpt' => isset( $tf_notes[ $parts[1] ] ) ? $tf_notes[ $parts[1] ] : '',
+			)
 		);
 	}
 
+	// Name, who, people, days, early-bird price, price, includes, campsite, art.
 	$tiers = array(
-		array( 'Solo Day', '1 person · 1 day', 1, 1, 129, 159, "Day 1 or Day 2\nAll zones that day", false ),
-		array( 'Solo Weekend', '1 person · 2 days', 1, 2, 229, 279, "Both days\nAll zones", false ),
-		array( 'Geng Weekend', '4 people · 2 days', 4, 2, 849, 999, "4 weekend passes\nLowest price per person", false ),
-		array( 'Duo Campers', '2 people · 2 days + camping', 2, 2, 529, 629, "2 weekend passes\nTent spot at the festival campsite\nBonfire sets after midnight", true ),
+		array( 'Day Ticket', '1 person · 1 day', 1, 1, 0, 158, "Saturday or Sunday\nAll zones that day\nRM198 at the door", false, 'day' ),
+		array( 'Weekend Ticket', '1 person · 2 days', 1, 2, 188, 288, "Both days\nAll zones\nEarly bird for the first 2 weeks", false, 'weekend' ),
+		array( 'Student Weekend', '1 student · 2 days', 1, 2, 98, 98, "Both days\nAll zones\nLimited to 500\nValid student ID at the gate", false, 'geng' ),
 	);
 	foreach ( $tiers as $i => $t ) {
 		tapaufest_demo_insert(
@@ -189,6 +254,7 @@ function tapaufest_seed() {
 				'tf_regular'  => $t[5],
 				'tf_includes' => $t[6],
 				'tf_campsite' => $t[7],
+				'tf_art'      => $t[8],
 				'tf_url'      => tapaufest_setting( 'tickets_url' ),
 			),
 			array( 'menu_order' => $i )
@@ -197,23 +263,27 @@ function tapaufest_seed() {
 
 	$faq = array(
 		'The basics' => array(
-			array( 'When and where is it?', '12 and 13 Dec 2026 at Sungai Congkak, Hulu Langat, Selangor. Gates open at 11am (to be confirmed).' ),
-			array( 'Can I go solo?', 'Plenty do. Grab a Solo pass and say hi to Geng TAPAU at the WARUNG.' ),
-			array( 'Can I bring my kids?', 'Yes. Children aged 12 and below must stay with a parent or guardian at all times.' ),
+			array( 'When and where is it?', 'Saturday 12 and Sunday 13 Dec 2026 at Chongkak Park & Resort, Hulu Langat, Selangor. Registration and gates open at 9am both days.' ),
+			array( 'How do I get there without a car?', 'Take the MRT Kajang Line to MRT Sri Raya. Official TAPAUfest shuttles run from there straight to the festival gates. By car it’s about an hour from KL.', true ),
+			array( 'Can I go solo?', 'Plenty do. Grab a Day or Weekend Ticket and say hi to Geng TAPAU at the WARUNG.' ),
+			array( 'Can I bring my kids?', 'Yes. Children aged 12 and below must stay with a parent or guardian at all times.', true ),
 		),
 		'Tickets'    => array(
+			array( 'How much are tickets?', 'Weekend Tickets are RM188 early bird (first 2 weeks), then RM288. Day Tickets are RM158, or RM198 at the door. Student Weekend Tickets are RM98, limited to 500, with a valid student ID.' ),
 			array( 'How do my tickets work?', 'Your e-ticket arrives by email from TAPAUtix. Swap it for a wristband at the gate and keep it on all weekend. Lost wristbands can’t be replaced.' ),
-			array( 'Can I get a refund?', 'All sales are final, unless the festival is cancelled or postponed.' ),
+			array( 'Can I get a refund?', 'All sales are final, unless the festival is cancelled or postponed.', true ),
 			array( 'What is early access?', 'People on the waitlist get a code by email. Enter it at TAPAUtix checkout for the early-bird price before public sale opens.' ),
 		),
 		'On site'    => array(
+			array( 'Can I camp?', 'Yes. Book a spot at the Santuy Campsite inside the festival grounds for both nights, run by the Santrav team with bonfire sessions late into the night. Locally run campsites and chalets nearby work too.' ),
 			array( 'What can’t I bring?', 'Glass and bottles, cigarettes and vapes, professional recording gear, weapons, lasers, fireworks and flares, and animals.' ),
-			array( 'Is there a surau?', 'Yes, next to the WARUNG. PENTAS pauses for Maghrib on both days.' ),
+			array( 'Is there free water?', 'Yes. Bring your own bottle and refill for free at the Water Station.' ),
+			array( 'Is there a surau?', 'Yes, next to the WARUNG. PENTAS pauses for Maghrib and Isyak on both days.' ),
 			array( 'Can I pay by card?', 'Most stalls take DuitNow QR and cards. Bring some cash for smaller stalls.' ),
 		),
 		'Weather'    => array(
-			array( 'What happens if it rains?', 'December is rainy season. Our rain and cancellation policy goes here before tickets go on sale.' ),
-			array( 'Are river activities safe?', 'KEMBARA activities only run when water levels are safe. Changes post to the alert bar and the WhatsApp channel first.' ),
+			array( 'What happens if it rains?', 'December is rainy season, so pack a poncho and slippers that can get wet. LAYAR’s open-air cinema runs weather permitting. Updates and any set changes post to the alert bar at the top of every page first. All sales are final unless the festival is cancelled or postponed.', true ),
+			array( 'Are river activities safe?', 'River dips and KEMBARA activities only run when water levels are safe. Changes post to the alert bar and the WhatsApp channel first.' ),
 		),
 	);
 	$order = 0;
@@ -230,7 +300,7 @@ function tapaufest_seed() {
 			$id = tapaufest_demo_insert(
 				'tf_faq',
 				$item[0],
-				array(),
+				! empty( $item[2] ) ? array( 'tf_featured' => true ) : array(),
 				array(
 					'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $item[1] ) . '</p><!-- /wp:paragraph -->',
 					'menu_order'   => $order++,
@@ -242,18 +312,23 @@ function tapaufest_seed() {
 		}
 	}
 
+	// Two confirmed 2025 names, then sample stalls (tagged "Sample") based on what
+	// past editions served: nasi lemak, cendol, fried food, desserts, a community cookout.
 	$vendors = array(
-		array( 'warung', 'Warung Pak Din', 'Nasi lemak, all day' ),
-		array( 'warung', 'Roti John Bros', 'Roti john, late night' ),
-		array( 'warung', 'Kopi Lepak', 'Kopi, teh tarik, Milo ais' ),
-		array( 'warung', 'Satay Corner', 'Satay and ketupat' ),
-		array( 'warung', 'Kedai Hijau', 'Vegetarian rice bowls' ),
-		array( 'warung', 'Ais Kacang Kak Mah', 'Desserts' ),
-		array( 'pasar', 'TAPAUfest merch', 'Tees, totes and caps' ),
-		array( 'pasar', 'Rak Vinyl', 'Indie vinyl and tapes' ),
-		array( 'pasar', 'Zine Corner', 'Zines and prints' ),
-		array( 'pasar', 'Hulu Langat Handmade', 'Local crafts' ),
-		array( 'pasar', 'Cetak Studio', 'Live screenprinting' ),
+		array( 'pasar', 'TAPAUfest x Humblezing', 'Official festival merch', 'The 2025 collab line sold out fast. Watch for the 2026 drop.', 'Merch, Limited run', '2025', '', '$$', '' ),
+		array( 'pasar', 'Pekan Pop Up', 'Indie market curators', 'Curated the 2025 PASAR: indie brands, art, crafts and vinyl.', 'Curated, Local brands', '2025', '', '', '' ),
+		array( 'warung', 'Nasi Lemak Corner', 'Nasi lemak, all day', 'Breakfast, lunch and the 2am refuel.', 'Halal, Cashless', 'Sample', 'Nasi lemak sambal sotong', '$', '' ),
+		array( 'warung', 'Cendol and ABC', 'Shaved ice desserts', 'The cold one you need after the sun sets on PENTAS.', 'Halal, Vegetarian options', 'Sample', 'Cendol pulut', '$', '' ),
+		array( 'warung', 'Goreng-goreng', 'Fried snacks', 'Pisang goreng, keropok lekor and cucur, fresh from the wok.', 'Halal, Vegetarian options', 'Sample', 'Keropok lekor', '$', '' ),
+		array( 'warung', 'Satay and Grill', 'Satay, ketupat and grilled corn', 'Smoke you can follow from the campsite.', 'Halal, Late night', 'Sample', '10 sticks of satay ayam', '$$', '' ),
+		array( 'warung', 'Kopi and Teh Tarik', 'Kopi, teh tarik, Milo ais', 'Hot or iced. Bring your own cup for a discount.', 'Halal, Vegetarian options, Bring your cup', 'Sample', 'Kopi ais kaw', '$', '' ),
+		array( 'warung', 'Roti John Late Night', 'Roti john and burgers', 'Opens when the bonfire sets start.', 'Halal, Late night', 'Sample', 'Roti john daging', '$$', '' ),
+		array( 'warung', 'Green Bowls', 'Vegetarian rice bowls', 'Plant-based bowls and salads.', 'Vegetarian, Vegan options', 'Sample', 'Tempeh sambal bowl', '$$', '' ),
+		array( 'warung', 'Community Cookout', 'Shared pot by the campsite', 'Like 2023: bring a dish, share a dish, meet your neighbours.', 'Free, Campsite', 'Sample', '', '', '' ),
+		array( 'pasar', 'Band Merch Table', 'Tees and tapes from the lineup', 'One table for every act on PENTAS.', 'Merch, Cashless', 'Sample', '', '$$', '' ),
+		array( 'pasar', 'Vinyl and Tapes', 'Indie records', 'South East Asian vinyl and cassettes.', 'Records', 'Sample', '', '$$$', '' ),
+		array( 'pasar', 'Zine Corner', 'Zines and prints', 'Local zine makers and illustrators.', 'Zines, Art', 'Sample', '', '$', '' ),
+		array( 'pasar', 'Live Screenprint', 'Print your own tee', 'Bring a shirt or buy one. Prints while you wait.', 'Hands-on', 'Sample', '', '$$', '' ),
 	);
 	foreach ( $vendors as $i => $v ) {
 		tapaufest_demo_insert(
@@ -262,6 +337,55 @@ function tapaufest_seed() {
 			array(
 				'tf_vendor_type' => $v[0],
 				'tf_note'        => $v[2],
+				'tf_tags'        => $v[4],
+				'tf_year'        => $v[5],
+				'tf_signature'   => $v[6],
+				'tf_price'       => $v[7],
+				'tf_instagram'   => $v[8],
+			),
+			array(
+				'menu_order'   => $i,
+				'post_excerpt' => $v[3],
+				'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $v[3] ) . '</p><!-- /wp:paragraph -->',
+			)
+		);
+	}
+
+	// TAPAUfest 2025 partners, as credited on the 2025 poster and in press coverage.
+	$partners = array(
+		array( 'supporter', 'ASEAN Malaysia 2025', 'Main supporter of the ASEAN edition', '' ),
+		array( 'supporter', 'Visit Malaysia 2026', 'Main supporter, with Tourism Malaysia', '' ),
+		array( 'strategic', 'KBS', 'Kementerian Belia dan Sukan (Ministry of Youth and Sports)', '' ),
+		array( 'strategic', 'IMPACT', 'Impact Integrated, strategic partner', '' ),
+		array( 'strategic', 'Majlis Daerah Lenggong', 'Local council and host of the 2025 site at Resort Tasik Raban', '' ),
+		array( 'programme', 'Pekan Pop Up', 'Curated the PASAR market', '' ),
+		array( 'programme', 'SEA Short Film Festival', 'Short films for LAYAR', '' ),
+		array( 'programme', 'Sesi Tikar Mengkuang', 'Yoga at KEMBARA', '' ),
+		array( 'programme', 'Santuy Travellers', 'Campsite and late-night bonfire sets', '' ),
+		array( 'programme', 'Slow Cub Camp', 'Campsite', '' ),
+		array( 'brand', 'Spritzer', 'Free drinking water for everyone on site', '' ),
+		array( 'brand', 'Humblezing', 'TAPAUfest x Humblezing merch', '' ),
+		array( 'media', 'ERA', 'Media partner', '' ),
+		array( 'media', 'hitz', 'Media partner', '' ),
+		array( 'media', 'VOCKET', 'Media partner', '' ),
+		array( 'media', 'Noisy Headspace', 'Media partner', 'https://noisyheadspace.com/' ),
+		array( 'media', 'Rakita 107.9', 'Media partner', '' ),
+		array( 'community', 'NRDN Photography', 'Festival photography', '' ),
+		array( 'community', 'TAPAUtix', 'Ticketing', 'https://tapautix.asia/' ),
+	);
+	// Past sponsors and partners since 2014.
+	foreach ( array( 'JBL', 'Waka', 'Vans', 'ERA', 'TV9', 'Astro', 'TM', 'Cradle', 'Maxis', 'Tune Talk', 'Kementerian Komunikasi dan Digital', 'MyCreative Ventures', 'SYOK', 'Grab', 'Maybank', 'Marshall Headphones', 'Yoodo', 'Gempak', 'iConcerts', 'MUBI', 'Cendana', 'Rakita', 'ArtsFAS by Yayasan Hasanah', 'Tourism Malaysia', 'Montigo' ) as $tf_past ) {
+		$partners[] = array( 'past', $tf_past, '', '' );
+	}
+	foreach ( $partners as $i => $p ) {
+		tapaufest_demo_insert(
+			'tf_partner',
+			$p[1],
+			array(
+				'tf_tier' => $p[0],
+				'tf_role' => $p[2],
+				'tf_url'  => $p[3],
+				'tf_year' => 'past' === $p[0] ? '' : '2025',
 			),
 			array( 'menu_order' => $i )
 		);
@@ -274,6 +398,8 @@ function tapaufest_seed() {
 		'plan'       => 'Plan your trip',
 		'map'        => 'Map and help',
 		'faq'        => 'FAQ',
+		'partners'   => 'Partners',
+		'sell'       => 'Sell at TAPAUfest',
 		'recap'      => 'Recap',
 		'archive'    => 'Past editions',
 	);
@@ -302,7 +428,7 @@ function tapaufest_seed() {
 function tapaufest_unseed() {
 	$ids = get_posts(
 		array(
-			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'page' ),
+			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'tf_partner', 'page' ),
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
@@ -311,6 +437,18 @@ function tapaufest_unseed() {
 	);
 	foreach ( $ids as $id ) {
 		wp_delete_post( $id, true );
+	}
+	$media = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
+			'fields'         => 'ids',
+		)
+	);
+	foreach ( $media as $id ) {
+		wp_delete_attachment( $id, true );
 	}
 	$terms = get_terms(
 		array(

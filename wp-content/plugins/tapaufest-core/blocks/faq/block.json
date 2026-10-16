@@ -15,6 +15,10 @@
 		"group": {
 			"type": "string",
 			"default": ""
+		},
+		"mini": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"editorScript": "tapaufest-blocks-editor",

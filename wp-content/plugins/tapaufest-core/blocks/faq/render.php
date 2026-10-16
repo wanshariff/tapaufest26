@@ -8,6 +8,19 @@
 defined( 'ABSPATH' ) || exit;
 
 $tf_group = isset( $attributes['group'] ) ? sanitize_title( $attributes['group'] ) : '';
+$tf_mini  = ! empty( $attributes['mini'] );
+if ( $tf_mini ) {
+	// Mini FAQ for the home page: questions flagged "Show on home page".
+	$tf_featured = get_posts(
+		array(
+			'post_type'      => 'tf_faq',
+			'posts_per_page' => 6,
+			'orderby'        => array( 'menu_order' => 'ASC' ),
+			'meta_key'       => 'tf_featured', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
+			'meta_value'     => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_value
+		)
+	);
+}
 $tf_terms = get_terms(
 	array(
 		'taxonomy'   => 'tf_faq_group',
@@ -20,6 +33,15 @@ if ( is_wp_error( $tf_terms ) ) {
 }
 
 $tf_sets = array();
+if ( $tf_mini ) {
+	$tf_terms = array();
+	if ( $tf_featured ) {
+		$tf_sets[] = array(
+			'name'  => '',
+			'posts' => $tf_featured,
+		);
+	}
+}
 foreach ( $tf_terms as $tf_term ) {
 	$tf_sets[] = array(
 		'name'  => $tf_term->name,
@@ -41,7 +63,7 @@ foreach ( $tf_terms as $tf_term ) {
 		),
 	);
 }
-if ( ! $tf_group ) {
+if ( ! $tf_group && ! $tf_mini ) {
 	$tf_loose = get_posts(
 		array(
 			'post_type'      => 'tf_faq',
@@ -63,7 +85,7 @@ if ( ! $tf_group ) {
 	}
 }
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-faq' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+<div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-faq' . ( $tf_mini ? ' tf-faq--mini' : '' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php if ( ! $tf_sets ) : ?>
 		<p class="tf-empty"><?php esc_html_e( 'Questions and answers coming soon.', 'tapaufest' ); ?></p>
 	<?php endif; ?>
@@ -74,7 +96,7 @@ if ( ! $tf_group ) {
 			<?php endif; ?>
 			<?php foreach ( $tf_set['posts'] as $tf_j => $tf_q ) : ?>
 				<details class="tf-faq__item"<?php echo ( 0 === $tf_i && 0 === $tf_j ) ? ' open' : ''; ?>>
-					<summary><?php echo esc_html( get_the_title( $tf_q ) ); ?></summary>
+					<summary><?php echo esc_html( get_the_title( $tf_q ) ); ?><?php echo tapaufest_icon( 'plus', array( 'class' => 'tf-faq__toggle' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></summary>
 					<div class="tf-faq__answer"><?php echo wp_kses_post( wpautop( do_blocks( $tf_q->post_content ) ) ); ?></div>
 				</details>
 			<?php endforeach; ?>

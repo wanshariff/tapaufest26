@@ -1,0 +1,18 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/vendor-apply",
+	"title": "Stall application form",
+	"category": "tapaufest",
+	"icon": "store",
+	"description": "Lets food vendors, makers, brands and activity hosts apply for a stall. Applications land privately under TAPAUfest > Applications.",
+	"textdomain": "tapaufest",
+	"version": "1.5.0",
+	"supports": {
+		"html": false
+	},
+	"attributes": {},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

@@ -23,18 +23,22 @@ function tapaufest_default_settings() {
 		'edition'        => 'TAPAUfest 2026',
 		'day1'           => '2026-12-12',
 		'day2'           => '2026-12-13',
-		'gates_open'     => '11:00',
-		'venue'          => 'Sungai Congkak, Hulu Langat, Selangor',
-		'maps_url'       => 'https://www.google.com/maps/search/Sungai+Congkak+Hulu+Langat',
+		'gates_open'     => '09:00',
+		'venue'          => 'Chongkak Park & Resort, Hulu Langat, Selangor',
+		'explainer'      => 'An art x nature weekend under the forest canopy at Chongkak Park & Resort, by cool running rivers. Top and rising South East Asian indie acts on PENTAS, workshops at BENGKEL, starlight films at LAYAR, makan at WARUNG and finds at PASAR, then camp two nights at Santuy Campsite. Come solo or bring your geng.',
+		'maps_url'       => 'https://www.google.com/maps/search/Chongkak+Park+%26+Resort+Hulu+Langat',
 		'tickets_url'    => 'https://tapautix.asia/',
 		'join_url'       => 'https://tapau.asia/',
 		'waitlist_url'   => '',
-		'aftermovie_url' => 'https://tapau.asia/vod/tapaufest-2025-asean-the-aftermovie/',
+		'aftermovie_url' => 'https://player.castr.com/vod/0OnEi4OQE72IphJS',
 		'survey_url'     => '',
 		'takedown_url'   => '',
 		'whatsapp_url'   => '',
-		'stages'         => "PENTAS|Main stage\nLAYAR|Screenings\nBENGKEL|Workshops\nKEMBARA|Outdoor\nUNGGUN|Bonfire at the campsite",
+		'stages'         => "PENTAS|Main stage\nLAYAR|Films\nBENGKEL|Workshops\nKEMBARA|Outdoor\nUNGGUN|Bonfire at Santuy Campsite",
 		'timezone'       => 'Asia/Kuala_Lumpur',
+		'apply_open'     => 1,
+		'apply_deadline' => '',
+		'apply_email'    => '',
 	);
 }
 
@@ -137,7 +141,7 @@ function tapaufest_days() {
 function tapaufest_alert( $state = '' ) {
 	$state    = $state ? $state : tapaufest_state();
 	$defaults = array(
-		'early'  => array( __( 'Early access', 'tapaufest' ), __( 'The waitlist window is open. Use the code in your email at checkout for the early-bird price.', 'tapaufest' ) ),
+		'early'  => array( __( 'Early access', 'tapaufest' ), __( 'Waitlist window is open. Use your email code at checkout.', 'tapaufest' ) ),
 		'public' => array( __( 'On sale', 'tapaufest' ), __( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' ) ),
 		'live'   => array( __( 'Live', 'tapaufest' ), __( 'Set changes and weather updates post here first.', 'tapaufest' ) ),
 		'recap'  => array( __( 'Recap', 'tapaufest' ), __( 'Photos are up. Find yourself in the Day 1 and Day 2 galleries.', 'tapaufest' ) ),
@@ -192,6 +196,9 @@ function tapaufest_sanitize_settings( $input ) {
 
 	$out['state']    = ( isset( $input['state'] ) && array_key_exists( $input['state'], tapaufest_states() ) ) ? $input['state'] : 'early';
 	$out['alert_on'] = empty( $input['alert_on'] ) ? 0 : 1;
+	$out['apply_open']     = empty( $input['apply_open'] ) ? 0 : 1;
+	$out['apply_deadline'] = isset( $input['apply_deadline'] ) ? sanitize_text_field( $input['apply_deadline'] ) : '';
+	$out['apply_email']    = isset( $input['apply_email'] ) ? sanitize_email( $input['apply_email'] ) : '';
 
 	foreach ( array( 'alert_text', 'edition', 'venue', 'gates_open', 'timezone' ) as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : $defaults[ $key ];
@@ -203,7 +210,8 @@ function tapaufest_sanitize_settings( $input ) {
 	foreach ( array( 'maps_url', 'tickets_url', 'join_url', 'waitlist_url', 'aftermovie_url', 'survey_url', 'takedown_url', 'whatsapp_url' ) as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) ? esc_url_raw( $input[ $key ] ) : '';
 	}
-	$out['stages'] = isset( $input['stages'] ) ? sanitize_textarea_field( $input['stages'] ) : $defaults['stages'];
+	$out['stages']    = isset( $input['stages'] ) ? sanitize_textarea_field( $input['stages'] ) : $defaults['stages'];
+	$out['explainer'] = isset( $input['explainer'] ) ? sanitize_textarea_field( $input['explainer'] ) : $defaults['explainer'];
 
 	return $out;
 }
@@ -278,11 +286,34 @@ function tapaufest_render_settings_page() {
 					</tr>
 				<?php endforeach; ?>
 				<tr>
+					<th scope="row"><label for="tf-explainer"><?php esc_html_e( 'Home page explainer', 'tapaufest' ); ?></label></th>
+					<td>
+						<textarea id="tf-explainer" class="large-text" rows="3" name="tapaufest_settings[explainer]"><?php echo esc_textarea( $opt['explainer'] ); ?></textarea>
+						<p class="description"><?php esc_html_e( 'Two or three sentences under the date in the home page hero: what TAPAUfest is, for someone who has never been.', 'tapaufest' ); ?></p>
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><label for="tf-stages"><?php esc_html_e( 'Stages', 'tapaufest' ); ?></label></th>
 					<td>
 						<textarea id="tf-stages" class="large-text" rows="6" name="tapaufest_settings[stages]"><?php echo esc_textarea( $opt['stages'] ); ?></textarea>
 						<p class="description"><?php esc_html_e( 'One per line, as NAME|Short description. The order here is the order on the timetable.', 'tapaufest' ); ?></p>
 					</td>
+				</tr>
+			</table>
+			<h2><?php esc_html_e( 'Stall applications', 'tapaufest' ); ?></h2>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Form', 'tapaufest' ); ?></th>
+					<td><label><input type="checkbox" name="tapaufest_settings[apply_open]" value="1" <?php checked( ! empty( $opt['apply_open'] ) ); ?>> <?php esc_html_e( 'Accept applications on the Sell at TAPAUfest page', 'tapaufest' ); ?></label></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="tf-apply_deadline"><?php esc_html_e( 'Deadline (shown on the page)', 'tapaufest' ); ?></label></th>
+					<td><input type="text" class="regular-text" id="tf-apply_deadline" name="tapaufest_settings[apply_deadline]" value="<?php echo esc_attr( $opt['apply_deadline'] ); ?>" placeholder="<?php esc_attr_e( 'e.g. 15 Nov 2026', 'tapaufest' ); ?>"></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="tf-apply_email"><?php esc_html_e( 'Send new applications to', 'tapaufest' ); ?></label></th>
+					<td><input type="email" class="regular-text" id="tf-apply_email" name="tapaufest_settings[apply_email]" value="<?php echo esc_attr( $opt['apply_email'] ); ?>" placeholder="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>">
+					<p class="description"><?php esc_html_e( 'Applications are saved under TAPAUfest > Applications either way.', 'tapaufest' ); ?></p></td>
 				</tr>
 			</table>
 			<?php submit_button(); ?>

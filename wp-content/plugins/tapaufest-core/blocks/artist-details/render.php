@@ -34,7 +34,11 @@ foreach ( tapaufest_get_artists() as $tf_other ) {
 }
 ?>
 <div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-artist-details' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<p class="tf-eyebrow"><?php echo esc_html( implode( ' · ', array_filter( array( $tf_a['country_name'], $tf_a['genre'] ) ) ) ); ?></p>
+	<?php
+	$tf_bill_types = tapaufest_billing_types();
+	$tf_bill       = ( $tf_a['billing'] && 'act' !== $tf_a['billing'] && isset( $tf_bill_types[ $tf_a['billing'] ] ) ) ? $tf_bill_types[ $tf_a['billing'] ] : '';
+	?>
+	<p class="tf-eyebrow"><?php echo esc_html( implode( ' · ', array_filter( array( $tf_bill, $tf_a['country_name'], $tf_a['genre'] ) ) ) ); ?></p>
 
 	<?php if ( $tf_s ) : ?>
 		<dl class="tf-facts"<?php echo tapaufest_session_attrs( $tf_s ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
@@ -51,10 +55,10 @@ foreach ( tapaufest_get_artists() as $tf_other ) {
 
 	<div class="tf-ctas tf-ctas--left">
 		<?php if ( $tf_s ) : ?>
-			<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_s['id']; ?>" data-tf-star-label aria-pressed="false"><?php esc_html_e( '☆ Add to Jadual Aku', 'tapaufest' ); ?></button>
+			<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_s['id']; ?>" data-tf-star-label aria-pressed="false"><?php echo tapaufest_icon( 'star' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Add to Jadual Aku', 'tapaufest' ); ?></button>
 		<?php endif; ?>
 		<?php if ( $tf_a['profile'] ) : ?>
-			<a class="tf-btn" href="<?php echo esc_url( $tf_a['profile'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Profile on tapau.asia ↗', 'tapaufest' ); ?></a>
+			<a class="tf-btn" href="<?php echo esc_url( $tf_a['profile'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Profile on tapau.asia', 'tapaufest' ); ?> <?php echo tapaufest_icon( 'external' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<?php endif; ?>
 	</div>
 

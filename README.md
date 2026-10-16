@@ -23,7 +23,7 @@ Needs WordPress 6.6 or later and PHP 7.4 or later.
 2. Activate **TAPAUfest Core** under Plugins, then **TAPAUfest 2026** under Appearance > Themes.
 3. Settings > Permalinks: choose **Post name**.
 4. Settings > TAPAUfest: check the dates, venue and links, and pick the site state.
-5. To review with mock content: Settings > TAPAUfest > **Load demo content**. It creates the pages, 16 mock artists, 33 set times, 4 tiers, FAQs and vendors. **Remove demo content** deletes all of it.
+5. To review with mock content: Settings > TAPAUfest > **Load demo content**. It creates the pages, the 12 TAPAUfest 2025 artists with their photos (stand-ins until the 2026 lineup is out), 30 set times, 4 tiers, FAQs and vendors. **Remove demo content** deletes all of it.
 
 Pages the theme expects (the demo loader creates them, using the "Festival page" template):
 `/tickets/`, `/timetable/`, `/experience/`, `/plan/`, `/map/`, `/faq/`, `/recap/`, `/archive/`. The lineup lives at `/lineup/` and each artist at `/artist/<name>/`.

@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @return string[]
  */
 function tapaufest_block_names() {
-	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta' );
+	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta', 'ticker', 'site-map', 'partners', 'session-details', 'vendor-details', 'vendor-apply' );
 }
 
 /**
@@ -32,6 +32,10 @@ function tapaufest_register_blocks() {
 		true
 	);
 	wp_register_script( 'tapaufest-view', TAPAUFEST_URL . 'assets/view.js', array(), TAPAUFEST_VERSION, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	// Interactive map: Leaflet (bundled, BSD-2) plus our map script.
+	wp_register_style( 'tapaufest-leaflet', TAPAUFEST_URL . 'assets/vendor/leaflet/leaflet.css', array(), '1.9.4' );
+	wp_register_script( 'tapaufest-leaflet', TAPAUFEST_URL . 'assets/vendor/leaflet/leaflet.js', array(), '1.9.4', array( 'in_footer' => true ) );
+	wp_register_script( 'tapaufest-map', TAPAUFEST_URL . 'assets/map.js', array( 'tapaufest-leaflet' ), TAPAUFEST_VERSION, array( 'in_footer' => true ) );
 	wp_localize_script(
 		'tapaufest-view',
 		'tapaufestView',
@@ -106,7 +110,7 @@ add_action( 'wp_footer', 'tapaufest_print_sheet' );
  * @return string
  */
 function tapaufest_play_icon() {
-	return '<svg viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0L10 6L0 12z"/></svg>';
+	return tapaufest_icon( 'play' );
 }
 
 /**
@@ -191,7 +195,7 @@ function tapaufest_artist_card( $a, $big = false ) {
  */
 function tapaufest_star_button( $s ) {
 	return sprintf(
-		'<button type="button" class="tf-star" data-tf-star="%1$d" aria-pressed="false" aria-label="%2$s"><span aria-hidden="true">☆</span></button>',
+		'<button type="button" class="tf-star" data-tf-star="%1$d" aria-pressed="false" aria-label="%2$s"><span aria-hidden="true">' . tapaufest_icon( 'star' ) . '</span></button>',
 		(int) $s['id'],
 		/* translators: %s: set title. */
 		esc_attr( sprintf( __( 'Add %s to Jadual Aku', 'tapaufest' ), $s['title'] ) )
