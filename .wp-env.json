@@ -1,0 +1,9 @@
+{
+	"core": null,
+	"phpVersion": "8.2",
+	"plugins": [ "./wp-content/plugins/tapaufest-core" ],
+	"themes": [ "./wp-content/themes/tapaufest-2026" ],
+	"config": {
+		"WP_DEBUG": true
+	}
+}

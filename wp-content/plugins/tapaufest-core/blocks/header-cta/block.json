@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/header-cta",
+	"title": "Header button",
+	"category": "tapaufest",
+	"icon": "tickets-alt",
+	"description": "Get tickets before the fest, Map and help during it, Recap after.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": false
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

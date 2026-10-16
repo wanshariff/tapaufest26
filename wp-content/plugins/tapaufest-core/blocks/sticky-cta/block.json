@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/sticky-cta",
+	"title": "Mobile ticket bar",
+	"category": "tapaufest",
+	"icon": "button",
+	"description": "Bottom bar on phones with the main button. Hides when the ticket cards are on screen.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": false
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

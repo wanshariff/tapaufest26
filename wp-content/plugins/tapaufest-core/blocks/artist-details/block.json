@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/artist-details",
+	"title": "Artist set details",
+	"category": "tapaufest",
+	"icon": "microphone",
+	"description": "Set time, stage, listen player and Add to Jadual Aku for the current artist.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": false
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php",
+	"usesContext": [
+		"postId",
+		"postType"
+	]
+}

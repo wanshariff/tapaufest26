@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/now-next",
+	"title": "Now and next",
+	"category": "tapaufest",
+	"icon": "clock",
+	"description": "What is on now and next on each stage during the festival.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": false
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}
