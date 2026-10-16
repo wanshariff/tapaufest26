@@ -33,7 +33,7 @@ $tf_tags   = array_filter( array_map( 'trim', explode( ',', (string) get_post_me
 			<div><dt><?php esc_html_e( 'Price', 'tapaufest' ); ?></dt><dd><?php echo esc_html( $tf_prices[ $tf_price ] ); ?></dd></div>
 		<?php endif; ?>
 		<?php if ( $tf_year ) : ?>
-			<div><dt><?php esc_html_e( 'At TAPAUfest', 'tapaufest' ); ?></dt><dd><?php echo esc_html( $tf_year ); ?></dd></div>
+			<div><dt><?php esc_html_e( 'At TAPAUfest', 'tapaufest' ); ?></dt><dd><?php echo esc_html( 'Sample' === $tf_year ? __( 'Sample stall, based on past editions', 'tapaufest' ) : $tf_year ); ?></dd></div>
 		<?php endif; ?>
 		<div><dt><?php esc_html_e( 'Find them', 'tapaufest' ); ?></dt><dd><a href="<?php echo esc_url( home_url( '/map/' ) ); ?>"><?php echo esc_html( ( isset( $tf_types[ $tf_type ] ) ? $tf_types[ $tf_type ] : '' ) . ' ' . __( 'on the map', 'tapaufest' ) ); ?></a></dd></div>
 	</dl>

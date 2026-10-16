@@ -22,7 +22,7 @@ $tf_ig = '<a href="https://www.instagram.com/tapaufest/" target="_blank" rel="no
 echo tapaufest_grid( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	array(
 		tapaufest_card( __( 'Brands and sponsors', 'tapaufest-2026' ), array( esc_html__( 'Put your brand in front of 2,000+ festival-goers over two days, on site and on tapau.asia.', 'tapaufest-2026' ), $tf_ig ) ),
-		tapaufest_card( __( 'Sell at PASAR or WARUNG', 'tapaufest-2026' ), array( esc_html__( 'Indie brands, makers and local kitchens. Stall calls go out before November.', 'tapaufest-2026' ), $tf_ig ) ),
+		tapaufest_card( __( 'Sell at PASAR or WARUNG', 'tapaufest-2026' ), array( esc_html__( 'Indie brands, makers and local kitchens. Apply online, no account needed.', 'tapaufest-2026' ), '<a href="' . esc_url( home_url( '/sell/' ) ) . '">' . esc_html__( 'Apply for a stall →', 'tapaufest-2026' ) . '</a>' ) ),
 		tapaufest_card( __( 'Media and creators', 'tapaufest-2026' ), array( esc_html__( 'Press passes, interviews and content partnerships with the TAPAUasia media team.', 'tapaufest-2026' ), $tf_ig ) ),
 	),
 	'15rem'

@@ -36,6 +36,9 @@ function tapaufest_default_settings() {
 		'whatsapp_url'   => '',
 		'stages'         => "PENTAS|Main stage\nLAYAR|Screenings\nBENGKEL|Workshops\nKEMBARA|Outdoor\nUNGGUN|Bonfire at the campsite",
 		'timezone'       => 'Asia/Kuala_Lumpur',
+		'apply_open'     => 1,
+		'apply_deadline' => '',
+		'apply_email'    => '',
 	);
 }
 
@@ -193,6 +196,9 @@ function tapaufest_sanitize_settings( $input ) {
 
 	$out['state']    = ( isset( $input['state'] ) && array_key_exists( $input['state'], tapaufest_states() ) ) ? $input['state'] : 'early';
 	$out['alert_on'] = empty( $input['alert_on'] ) ? 0 : 1;
+	$out['apply_open']     = empty( $input['apply_open'] ) ? 0 : 1;
+	$out['apply_deadline'] = isset( $input['apply_deadline'] ) ? sanitize_text_field( $input['apply_deadline'] ) : '';
+	$out['apply_email']    = isset( $input['apply_email'] ) ? sanitize_email( $input['apply_email'] ) : '';
 
 	foreach ( array( 'alert_text', 'edition', 'venue', 'gates_open', 'timezone' ) as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) ? sanitize_text_field( $input[ $key ] ) : $defaults[ $key ];
@@ -292,6 +298,22 @@ function tapaufest_render_settings_page() {
 						<textarea id="tf-stages" class="large-text" rows="6" name="tapaufest_settings[stages]"><?php echo esc_textarea( $opt['stages'] ); ?></textarea>
 						<p class="description"><?php esc_html_e( 'One per line, as NAME|Short description. The order here is the order on the timetable.', 'tapaufest' ); ?></p>
 					</td>
+				</tr>
+			</table>
+			<h2><?php esc_html_e( 'Stall applications', 'tapaufest' ); ?></h2>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><?php esc_html_e( 'Form', 'tapaufest' ); ?></th>
+					<td><label><input type="checkbox" name="tapaufest_settings[apply_open]" value="1" <?php checked( ! empty( $opt['apply_open'] ) ); ?>> <?php esc_html_e( 'Accept applications on the Sell at TAPAUfest page', 'tapaufest' ); ?></label></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="tf-apply_deadline"><?php esc_html_e( 'Deadline (shown on the page)', 'tapaufest' ); ?></label></th>
+					<td><input type="text" class="regular-text" id="tf-apply_deadline" name="tapaufest_settings[apply_deadline]" value="<?php echo esc_attr( $opt['apply_deadline'] ); ?>" placeholder="<?php esc_attr_e( 'e.g. 15 Nov 2026', 'tapaufest' ); ?>"></td>
+				</tr>
+				<tr>
+					<th scope="row"><label for="tf-apply_email"><?php esc_html_e( 'Send new applications to', 'tapaufest' ); ?></label></th>
+					<td><input type="email" class="regular-text" id="tf-apply_email" name="tapaufest_settings[apply_email]" value="<?php echo esc_attr( $opt['apply_email'] ); ?>" placeholder="<?php echo esc_attr( get_option( 'admin_email' ) ); ?>">
+					<p class="description"><?php esc_html_e( 'Applications are saved under TAPAUfest > Applications either way.', 'tapaufest' ); ?></p></td>
 				</tr>
 			</table>
 			<?php submit_button(); ?>

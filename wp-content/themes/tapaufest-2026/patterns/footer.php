@@ -22,6 +22,7 @@ $tf_cols = array(
 		home_url( '/plan/' ) => __( 'Plan your trip', 'tapaufest-2026' ),
 		home_url( '/map/' )  => __( 'Map and help', 'tapaufest-2026' ),
 		home_url( '/faq/' )  => __( 'FAQ', 'tapaufest-2026' ),
+		home_url( '/sell/' ) => __( 'Sell at TAPAUfest', 'tapaufest-2026' ),
 	),
 	__( 'Look back', 'tapaufest-2026' ) => array(
 		home_url( '/recap/' )   => tapaufest_is_recap() ? __( '2026 recap', 'tapaufest-2026' ) : __( '2025 recap', 'tapaufest-2026' ),

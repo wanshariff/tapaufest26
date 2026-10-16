@@ -376,6 +376,8 @@ function tapaufest_page_descriptions() {
 		'faq'         => __( 'Tickets, kids, rain, refunds and what you can bring to TAPAUfest 2026.', 'tapaufest-2026' ),
 		'recap'       => __( 'Photos, the aftermovie and set recordings from TAPAUfest.', 'tapaufest-2026' ),
 		'archive'     => __( 'Every TAPAUfest since the first crowdfunded edition in Penang in 2014.', 'tapaufest-2026' ),
+		'partners'    => __( 'The supporters, brands, programme partners and media behind TAPAUfest.', 'tapaufest-2026' ),
+		'sell'        => __( 'Apply for a food, market, brand or activity stall at TAPAUfest 2026, Sungai Congkak, 12 and 13 Dec.', 'tapaufest-2026' ),
 	);
 }
 

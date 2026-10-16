@@ -1638,3 +1638,152 @@ a.tf-partner__in:hover {
 	min-width: 80px;
 	font-variant-numeric: tabular-nums;
 }
+
+/* ---------- stall application form ---------- */
+.tf-apply__form {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px 20px;
+	padding: 24px;
+	border: var(--tf-line);
+	border-radius: var(--tf-radius, 14px);
+	box-shadow: var(--tf-shadow);
+	background: var(--tf-paper-hi);
+	color: var(--tf-ink);
+}
+.tf-field {
+	display: grid;
+	gap: 6px;
+	margin: 0;
+	min-width: 0;
+	border: 0;
+	padding: 0;
+}
+.tf-field.is-wide {
+	grid-column: 1 / -1;
+}
+.tf-field > label,
+.tf-field legend {
+	font-weight: 700;
+	font-size: 15px;
+	padding: 0;
+}
+.tf-field input[type="text"],
+.tf-field input[type="email"],
+.tf-field input[type="tel"],
+.tf-field select,
+.tf-field textarea {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 46px;
+	padding: 10px 12px;
+	border: 2px solid var(--tf-ink);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--tf-ink);
+	font: 400 16px/1.4 var(--tf-body);
+}
+.tf-field textarea {
+	min-height: 96px;
+	resize: vertical;
+}
+.tf-field input:focus-visible,
+.tf-field select:focus-visible,
+.tf-field textarea:focus-visible {
+	outline: 3px solid var(--tf-ink);
+	outline-offset: 2px;
+}
+.tf-req {
+	color: var(--tf-cili-ink);
+}
+.tf-help {
+	font-size: 13px;
+	color: var(--tf-muted);
+}
+.tf-choices {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 8px;
+}
+.tf-choice {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 48px;
+	padding: 8px 12px;
+	border: 2px solid var(--tf-ink);
+	border-radius: 6px;
+	background: #fff;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 14px;
+}
+.tf-choice:has(input:checked) {
+	background: var(--tf-gold);
+	box-shadow: 3px 3px 0 var(--tf-ink);
+}
+.tf-choice input,
+.tf-consent input {
+	width: 20px;
+	height: 20px;
+	accent-color: var(--tf-cili-ink);
+	flex: none;
+}
+.tf-consent label {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	font-weight: 400;
+	font-size: 14px;
+}
+.tf-apply__hp {
+	position: absolute;
+	left: -9999px;
+}
+.tf-apply__error {
+	margin: 0 0 14px;
+	padding: 12px 14px;
+	border: 2px solid var(--tf-cili-ink);
+	border-radius: 6px;
+	background: #fff;
+	color: var(--tf-cili-ink);
+	font-weight: 700;
+}
+.tf-apply__deadline {
+	margin: 0 0 12px;
+	font-weight: 700;
+}
+.tf-apply__done {
+	padding: 24px;
+	border: var(--tf-line);
+	border-radius: var(--tf-radius, 14px);
+	background: var(--tf-gold);
+	color: var(--tf-ink);
+	box-shadow: var(--tf-shadow);
+}
+.tf-apply__big {
+	margin: 0 0 6px;
+	font-family: var(--tf-display);
+	font-size: 28px;
+	line-height: 1.1;
+}
+@media (max-width: 700px) {
+	.tf-apply__form {
+		grid-template-columns: 1fr;
+		padding: 16px;
+	}
+}
+.tf-field {
+	align-content: start;
+}
+.tf-vendor .tf-vendor__tags {
+	display: flex;
+}
+.tf-vendor .tf-tag {
+	display: inline-block;
+	color: var(--tf-ink);
+	font-size: 12px;
+}
+.tf-vendor .tf-vendor__year {
+	display: inline-block;
+}

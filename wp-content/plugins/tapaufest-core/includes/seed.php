@@ -309,10 +309,23 @@ function tapaufest_seed() {
 		}
 	}
 
-	// Only vendors confirmed in public 2025 coverage. Add 2026 stalls in wp-admin.
+	// Two confirmed 2025 names, then sample stalls (tagged "Sample") based on what
+	// past editions served: nasi lemak, cendol, fried food, desserts, a community cookout.
 	$vendors = array(
-		array( 'pasar', 'TAPAUfest x Humblezing', 'Official festival merch', 'The 2025 collab line sold out fast. Watch for the 2026 drop.', 'Merch, Limited run', '2025' ),
-		array( 'pasar', 'Pekan Pop Up', 'Indie market curators', 'Curated the 2025 PASAR: indie brands, art, crafts and vinyl.', 'Curated, Local brands', '2025' ),
+		array( 'pasar', 'TAPAUfest x Humblezing', 'Official festival merch', 'The 2025 collab line sold out fast. Watch for the 2026 drop.', 'Merch, Limited run', '2025', '', '$$', '' ),
+		array( 'pasar', 'Pekan Pop Up', 'Indie market curators', 'Curated the 2025 PASAR: indie brands, art, crafts and vinyl.', 'Curated, Local brands', '2025', '', '', '' ),
+		array( 'warung', 'Nasi Lemak Corner', 'Nasi lemak, all day', 'Breakfast, lunch and the 2am refuel.', 'Halal, Cashless', 'Sample', 'Nasi lemak sambal sotong', '$', '' ),
+		array( 'warung', 'Cendol and ABC', 'Shaved ice desserts', 'The cold one you need after the sun sets on PENTAS.', 'Halal, Vegetarian options', 'Sample', 'Cendol pulut', '$', '' ),
+		array( 'warung', 'Goreng-goreng', 'Fried snacks', 'Pisang goreng, keropok lekor and cucur, fresh from the wok.', 'Halal, Vegetarian options', 'Sample', 'Keropok lekor', '$', '' ),
+		array( 'warung', 'Satay and Grill', 'Satay, ketupat and grilled corn', 'Smoke you can follow from the campsite.', 'Halal, Late night', 'Sample', '10 sticks of satay ayam', '$$', '' ),
+		array( 'warung', 'Kopi and Teh Tarik', 'Kopi, teh tarik, Milo ais', 'Hot or iced. Bring your own cup for a discount.', 'Halal, Vegetarian options, Bring your cup', 'Sample', 'Kopi ais kaw', '$', '' ),
+		array( 'warung', 'Roti John Late Night', 'Roti john and burgers', 'Opens when the bonfire sets start.', 'Halal, Late night', 'Sample', 'Roti john daging', '$$', '' ),
+		array( 'warung', 'Green Bowls', 'Vegetarian rice bowls', 'Plant-based bowls and salads.', 'Vegetarian, Vegan options', 'Sample', 'Tempeh sambal bowl', '$$', '' ),
+		array( 'warung', 'Community Cookout', 'Shared pot by the campsite', 'Like 2023: bring a dish, share a dish, meet your neighbours.', 'Free, Campsite', 'Sample', '', '', '' ),
+		array( 'pasar', 'Band Merch Table', 'Tees and tapes from the lineup', 'One table for every act on PENTAS.', 'Merch, Cashless', 'Sample', '', '$$', '' ),
+		array( 'pasar', 'Vinyl and Tapes', 'Indie records', 'South East Asian vinyl and cassettes.', 'Records', 'Sample', '', '$$$', '' ),
+		array( 'pasar', 'Zine Corner', 'Zines and prints', 'Local zine makers and illustrators.', 'Zines, Art', 'Sample', '', '$', '' ),
+		array( 'pasar', 'Live Screenprint', 'Print your own tee', 'Bring a shirt or buy one. Prints while you wait.', 'Hands-on', 'Sample', '', '$$', '' ),
 	);
 	foreach ( $vendors as $i => $v ) {
 		tapaufest_demo_insert(
@@ -323,10 +336,14 @@ function tapaufest_seed() {
 				'tf_note'        => $v[2],
 				'tf_tags'        => $v[4],
 				'tf_year'        => $v[5],
+				'tf_signature'   => $v[6],
+				'tf_price'       => $v[7],
+				'tf_instagram'   => $v[8],
 			),
 			array(
 				'menu_order'   => $i,
 				'post_excerpt' => $v[3],
+				'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $v[3] ) . '</p><!-- /wp:paragraph -->',
 			)
 		);
 	}
@@ -375,6 +392,7 @@ function tapaufest_seed() {
 		'map'        => 'Map and help',
 		'faq'        => 'FAQ',
 		'partners'   => 'Partners',
+		'sell'       => 'Sell at TAPAUfest',
 		'recap'      => 'Recap',
 		'archive'    => 'Past editions',
 	);
