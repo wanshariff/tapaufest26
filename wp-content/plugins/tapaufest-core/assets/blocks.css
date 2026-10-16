@@ -1748,7 +1748,7 @@ a.tf-partner__in:hover {
 }
 .tf-map__popup .leaflet-popup-content {
 	margin: 0;
-	width: 280px !important;
+	width: 240px !important;
 	font-family: var(--tf-body);
 }
 .tf-map__popup .leaflet-popup-tip {
@@ -1888,7 +1888,7 @@ a.tf-partner__in:hover {
 		flex: none;
 	}
 	.tf-map__popup .leaflet-popup-content {
-		width: 240px !important;
+		width: 220px !important;
 	}
 }
 
@@ -1903,8 +1903,8 @@ a.tf-partner__in:hover {
  * size with the text, so they work in buttons, links, pills and headings. */
 .tf-icon {
 	display: inline-block;
-	width: 1.25em;
-	height: 1.25em;
+	width: 1.35em;
+	height: 1.35em;
 	vertical-align: -0.28em;
 	flex: none;
 	overflow: visible;
@@ -1982,4 +1982,52 @@ a:hover .tf-icon--external {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
+}
+
+/* Short map card: photo, category, name, link. */
+.tf-map__pop {
+	background: #fff;
+	color: var(--tf-ink);
+	border-top: 4px solid var(--tf-pin, var(--tf-ink));
+}
+.tf-map__pop .tf-map__body {
+	padding: 10px 14px 14px;
+}
+.tf-map__cat {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	margin: 0;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--tf-pin, var(--tf-cili-ink));
+}
+.tf-map__cat .tf-icon {
+	width: 18px;
+	height: 18px;
+}
+.tf-map__pop .tf-map__name {
+	margin: 4px 0 10px;
+}
+.tf-map__pop .tf-map__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	font-weight: 700;
+	font-size: 15px;
+	color: var(--tf-cili-ink);
+}
+
+/* Keep Leaflet's layers (z-index 400 to 1000) inside the map, so the sticky
+ * header and the phone menu always sit on top. */
+.tf-map__canvas,
+.tf-map .leaflet-container {
+	isolation: isolate;
+	z-index: 0;
+}
+.tf-map {
+	position: relative;
+	z-index: 0;
 }

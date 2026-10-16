@@ -71,6 +71,18 @@ $tf_vendor_names = function ( $type ) {
 			$tf_vend  = ! empty( $tf_s['vendors'] ) ? $tf_vendor_names( $tf_s['vendors'] ) : array();
 			$tf_col   = isset( $tf_cats[ $tf_s['cat'] ] ) ? $tf_cats[ $tf_s['cat'] ][1] : '#5A3A20';
 			?>
+			<div class="tf-map__pop" data-pop="<?php echo esc_attr( $tf_key ); ?>" style="--tf-pin:<?php echo esc_attr( $tf_col ); ?>" hidden>
+				<?php if ( $tf_photo ) : ?>
+					<img class="tf-map__photo" src="<?php echo esc_url( $tf_photo ); ?>" alt="" loading="lazy" width="400" height="200">
+				<?php endif; ?>
+				<div class="tf-map__body">
+					<p class="tf-map__cat"><?php echo tapaufest_icon( tapaufest_map_cat_icon( $tf_s['cat'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( isset( $tf_cats[ $tf_s['cat'] ] ) ? $tf_cats[ $tf_s['cat'] ][0] : '' ); ?></p>
+					<h3 class="tf-map__name"><?php echo esc_html( $tf_s['label'] ); ?></h3>
+					<?php if ( ! empty( $tf_s['link'] ) ) : ?>
+						<a class="tf-map__link" href="<?php echo esc_url( home_url( $tf_s['link'] ) ); ?>"><?php echo esc_html( $tf_s['cta'] ); ?> <?php echo tapaufest_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+					<?php endif; ?>
+				</div>
+			</div>
 			<article class="tf-map__card" data-card="<?php echo esc_attr( $tf_key ); ?>" style="--tf-pin:<?php echo esc_attr( $tf_col ); ?>">
 				<?php if ( $tf_photo ) : ?>
 					<img class="tf-map__photo" src="<?php echo esc_url( $tf_photo ); ?>" alt="" loading="lazy" width="400" height="200">

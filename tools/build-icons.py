@@ -25,7 +25,7 @@ WOBBLE = 0.42      # how far a line drifts from the true path
 WAVE = (7.0, 13.0) # wavelength range of the drift, so it reads as a slow hand, not jitter
 OVERSHOOT = 0.7    # open strokes run a little past their end
 OVERLAP = 1.6      # closed shapes are not closed: the pen runs past the start
-WIDTH = (1.75, 2.3)  # pen pressure: each stroke gets its own width
+WIDTH = (2.0, 2.5)  # pen pressure: each stroke gets its own width
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'wp-content', 'plugins', 'tapaufest-core', 'assets', 'icons')
 J = 0.32  # wobble in px
@@ -227,7 +227,7 @@ class Icon:
                 cx, cy, r = d
                 out.append('<circle cx="%s" cy="%s" r="%s" fill="currentColor" stroke="none"/>' % (f(cx), f(cy), f(r)))
             elif acc == 'solid':
-                out.append('<path d="%s" fill="currentColor"/><path d="%s" stroke-width="1.6"/>' % (d, sketch(d, self.rng)))
+                out.append('<path d="%s" fill="currentColor"/><path d="%s" stroke-width="1.8"/>' % (d, sketch(d, self.rng)))
             elif acc:
                 # misregistered fill, like a second print colour slightly off the line
                 out.append('<path class="tf-i-a" d="%s" fill="currentColor" fill-opacity=".2" stroke="none" transform="translate(.9 1)"/>' % d)

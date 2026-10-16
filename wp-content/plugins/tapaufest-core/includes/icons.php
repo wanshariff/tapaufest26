@@ -119,6 +119,9 @@ function tapaufest_render_block_icons( $content, $block ) {
 	if ( 'core/heading' === $name ) {
 		$content = tapaufest_zone_heading_icon( $content );
 	}
+	if ( 'core/navigation' === $name ) {
+		$content = tapaufest_nav_icons( $content );
+	}
 	return $content;
 }
 add_filter( 'render_block', 'tapaufest_render_block_icons', 20, 2 );
@@ -173,4 +176,41 @@ function tapaufest_stage_icon( $stage ) {
 	);
 	$key = strtoupper( trim( $stage ) );
 	return isset( $map[ $key ] ) ? $map[ $key ] : 'pin';
+}
+
+/**
+ * Main menu: hand-drawn Menu and Close buttons with labels, an arrow on each
+ * link (shown in the phone overlay only) and a ticket button with the dates
+ * at the foot of the overlay.
+ *
+ * @param string $html Navigation block HTML.
+ * @return string
+ */
+function tapaufest_nav_icons( $html ) {
+	$html = preg_replace(
+		'/(<button[^>]*wp-block-navigation__responsive-container-open[^>]*>)\s*<svg.*?<\/svg>/s',
+		'$1' . tapaufest_icon( 'menu' ) . '<span class="tf-nav__label">' . esc_html__( 'Menu', 'tapaufest' ) . '</span>',
+		$html,
+		1
+	);
+	$html = preg_replace(
+		'/(<button[^>]*wp-block-navigation__responsive-container-close[^>]*>)\s*<svg.*?<\/svg>/s',
+		'$1<span class="tf-nav__label">' . esc_html__( 'Close', 'tapaufest' ) . '</span>' . tapaufest_icon( 'close' ),
+		$html,
+		1
+	);
+	$html = str_replace( '</span></a></li>', '</span>' . tapaufest_icon( 'arrow-right', array( 'class' => 'tf-nav__arrow' ) ) . '</a></li>', $html );
+	if ( function_exists( 'tapaufest_cta' ) ) {
+		$cta   = tapaufest_cta();
+		$when  = '';
+		$extra = '<div class="tf-nav__extra">'
+			. '<p class="tf-nav__when">' . tapaufest_icon( 'calendar' ) . esc_html( $when ? $when : __( '12 & 13 Dec 2026, Sungai Congkak', 'tapaufest' ) ) . '</p>'
+			. '<a class="tf-btn tf-btn--cili" href="' . esc_url( $cta['url'] ) . '">' . esc_html( $cta['label'] ) . ' ' . tapaufest_icon( 'arrow-right' ) . '</a>'
+			. '</div>';
+		$pos = strrpos( $html, '</ul>' );
+		if ( false !== $pos ) {
+			$html = substr_replace( $html, '</ul>' . $extra, $pos, 5 );
+		}
+	}
+	return $html;
 }

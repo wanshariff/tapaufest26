@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.7.0
+Version: 1.7.1
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -49,7 +49,7 @@ h3 {
 .tf-site-header {
 	position: sticky;
 	top: env(safe-area-inset-top, 0px);
-	z-index: 20;
+	z-index: 100;
 }
 .admin-bar .tf-site-header {
 	top: calc(32px + env(safe-area-inset-top, 0px));
@@ -840,4 +840,112 @@ html:not(.tf-motion) .tf-ticker__set + .tf-ticker__set {
 }
 .tf-site-header .wp-block-navigation__responsive-container-open {
 	align-items: center;
+}
+
+/* ---------------------------------------------------------------- menu
+ * Desktop: inline links. Phone (under 600px): "Menu" button on the right
+ * opens a full-screen paper sheet with big links, the dates and the
+ * ticket button. */
+.tf-nav .tf-nav__arrow,
+.tf-nav .tf-nav__extra {
+	display: none;
+}
+.tf-site-header .wp-block-navigation__responsive-container-open,
+.tf-site-header .wp-block-navigation__responsive-container-close {
+	gap: 6px;
+	font: 700 15px/1 var(--wp--preset--font-family--body);
+	color: var(--wp--preset--color--ink);
+}
+.tf-site-header .wp-block-navigation__responsive-container-open .tf-icon,
+.tf-site-header .wp-block-navigation__responsive-container-close .tf-icon {
+	width: 24px;
+	height: 24px;
+}
+@media (max-width: 599px) {
+	.tf-header-row .tf-nav,
+	.tf-header-row .tf-nav.is-content-justification-center {
+		justify-content: flex-end;
+	}
+	.tf-site-header .wp-block-navigation__responsive-container-open {
+		display: inline-flex;
+		width: auto;
+		height: 44px;
+		padding: 0 14px 0 10px;
+		background: var(--wp--preset--color--paper);
+		border: 2px solid var(--wp--preset--color--ink);
+		border-radius: 999px;
+		box-shadow: 2px 3px 0 var(--wp--preset--color--ink);
+	}
+	.tf-site-header .wp-block-navigation__responsive-container.is-menu-open {
+		background: var(--wp--preset--color--paper) !important;
+		color: var(--wp--preset--color--ink) !important;
+		padding: calc(14px + env(safe-area-inset-top, 0px)) 20px calc(24px + env(safe-area-inset-bottom, 0px));
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation__responsive-container-close {
+		display: inline-flex;
+		align-items: center;
+		top: calc(14px + env(safe-area-inset-top, 0px));
+		right: 20px;
+		height: 44px;
+		padding: 0 10px 0 14px;
+		border: 2px solid var(--wp--preset--color--ink);
+		border-radius: 999px;
+		background: var(--wp--preset--color--paper-hi);
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation__responsive-container-content {
+		padding-top: 64px;
+		align-items: stretch;
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation__container {
+		align-items: stretch !important;
+		gap: 0;
+		width: 100%;
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation-item {
+		width: 100%;
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation-item__content {
+		display: flex !important;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		padding: 14px 2px !important;
+		border: 0 !important;
+		border-bottom: 2px solid var(--wp--preset--color--ink) !important;
+		border-radius: 0;
+		font-family: var(--wp--preset--font-family--display);
+		font-size: 30px;
+		line-height: 1.05;
+	}
+	.tf-site-header .is-menu-open [aria-current="page"],
+	.tf-site-header .is-menu-open .current-menu-item > .wp-block-navigation-item__content {
+		color: var(--wp--preset--color--cili-deep);
+	}
+	.tf-site-header .is-menu-open .tf-nav__arrow {
+		display: inline-block;
+		width: 26px;
+		height: 26px;
+		color: var(--wp--preset--color--cili-deep);
+	}
+	.tf-site-header .is-menu-open .tf-nav__extra {
+		display: grid;
+		gap: 12px;
+		width: 100%;
+		margin-top: 24px;
+	}
+	.tf-nav__when {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0;
+		font-weight: 700;
+	}
+	.tf-site-header .is-menu-open .tf-nav__extra .tf-btn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 6px;
+		font-size: 17px;
+		padding: 14px;
+	}
 }

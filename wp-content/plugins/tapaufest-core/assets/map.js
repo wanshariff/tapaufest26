@@ -72,8 +72,14 @@
 		map.addControl( new Reset() );
 
 		function cardHtml( key ) {
-			var card = root.querySelector( '.tf-map__card[data-card="' + key + '"]' );
-			return card ? card.outerHTML : '';
+			// The short card: photo, category, name and a link to more.
+			var pop = root.querySelector( '.tf-map__pop[data-pop="' + key + '"]' );
+			if ( ! pop ) {
+				return '';
+			}
+			var el = pop.cloneNode( true );
+			el.removeAttribute( 'hidden' );
+			return el.outerHTML;
 		}
 
 		var markers = {};
@@ -82,15 +88,15 @@
 			var icon = L.divIcon( {
 				className: 'tf-pin-wrap',
 				html: '<span class="tf-pin' + ( p.small ? ' is-small' : '' ) + '" style="--pin:' + p.color + '">' + p.icon + '</span><span class="tf-pin__label">' + p.label + '</span>',
-				iconSize: p.small ? [ 30, 30 ] : [ 40, 48 ],
-				iconAnchor: p.small ? [ 15, 15 ] : [ 20, 46 ],
+				iconSize: p.small ? [ 32, 32 ] : [ 42, 50 ],
+				iconAnchor: p.small ? [ 16, 16 ] : [ 21, 48 ],
 				popupAnchor: p.small ? [ 0, -14 ] : [ 0, -44 ]
 			} );
 			var m = L.marker( [ H - p.y, p.x ], { icon: icon, title: p.label, alt: p.label, riseOnHover: true, keyboard: true } );
 			m.bindPopup( cardHtml( p.key ), {
 				className: 'tf-map__popup',
-				maxWidth: 300,
-				minWidth: 260,
+				maxWidth: 240,
+				minWidth: 220,
 				autoPanPaddingTopLeft: [ 60, 16 ],
 				autoPanPaddingBottomRight: [ 16, 16 ],
 				closeButton: true
