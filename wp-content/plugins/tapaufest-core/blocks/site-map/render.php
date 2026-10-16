@@ -49,7 +49,7 @@ $tf_vendor_names = function ( $type ) {
 	);
 };
 ?>
-<div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-map' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-tf-map data-pins="<?php echo esc_attr( wp_json_encode( $tf_pins ) ); ?>">
+<div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-map' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-tf-map data-close-icon="<?php echo esc_attr( tapaufest_icon( 'close' ) ); ?>" data-pins="<?php echo esc_attr( wp_json_encode( $tf_pins ) ); ?>">
 	<div class="tf-map__filters" role="group" aria-label="<?php esc_attr_e( 'Show on the map', 'tapaufest' ); ?>">
 		<button type="button" class="tf-map__filter" data-cat="" aria-pressed="true"><?php esc_html_e( 'Everything', 'tapaufest' ); ?></button>
 		<?php foreach ( $tf_cats as $tf_slug => $tf_c ) : ?>

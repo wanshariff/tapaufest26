@@ -378,5 +378,63 @@
 		).observe( tickets );
 	}
 
+	/* ---------- sticky offsets: the header's height, for things that stick under it ---------- */
+	var siteHeader = $( '.tf-site-header' );
+	function setHeaderHeight() {
+		if ( siteHeader ) {
+			document.documentElement.style.setProperty( '--tf-header-h', Math.round( siteHeader.getBoundingClientRect().height ) + 'px' );
+		}
+	}
+	setHeaderHeight();
+	window.addEventListener( 'resize', setHeaderHeight );
+
+	/* ---------- timetable on phones: stage chips scroll the track, and follow it ---------- */
+	$$( '.tf-stages' ).forEach( function ( panel ) {
+		var nav = $( '.tf-stagenav', panel );
+		var track = $( '.tf-stages__track', panel );
+		if ( ! nav || ! track ) {
+			return;
+		}
+		var chips = $$( '[data-tf-stage-jump]', nav );
+		function mark( id ) {
+			chips.forEach( function ( c ) {
+				var on = 'tf-stage-' + c.getAttribute( 'data-tf-stage-jump' ) === id;
+				c.setAttribute( 'aria-pressed', on ? 'true' : 'false' );
+				if ( on && nav.scrollWidth > nav.clientWidth ) {
+					nav.scrollTo( { left: c.offsetLeft - 16, behavior: 'smooth' } );
+				}
+			} );
+		}
+		chips.forEach( function ( c ) {
+			c.addEventListener( 'click', function () {
+				var col = document.getElementById( 'tf-stage-' + c.getAttribute( 'data-tf-stage-jump' ) );
+				if ( ! col ) {
+					return;
+				}
+				mark( col.id );
+				if ( track.scrollWidth > track.clientWidth + 4 ) {
+					track.scrollTo( { left: col.offsetLeft - track.offsetLeft - 16, behavior: matchMedia( '(prefers-reduced-motion: reduce)' ).matches ? 'auto' : 'smooth' } );
+				} else {
+					col.scrollIntoView( { block: 'start', behavior: 'smooth' } );
+				}
+			} );
+		} );
+		if ( 'IntersectionObserver' in window ) {
+			var io = new IntersectionObserver(
+				function ( entries ) {
+					entries.forEach( function ( entry ) {
+						if ( entry.isIntersecting && entry.intersectionRatio > 0.6 && track.scrollWidth > track.clientWidth + 4 ) {
+							mark( entry.target.id );
+						}
+					} );
+				},
+				{ root: track, threshold: [ 0.6 ] }
+			);
+			$$( '.tf-stagecol', track ).forEach( function ( col ) {
+				io.observe( col );
+			} );
+		}
+	} );
+
 	render();
 } )();

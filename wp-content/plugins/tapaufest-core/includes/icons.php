@@ -200,6 +200,16 @@ function tapaufest_nav_icons( $html ) {
 		$html,
 		1
 	);
+	// Logo at the top of the phone menu sheet.
+	$logo = get_theme_file_path( 'assets/images/tapaufest-2026-logo.webp' );
+	if ( file_exists( $logo ) ) {
+		$html = preg_replace(
+			'/(<div class="wp-block-navigation__responsive-dialog"[^>]*>)/s',
+			'$1<a class="tf-nav__logo" href="' . esc_url( home_url( '/' ) ) . '"><img src="' . esc_url( get_theme_file_uri( 'assets/images/tapaufest-2026-logo.webp' ) ) . '" alt="' . esc_attr__( 'TAPAUfest 2026 home', 'tapaufest' ) . '" width="96" height="58"></a>',
+			$html,
+			1
+		);
+	}
 	$html = str_replace( '</span></a></li>', '</span>' . tapaufest_icon( 'arrow-right', array( 'class' => 'tf-nav__arrow' ) ) . '</a></li>', $html );
 	if ( function_exists( 'tapaufest_cta' ) ) {
 		$cta   = tapaufest_cta();
@@ -207,6 +217,7 @@ function tapaufest_nav_icons( $html ) {
 		$extra = '<div class="tf-nav__extra">'
 			. '<p class="tf-nav__when">' . tapaufest_icon( 'calendar' ) . esc_html( $when ? $when : __( '12 & 13 Dec 2026, Chongkak Park, Hulu Langat', 'tapaufest' ) ) . '</p>'
 			. '<a class="tf-btn tf-btn--cili" href="' . esc_url( $cta['url'] ) . '">' . esc_html( $cta['label'] ) . ' ' . tapaufest_icon( 'arrow-right' ) . '</a>'
+			. tapaufest_social_row()
 			. '</div>';
 		$pos = strrpos( $html, '</ul>' );
 		if ( false !== $pos ) {
@@ -214,4 +225,34 @@ function tapaufest_nav_icons( $html ) {
 		}
 	}
 	return $html;
+}
+
+/**
+ * Official social accounts.
+ *
+ * @return array URL => array( label, icon ).
+ */
+function tapaufest_social_links() {
+	return apply_filters(
+		'tapaufest_social_links',
+		array(
+			'https://www.instagram.com/tapaufest/' => array( 'Instagram', 'instagram' ),
+			'https://www.tiktok.com/@tapaufest'    => array( 'TikTok', 'tiktok' ),
+			'https://x.com/TAPAUfest'              => array( 'X (Twitter)', 'x' ),
+			'https://www.facebook.com/TAPAUfest/'  => array( 'Facebook', 'facebook' ),
+		)
+	);
+}
+
+/**
+ * A row of social icon links.
+ *
+ * @return string
+ */
+function tapaufest_social_row() {
+	$out = '<p class="tf-social">';
+	foreach ( tapaufest_social_links() as $url => $item ) {
+		$out .= '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener">' . tapaufest_icon( $item[1], array( 'label' => $item[0] ) ) . '</a>';
+	}
+	return $out . '</p>';
 }

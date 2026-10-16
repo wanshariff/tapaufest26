@@ -530,7 +530,10 @@
 }
 
 /* ---------- timetable ---------- */
-.tf-stages {
+.tf-stagenav {
+	display: none;
+}
+.tf-stages__track {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	gap: 16px;
@@ -737,21 +740,8 @@
 }
 .tf-tiers {
 	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	gap: 16px;
-}
-@media (max-width: 980px) {
-	.tf-tiers {
-		grid-auto-flow: column;
-		grid-template-columns: none;
-		grid-auto-columns: minmax(250px, 78%);
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		padding: 4px 4px 14px;
-	}
-	.tf-tier {
-		scroll-snap-align: start;
-	}
 }
 .tf-tier {
 	display: flex;
@@ -2030,4 +2020,265 @@ a:hover .tf-icon--external {
 .tf-map {
 	position: relative;
 	z-index: 0;
+}
+
+
+/* ================================================================
+ * Mobile pass (Oct 16): app-like patterns on phones, same look.
+ * ================================================================ */
+
+/* Lineup filters: one bar. Wraps on desktop, one swipeable row on phones. */
+.tf-filterbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 20px;
+	margin-bottom: 18px;
+}
+.tf-filterbar .tf-chips {
+	margin: 0;
+}
+.tf-filterbar .tf-toggle {
+	margin-left: auto;
+}
+
+@media (max-width: 700px) {
+	/* Swipe rows bleed to the screen edge and hide the scrollbar. */
+	.tf-filterbar,
+	.tf-stagenav,
+	.tf-hero__pills {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		scrollbar-width: none;
+		-webkit-overflow-scrolling: touch;
+		margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+		padding: 4px max(16px, env(safe-area-inset-left, 0px)) 8px;
+	}
+	.tf-filterbar::-webkit-scrollbar,
+	.tf-stagenav::-webkit-scrollbar,
+	.tf-hero__pills::-webkit-scrollbar {
+		display: none;
+	}
+	.tf-filterbar .tf-chips {
+		flex-wrap: nowrap;
+		flex: none;
+		gap: 8px;
+	}
+	.tf-filterbar .tf-chips + .tf-chips {
+		padding-left: 14px;
+		border-left: 2px solid currentColor;
+	}
+	.tf-filterbar .tf-chip,
+	.tf-stagenav .tf-chip {
+		flex: none;
+		white-space: nowrap;
+		min-height: 40px;
+	}
+	.tf-filterbar .tf-toggle {
+		flex: none;
+		flex-wrap: nowrap;
+		margin-left: 0;
+		box-shadow: none;
+	}
+
+	/* Timetable: day tabs stay under the header; one stage per view. */
+	.tf-timetable > .tf-tools {
+		position: sticky;
+		top: var(--tf-header-h, 0px);
+		z-index: 5;
+		margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+		padding: 10px max(16px, env(safe-area-inset-left, 0px));
+		background: var(--wp--preset--color--kopi, var(--tf-kopi));
+	}
+	.tf-timetable > .tf-tools .tf-toggle {
+		display: flex;
+		width: 100%;
+		box-shadow: none;
+	}
+	.tf-timetable > .tf-tools .tf-toggle button {
+		flex: 1;
+		min-height: 44px;
+	}
+	.tf-timetable > .tf-tools .tf-muted {
+		display: none;
+	}
+	.tf-stagenav {
+		display: flex;
+		gap: 8px;
+		margin-bottom: 10px;
+	}
+	.tf-stagenav .tf-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+	.tf-stagenav .tf-chip .tf-icon {
+		width: 18px;
+		height: 18px;
+	}
+	.tf-stages__track {
+		display: flex;
+		gap: 14px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+		padding: 2px max(16px, env(safe-area-inset-left, 0px)) 12px;
+		scroll-padding-inline: max(16px, env(safe-area-inset-left, 0px));
+		align-items: flex-start;
+	}
+	.tf-stages__track::-webkit-scrollbar {
+		display: none;
+	}
+	.tf-stages__track > .tf-stagecol {
+		flex: 0 0 calc(100% - 6px);
+		scroll-snap-align: start;
+		box-shadow: 4px 4px 0 var(--tf-ink);
+	}
+	.tf-slot {
+		min-height: 56px;
+	}
+	.tf-slot--prayer .tf-icon {
+		width: 18px;
+		height: 18px;
+		vertical-align: -0.25em;
+	}
+
+	/* Tickets: stacked cards, short art band, price beside the name. */
+	.tf-tiers {
+		grid-template-columns: 1fr;
+		gap: 20px;
+	}
+	.tf-tier {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		column-gap: 12px;
+		row-gap: 6px;
+		align-items: start;
+	}
+	.tf-tier > * {
+		grid-column: 1 / -1;
+	}
+	.tf-tier__art {
+		aspect-ratio: 36 / 15;
+		object-position: 50% 62%;
+	}
+	.tf-tier__who {
+		margin-top: 4px;
+	}
+	.tf-tier .tf-tier__name {
+		grid-column: 1;
+		margin: 0;
+	}
+	.tf-tier .tf-price {
+		grid-column: 2;
+		grid-row: span 2;
+		margin: 0;
+		text-align: right;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+	}
+	.tf-tier .tf-badge {
+		grid-column: 1;
+		justify-self: start;
+	}
+	.tf-tier .tf-btn {
+		margin-top: 6px;
+	}
+
+	/* Home hero: tighter stack, one row of pills, full-width buttons. */
+	.tf-hero__logo {
+		max-width: min(240px, 66vw);
+		margin-inline: auto;
+	}
+	.tf-hero__explainer {
+		font-size: 15px;
+		line-height: 1.5;
+	}
+	.tf-hero__pills {
+		justify-content: flex-start;
+		margin-top: 14px;
+	}
+	.tf-hero__pills li {
+		flex: none;
+		white-space: nowrap;
+	}
+	.tf-hero .tf-ctas {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.tf-hero .tf-ctas .tf-btn {
+		width: 100%;
+		min-height: 48px;
+	}
+}
+
+/* Map on touch screens: a card docked at the bottom of the map instead of a popup. */
+.tf-map__sheet {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	z-index: 1001;
+	display: grid;
+	grid-template-columns: 112px 1fr;
+	align-items: stretch;
+	background: #fff;
+	color: var(--tf-ink);
+	border: 2px solid var(--tf-ink);
+	border-radius: 10px;
+	box-shadow: 0 10px 28px rgba(30, 18, 8, 0.3);
+	overflow: hidden;
+	transform: translateY(0);
+	transition: transform 220ms ease-out, opacity 220ms ease-out;
+}
+.tf-map__sheet[hidden] {
+	display: grid;
+	opacity: 0;
+	transform: translateY(calc(100% + 20px));
+	pointer-events: none;
+}
+.tf-map__sheet .tf-map__pop {
+	display: contents;
+}
+.tf-map__sheet .tf-map__photo {
+	height: 100%;
+	aspect-ratio: auto;
+	border-right: 2px solid var(--tf-ink);
+}
+.tf-map__sheet .tf-map__pop:not(:has(.tf-map__photo)) .tf-map__body {
+	grid-column: 1 / -1;
+}
+.tf-map__sheet .tf-map__body {
+	padding: 10px 44px 12px 12px;
+	border: 0;
+}
+.tf-map__sheet .tf-map__name {
+	font-size: 20px;
+	margin: 2px 0 6px;
+}
+.tf-map__sheet-close {
+	position: absolute;
+	top: 6px;
+	right: 6px;
+	display: grid;
+	place-items: center;
+	width: 36px;
+	height: 36px;
+	border: 2px solid var(--tf-ink);
+	border-radius: 50%;
+	background: var(--tf-paper-hi);
+	color: var(--tf-ink);
+	cursor: pointer;
+	padding: 0;
+}
+.tf-map__sheet-close .tf-icon {
+	width: 18px;
+	height: 18px;
+}
+@media (prefers-reduced-motion: reduce) {
+	.tf-map__sheet {
+		transition: none;
+	}
 }

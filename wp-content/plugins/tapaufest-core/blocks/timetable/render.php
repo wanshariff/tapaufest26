@@ -51,6 +51,17 @@ endif;
 		<div class="tf-stages" role="tabpanel" id="tf-panel-<?php echo esc_attr( $tf_date ); ?>" aria-labelledby="tf-tab-<?php echo esc_attr( $tf_date ); ?>"<?php echo $tf_date === $tf_first ? '' : ' hidden'; ?>>
 			<?php
 			$tf_day_sessions = tapaufest_get_sessions( $tf_date );
+			$tf_used_stages  = array_values( array_intersect( array_keys( $tf_stages ), array_unique( wp_list_pluck( $tf_day_sessions, 'stage' ) ) ) );
+			if ( count( $tf_used_stages ) > 1 ) :
+				?>
+				<nav class="tf-stagenav" aria-label="<?php esc_attr_e( 'Stages', 'tapaufest' ); ?>">
+					<?php foreach ( $tf_used_stages as $tf_i => $tf_su ) : ?>
+						<button type="button" class="tf-chip" data-tf-stage-jump="<?php echo esc_attr( sanitize_title( $tf_date . '-' . $tf_su ) ); ?>" aria-pressed="<?php echo 0 === $tf_i ? 'true' : 'false'; ?>"><?php echo tapaufest_icon( tapaufest_stage_icon( $tf_su ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_su ); ?></button>
+					<?php endforeach; ?>
+				</nav>
+				<?php
+			endif;
+			echo '<div class="tf-stages__track">';
 			foreach ( $tf_stages as $tf_stage => $tf_desc ) :
 				$tf_list = array_filter(
 					$tf_day_sessions,
@@ -62,11 +73,11 @@ endif;
 					continue;
 				}
 				?>
-				<section class="tf-stagecol">
+				<section class="tf-stagecol" id="tf-stage-<?php echo esc_attr( sanitize_title( $tf_date . '-' . $tf_stage ) ); ?>">
 					<h3 class="tf-stagecol__head"><?php echo tapaufest_icon( tapaufest_stage_icon( $tf_stage ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_stage ); ?> <small><?php echo esc_html( $tf_desc ); ?></small></h3>
 					<?php foreach ( $tf_list as $tf_s ) : ?>
 						<?php if ( 'prayer' === $tf_s['kind'] ) : ?>
-							<div class="tf-slot tf-slot--prayer"><time><?php echo esc_html( $tf_s['label'] ); ?></time><p class="tf-slot__title"><?php echo esc_html( $tf_s['title'] ); ?></p></div>
+							<div class="tf-slot tf-slot--prayer"><time><?php echo esc_html( $tf_s['label'] ); ?></time><p class="tf-slot__title"><?php echo tapaufest_icon( 'moon' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( $tf_s['title'] ); ?></p></div>
 						<?php else : ?>
 							<div class="tf-slot"<?php echo tapaufest_session_attrs( $tf_s ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 								<time><?php echo esc_html( $tf_s['label'] ); ?></time>
@@ -99,6 +110,7 @@ endif;
 					<?php endforeach; ?>
 				</section>
 			<?php endforeach; ?>
+			</div>
 		</div>
 	<?php endforeach; ?>
 

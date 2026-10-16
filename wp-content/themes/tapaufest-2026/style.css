@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.8.0
+Version: 1.9.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -829,7 +829,7 @@ html:not(.tf-motion) .tf-ticker__set + .tf-ticker__set {
 		margin-top: 12px;
 	}
 	.tf-hero__pills {
-		display: none;
+		display: flex; /* one swipeable row on phones (see blocks.css) */
 	}
 	.tf-hero .tf-countdown {
 		margin-top: 10px;
@@ -1094,4 +1094,43 @@ body::before {
 /* The festival name keeps its own case inside capitalised labels. */
 .tf-name {
 	text-transform: none;
+}
+
+/* Phone menu: logo top left, social icons at the foot. */
+.tf-nav__logo,
+.tf-nav .tf-social {
+	display: none;
+}
+@media (max-width: 599px) {
+	.tf-site-header .is-menu-open .tf-nav__logo {
+		display: block;
+		position: absolute;
+		top: calc(10px + env(safe-area-inset-top, 0px));
+		left: 20px;
+		z-index: 2;
+	}
+	.tf-site-header .is-menu-open .tf-nav__logo img {
+		display: block;
+		width: 84px;
+		height: auto;
+	}
+	.tf-site-header .is-menu-open .tf-social {
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+		margin: 8px 0 0;
+	}
+	.tf-site-header .is-menu-open .tf-social a {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		color: var(--wp--preset--color--paper);
+		border: 0 !important;
+		padding: 0 !important;
+	}
+	.tf-site-header .is-menu-open .tf-social .tf-icon {
+		width: 26px;
+		height: 26px;
+	}
 }

@@ -40,7 +40,15 @@ foreach ( $tf_artists as $tf_a ) {
 ?>
 <div <?php echo get_block_wrapper_attributes( array( 'class' => $tf_class ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> data-tf-lineup>
 	<?php if ( $tf_filters ) : ?>
-		<div class="tf-tools">
+		<div class="tf-filterbar">
+			<?php if ( count( $tf_days ) > 1 ) : ?>
+				<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Day', 'tapaufest' ); ?>">
+					<button type="button" class="tf-chip" data-tf-day="" aria-pressed="true"><?php esc_html_e( 'Both days', 'tapaufest' ); ?></button>
+					<?php foreach ( $tf_days as $tf_date => $tf_label ) : ?>
+						<button type="button" class="tf-chip" data-tf-day="<?php echo esc_attr( $tf_date ); ?>" aria-pressed="false"><?php echo esc_html( $tf_label ); ?></button>
+					<?php endforeach; ?>
+				</div>
+			<?php endif; ?>
 			<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Country', 'tapaufest' ); ?>">
 				<button type="button" class="tf-chip" data-tf-country="" aria-pressed="true"><?php esc_html_e( 'All countries', 'tapaufest' ); ?></button>
 				<?php foreach ( $tf_countries as $tf_code => $tf_name ) : ?>
@@ -52,14 +60,6 @@ foreach ( $tf_artists as $tf_a ) {
 				<button type="button" data-tf-view="poster" aria-pressed="false"><?php esc_html_e( 'Poster', 'tapaufest' ); ?></button>
 			</div>
 		</div>
-		<?php if ( count( $tf_days ) > 1 ) : ?>
-			<div class="tf-chips" role="group" aria-label="<?php esc_attr_e( 'Day', 'tapaufest' ); ?>">
-				<button type="button" class="tf-chip" data-tf-day="" aria-pressed="true"><?php esc_html_e( 'Both days', 'tapaufest' ); ?></button>
-				<?php foreach ( $tf_days as $tf_date => $tf_label ) : ?>
-					<button type="button" class="tf-chip" data-tf-day="<?php echo esc_attr( $tf_date ); ?>" aria-pressed="false"><?php echo esc_html( $tf_label ); ?></button>
-				<?php endforeach; ?>
-			</div>
-		<?php endif; ?>
 	<?php endif; ?>
 
 	<div class="tf-grid" data-tf-grid>

@@ -84,6 +84,54 @@
 
 		var markers = {};
 		var closeTimer = null;
+
+		// Touch screens get a card docked at the bottom of the map instead of popups.
+		var useSheet = ! hoverable;
+		var sheet = null;
+		var activeMarker = null;
+		function closeSheet() {
+			if ( ! sheet ) {
+				return;
+			}
+			sheet.hidden = true;
+			root.classList.remove( 'has-open' );
+			if ( activeMarker && activeMarker._icon ) {
+				activeMarker._icon.classList.remove( 'is-active' );
+			}
+			activeMarker = null;
+		}
+		function openSheet( m, key ) {
+			if ( ! sheet ) {
+				sheet = L.DomUtil.create( 'div', 'tf-map__sheet', map.getContainer() );
+				sheet.hidden = true;
+				sheet.setAttribute( 'role', 'dialog' );
+				sheet.setAttribute( 'aria-live', 'polite' );
+				L.DomEvent.disableClickPropagation( sheet );
+				L.DomEvent.disableScrollPropagation( sheet );
+			}
+			if ( activeMarker && activeMarker._icon ) {
+				activeMarker._icon.classList.remove( 'is-active' );
+			}
+			activeMarker = m;
+			sheet.innerHTML = cardHtml( key ) + '<button type="button" class="tf-map__sheet-close" aria-label="Close">' + ( root.getAttribute( 'data-close-icon' ) || '×' ) + '</button>';
+			sheet.setAttribute( 'aria-label', m.options.title );
+			sheet.querySelector( '.tf-map__sheet-close' ).addEventListener( 'click', closeSheet );
+			sheet.hidden = false;
+			root.classList.add( 'has-open' );
+			if ( m._icon ) {
+				m._icon.classList.add( 'is-active' );
+			}
+			// Keep the pin visible above the card.
+			var size = map.getSize();
+			var pt = map.latLngToContainerPoint( m.getLatLng() );
+			var room = size.y - sheet.offsetHeight - 30;
+			if ( pt.y > room || pt.y < 40 ) {
+				map.panBy( [ 0, pt.y - room / 2 ], { animate: ! reduce } );
+			}
+		}
+		if ( useSheet ) {
+			map.on( 'click', closeSheet );
+		}
 		pins.forEach( function ( p ) {
 			var icon = L.divIcon( {
 				className: 'tf-pin-wrap',
@@ -93,6 +141,15 @@
 				popupAnchor: p.small ? [ 0, -14 ] : [ 0, -44 ]
 			} );
 			var m = L.marker( [ H - p.y, p.x ], { icon: icon, title: p.label, alt: p.label, riseOnHover: true, keyboard: true } );
+			m.tfCat = p.cat;
+			if ( useSheet ) {
+				m.on( 'click', function () {
+					openSheet( m, p.key );
+				} );
+				m.addTo( map );
+				markers[ p.key ] = m;
+				return;
+			}
 			m.bindPopup( cardHtml( p.key ), {
 				className: 'tf-map__popup',
 				maxWidth: 240,
