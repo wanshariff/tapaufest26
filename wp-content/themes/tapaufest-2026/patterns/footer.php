@@ -64,7 +64,7 @@ $tf_cols = array(
 <ul class="wp-block-list tf-footer-links">
 	<?php foreach ( $tf_links as $tf_url => $tf_label ) : ?>
 <!-- wp:list-item -->
-<li><a href="<?php echo esc_url( $tf_url ); ?>"><?php echo esc_html( $tf_label ); ?></a></li>
+<li><a href="<?php echo esc_url( $tf_url ); ?>"><?php echo tapaufest_footer_icon( $tf_url ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_label ); ?></a></li>
 <!-- /wp:list-item -->
 	<?php endforeach; ?>
 </ul>

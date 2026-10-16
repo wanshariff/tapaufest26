@@ -40,13 +40,13 @@ $tf_tags   = array_filter( array_map( 'trim', explode( ',', (string) get_post_me
 	<?php if ( $tf_tags ) : ?>
 		<p class="tf-vendor__tags">
 			<?php foreach ( $tf_tags as $tf_t ) : ?>
-				<span class="tf-tag"><?php echo esc_html( $tf_t ); ?></span>
+				<span class="tf-tag"><?php $tf_ti = tapaufest_tag_icon( $tf_t ); echo $tf_ti ? tapaufest_icon( $tf_ti ) . ' ' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_t ); ?></span>
 			<?php endforeach; ?>
 		</p>
 	<?php endif; ?>
 	<div class="tf-ctas tf-ctas--left">
 		<?php if ( $tf_ig ) : ?>
-			<a class="tf-btn" href="<?php echo esc_url( 'https://www.instagram.com/' . rawurlencode( $tf_ig ) . '/' ); ?>" target="_blank" rel="noopener">@<?php echo esc_html( $tf_ig ); ?> ↗</a>
+			<a class="tf-btn" href="<?php echo esc_url( 'https://www.instagram.com/' . rawurlencode( $tf_ig ) . '/' ); ?>" target="_blank" rel="noopener"><?php echo tapaufest_icon( 'instagram' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> @<?php echo esc_html( $tf_ig ); ?></a>
 		<?php endif; ?>
 		<a class="tf-btn" href="<?php echo esc_url( home_url( '/experience/' ) ); ?>"><?php esc_html_e( 'All stalls', 'tapaufest' ); ?></a>
 	</div>

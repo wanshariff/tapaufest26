@@ -354,18 +354,37 @@ function tapaufest_map_basemap_svg( $spots ) {
  * @return string SVG or text.
  */
 function tapaufest_map_pin_icon( $cat, $icon = '' ) {
-	if ( $icon ) {
-		return '<b>' . esc_html( $icon ) . '</b>';
-	}
-	$paths = array(
-		'stage'    => '<path d="M9 3v10.5a2.5 2.5 0 1 1-2-2.45V5.5l7-1.6v8.6a2.5 2.5 0 1 1-2-2.45V1.4z"/>',
-		'film'     => '<path d="M2 4h11v9H2zM13 7l4-2.5v8L13 10z"/>',
-		'workshop' => '<path d="M3 13.5 11.5 5l2.5 2.5L5.5 16H3zM12.5 4l1.5-1.5 2.5 2.5L15 6.5z"/>',
-		'food'     => '<path d="M4 2v6a2 2 0 0 0 1.5 1.9V17h1.5V9.9A2 2 0 0 0 8.5 8V2H7.5v5h-1V2h-1v5h-1V2zM12 2c2 0 2.5 3 2.5 5 0 1.5-.8 2.3-1.5 2.6V17h-1.5z"/>',
-		'market'   => '<path d="M3 6h12l-1 11H4zM6 6a3 3 0 0 1 6 0h-1.5a1.5 1.5 0 0 0-3 0z"/>',
-		'outdoor'  => '<path d="M9 2c4 3 5 7 2 10l-1.2 1.2V17H8.2v-3.8L7 12C4 9 5 5 9 2z"/>',
-		'camp'     => '<path d="M9 2.5 16.5 16h-15zM9 9.5 6.5 16h5z"/>',
-		'entry'    => '<path d="M3 3h12v2H3zM4 6h2v10H4zM12 6h2v10h-2z"/>',
+	$letters = array(
+		'S' => 'surau',
+		'T' => 'toilet',
+		'+' => 'first-aid',
+		'W' => 'water',
+		'i' => 'info',
+		'P' => 'parking',
 	);
-	return '<svg viewBox="0 0 18 18" aria-hidden="true">' . ( isset( $paths[ $cat ] ) ? $paths[ $cat ] : '<circle cx="9" cy="9" r="4"/>' ) . '</svg>';
+	$cats    = array(
+		'camp'  => 'tent',
+		'entry' => 'gate',
+	);
+	if ( $icon ) {
+		$name = isset( $letters[ $icon ] ) ? $letters[ $icon ] : $icon;
+	} else {
+		$name = isset( $cats[ $cat ] ) ? $cats[ $cat ] : $cat;
+	}
+	return tapaufest_icon( $name );
+}
+
+/**
+ * Icon name for a map category (filters and legends).
+ *
+ * @param string $cat Category slug.
+ * @return string
+ */
+function tapaufest_map_cat_icon( $cat ) {
+	$map = array(
+		'camp'     => 'tent',
+		'entry'    => 'gate',
+		'facility' => 'info',
+	);
+	return isset( $map[ $cat ] ) ? $map[ $cat ] : $cat;
 }

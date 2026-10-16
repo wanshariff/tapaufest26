@@ -87,7 +87,7 @@ foreach ( $tf_artists as $tf_a ) {
 	<?php endif; ?>
 
 	<?php if ( ! empty( $attributes['moreLink'] ) ) : ?>
-		<p class="tf-more"><a href="<?php echo esc_url( get_post_type_archive_link( 'tf_artist' ) ); ?>"><?php esc_html_e( 'Filter by day and country →', 'tapaufest' ); ?></a></p>
+		<p class="tf-more"><a href="<?php echo esc_url( get_post_type_archive_link( 'tf_artist' ) ); ?>"><?php esc_html_e( 'Filter by day and country', 'tapaufest' ); ?> <?php echo tapaufest_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a></p>
 	<?php endif; ?>
 
 	<?php

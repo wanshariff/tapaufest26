@@ -54,7 +54,7 @@ $tf_vendor_names = function ( $type ) {
 		<button type="button" class="tf-map__filter" data-cat="" aria-pressed="true"><?php esc_html_e( 'Everything', 'tapaufest' ); ?></button>
 		<?php foreach ( $tf_cats as $tf_slug => $tf_c ) : ?>
 			<?php if ( ! in_array( $tf_slug, $tf_used, true ) ) { continue; } ?>
-			<button type="button" class="tf-map__filter" data-cat="<?php echo esc_attr( $tf_slug ); ?>" aria-pressed="false"><i style="background:<?php echo esc_attr( $tf_c[1] ); ?>" aria-hidden="true"></i><?php echo esc_html( $tf_c[0] ); ?></button>
+			<button type="button" class="tf-map__filter" data-cat="<?php echo esc_attr( $tf_slug ); ?>" aria-pressed="false"><span class="tf-map__fi" style="color:<?php echo esc_attr( $tf_c[1] ); ?>"><?php echo tapaufest_icon( tapaufest_map_cat_icon( $tf_slug ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><?php echo esc_html( $tf_c[0] ); ?></button>
 		<?php endforeach; ?>
 	</div>
 
@@ -99,7 +99,7 @@ $tf_vendor_names = function ( $type ) {
 						<p class="tf-map__vendors"><?php echo $tf_vend ? esc_html( implode( ' · ', $tf_vend ) ) : esc_html__( 'Announced in November.', 'tapaufest' ); ?></p>
 					<?php endif; ?>
 					<?php if ( ! empty( $tf_s['link'] ) ) : ?>
-						<a class="tf-map__link" href="<?php echo esc_url( home_url( $tf_s['link'] ) ); ?>"><?php echo esc_html( $tf_s['cta'] ); ?> →</a>
+						<a class="tf-map__link" href="<?php echo esc_url( home_url( $tf_s['link'] ) ); ?>"><?php echo esc_html( $tf_s['cta'] ); ?> <?php echo tapaufest_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 					<?php endif; ?>
 				</div>
 			</article>

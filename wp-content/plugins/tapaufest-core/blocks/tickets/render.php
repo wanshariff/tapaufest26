@@ -77,7 +77,7 @@ if ( $tf_limit > 0 ) {
 					<?php if ( $tf_t['includes'] ) : ?>
 						<ul class="tf-tier__list">
 							<?php foreach ( $tf_t['includes'] as $tf_line ) : ?>
-								<li><?php echo esc_html( $tf_line ); ?></li>
+								<li><?php echo tapaufest_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_line ); ?></li>
 							<?php endforeach; ?>
 						</ul>
 					<?php endif; ?>
@@ -87,7 +87,7 @@ if ( $tf_limit > 0 ) {
 						<?php /* translators: %s: tier name. */ ?>
 						<a class="tf-btn tf-btn--cili" href="<?php echo esc_url( $tf_t['url'] ? $tf_t['url'] : $tf_default ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( sprintf( __( 'Buy %s on TAPAUtix (opens in a new tab)', 'tapaufest' ), $tf_t['name'] ) ); ?>">
 							<?php
-							echo esc_html( $tf_early ? __( 'Buy with your code ↗', 'tapaufest' ) : __( 'Get this pass ↗', 'tapaufest' ) );
+							echo esc_html( $tf_early ? __( 'Buy with your code', 'tapaufest' ) : __( 'Get this pass', 'tapaufest' ) ) . ' ' . tapaufest_icon( 'external' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</a>
 					<?php endif; ?>

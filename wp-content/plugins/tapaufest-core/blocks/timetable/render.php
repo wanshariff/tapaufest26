@@ -63,7 +63,7 @@ endif;
 				}
 				?>
 				<section class="tf-stagecol">
-					<h3 class="tf-stagecol__head"><?php echo esc_html( $tf_stage ); ?> <small><?php echo esc_html( $tf_desc ); ?></small></h3>
+					<h3 class="tf-stagecol__head"><?php echo tapaufest_icon( tapaufest_stage_icon( $tf_stage ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_stage ); ?> <small><?php echo esc_html( $tf_desc ); ?></small></h3>
 					<?php foreach ( $tf_list as $tf_s ) : ?>
 						<?php if ( 'prayer' === $tf_s['kind'] ) : ?>
 							<div class="tf-slot tf-slot--prayer"><time><?php echo esc_html( $tf_s['label'] ); ?></time><p class="tf-slot__title"><?php echo esc_html( $tf_s['title'] ); ?></p></div>
@@ -105,7 +105,7 @@ endif;
 	<div class="tf-mine" role="tabpanel" id="tf-panel-mine" aria-labelledby="tf-tab-mine" hidden>
 		<div class="tf-mine__empty" data-tf-mine-empty>
 			<p class="tf-mine__big"><?php esc_html_e( 'Your Jadual Aku is empty.', 'tapaufest' ); ?></p>
-			<p><?php esc_html_e( 'Tap ☆ on any set to add it here. Picks stay on this phone or computer.', 'tapaufest' ); ?></p>
+			<p><?php printf( /* translators: %s: star icon */ esc_html__( 'Tap %s on any set to add it here. Picks stay on this phone or computer.', 'tapaufest' ), tapaufest_icon( 'star', array( 'label' => __( 'the star', 'tapaufest' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 		</div>
 		<ol class="tf-mine__list" data-tf-mine-list></ol>
 		<div class="tf-ctas tf-ctas--left" data-tf-mine-actions hidden>

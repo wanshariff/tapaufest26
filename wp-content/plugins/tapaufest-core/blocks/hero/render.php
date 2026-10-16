@@ -57,11 +57,11 @@ $tf_join = tapaufest_setting( 'join_url' );
 				<p class="tf-hero__explainer"><?php echo esc_html( tapaufest_setting( 'explainer' ) ); ?></p>
 			<?php endif; ?>
 			<ul class="tf-hero__pills" aria-label="<?php esc_attr_e( 'What’s on', 'tapaufest' ); ?>">
-				<li><?php esc_html_e( 'Live music', 'tapaufest' ); ?></li>
-				<li><?php esc_html_e( 'Films', 'tapaufest' ); ?></li>
-				<li><?php esc_html_e( 'Workshops', 'tapaufest' ); ?></li>
-				<li><?php esc_html_e( 'Market and makan', 'tapaufest' ); ?></li>
-				<li><?php esc_html_e( 'Camping', 'tapaufest' ); ?></li>
+				<li><?php echo tapaufest_icon( 'music' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Live music', 'tapaufest' ); ?></li>
+				<li><?php echo tapaufest_icon( 'film' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Films', 'tapaufest' ); ?></li>
+				<li><?php echo tapaufest_icon( 'workshop' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Workshops', 'tapaufest' ); ?></li>
+				<li><?php echo tapaufest_icon( 'food' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Market and makan', 'tapaufest' ); ?></li>
+				<li><?php echo tapaufest_icon( 'tent' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Camping', 'tapaufest' ); ?></li>
 			</ul>
 			<div class="tf-ctas">
 				<a class="tf-btn tf-btn--cili" href="<?php echo esc_url( home_url( '/tickets/' ) ); ?>"><?php esc_html_e( 'Get tickets', 'tapaufest' ); ?></a>

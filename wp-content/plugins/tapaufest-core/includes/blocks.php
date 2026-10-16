@@ -110,7 +110,7 @@ add_action( 'wp_footer', 'tapaufest_print_sheet' );
  * @return string
  */
 function tapaufest_play_icon() {
-	return '<svg viewBox="0 0 10 12" aria-hidden="true" focusable="false"><path d="M0 0L10 6L0 12z"/></svg>';
+	return tapaufest_icon( 'play' );
 }
 
 /**
@@ -195,7 +195,7 @@ function tapaufest_artist_card( $a, $big = false ) {
  */
 function tapaufest_star_button( $s ) {
 	return sprintf(
-		'<button type="button" class="tf-star" data-tf-star="%1$d" aria-pressed="false" aria-label="%2$s"><span aria-hidden="true">☆</span></button>',
+		'<button type="button" class="tf-star" data-tf-star="%1$d" aria-pressed="false" aria-label="%2$s"><span aria-hidden="true">' . tapaufest_icon( 'star' ) . '</span></button>',
 		(int) $s['id'],
 		/* translators: %s: set title. */
 		esc_attr( sprintf( __( 'Add %s to Jadual Aku', 'tapaufest' ), $s['title'] ) )

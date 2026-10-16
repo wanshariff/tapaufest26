@@ -482,3 +482,31 @@ function tapaufest_motion_flag() {
 	echo "<script>try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('tf-motion')}}catch(e){}</script>\n";
 }
 add_action( 'wp_head', 'tapaufest_motion_flag', 1 );
+
+/**
+ * Social icon for a footer link (needs the TAPAUfest Core icon set).
+ *
+ * @param string $url Link URL.
+ * @return string
+ */
+function tapaufest_footer_icon( $url ) {
+	if ( ! function_exists( 'tapaufest_icon' ) ) {
+		return '';
+	}
+	$host = (string) wp_parse_url( $url, PHP_URL_HOST );
+	$map  = array(
+		'instagram.com' => 'instagram',
+		'tiktok.com'    => 'tiktok',
+		'x.com'         => 'x',
+		'twitter.com'   => 'x',
+		'facebook.com'  => 'facebook',
+		'youtube.com'   => 'youtube',
+		'whatsapp.com'  => 'whatsapp',
+	);
+	foreach ( $map as $domain => $icon ) {
+		if ( $host === $domain || substr( $host, -strlen( '.' . $domain ) ) === '.' . $domain ) {
+			return tapaufest_icon( $icon );
+		}
+	}
+	return '';
+}

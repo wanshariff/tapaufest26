@@ -61,12 +61,12 @@ $tf_vendors = get_posts(
 									<span class="tf-tag"><?php echo esc_html( $tf_prices[ $tf_price ] ); ?></span>
 								<?php endif; ?>
 								<?php foreach ( $tf_tags as $tf_t ) : ?>
-									<span class="tf-tag"><?php echo esc_html( $tf_t ); ?></span>
+									<span class="tf-tag"><?php $tf_ti = tapaufest_tag_icon( $tf_t ); echo $tf_ti ? tapaufest_icon( $tf_ti ) . ' ' : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( $tf_t ); ?></span>
 								<?php endforeach; ?>
 							</span>
 						<?php endif; ?>
 						<?php if ( $tf_ig ) : ?>
-							<a class="tf-vendor__ig" href="<?php echo esc_url( 'https://www.instagram.com/' . rawurlencode( $tf_ig ) . '/' ); ?>" target="_blank" rel="noopener">@<?php echo esc_html( $tf_ig ); ?> ↗</a>
+							<a class="tf-vendor__ig" href="<?php echo esc_url( 'https://www.instagram.com/' . rawurlencode( $tf_ig ) . '/' ); ?>" target="_blank" rel="noopener"><?php echo tapaufest_icon( 'instagram' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> @<?php echo esc_html( $tf_ig ); ?></a>
 						<?php endif; ?>
 					</div>
 				</li>

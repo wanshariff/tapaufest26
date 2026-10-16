@@ -44,7 +44,7 @@ foreach ( tapaufest_get_sessions( $tf_s['day'] ) as $tf_o ) {
 	</dl>
 
 	<div class="tf-ctas tf-ctas--left">
-		<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_id; ?>" data-tf-star-label aria-pressed="false"><?php esc_html_e( '☆ Add to Jadual Aku', 'tapaufest' ); ?></button>
+		<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_id; ?>" data-tf-star-label aria-pressed="false"><?php echo tapaufest_icon( 'star' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Add to Jadual Aku', 'tapaufest' ); ?></button>
 		<a class="tf-btn" href="<?php echo esc_url( $tf_ics ); ?>"><?php esc_html_e( 'Add to calendar', 'tapaufest' ); ?></a>
 	</div>
 

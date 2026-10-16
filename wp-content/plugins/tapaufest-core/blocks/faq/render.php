@@ -96,7 +96,7 @@ if ( ! $tf_group && ! $tf_mini ) {
 			<?php endif; ?>
 			<?php foreach ( $tf_set['posts'] as $tf_j => $tf_q ) : ?>
 				<details class="tf-faq__item"<?php echo ( 0 === $tf_i && 0 === $tf_j ) ? ' open' : ''; ?>>
-					<summary><?php echo esc_html( get_the_title( $tf_q ) ); ?></summary>
+					<summary><?php echo esc_html( get_the_title( $tf_q ) ); ?><?php echo tapaufest_icon( 'plus', array( 'class' => 'tf-faq__toggle' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></summary>
 					<div class="tf-faq__answer"><?php echo wp_kses_post( wpautop( do_blocks( $tf_q->post_content ) ) ); ?></div>
 				</details>
 			<?php endforeach; ?>

@@ -55,10 +55,10 @@ foreach ( tapaufest_get_artists() as $tf_other ) {
 
 	<div class="tf-ctas tf-ctas--left">
 		<?php if ( $tf_s ) : ?>
-			<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_s['id']; ?>" data-tf-star-label aria-pressed="false"><?php esc_html_e( '☆ Add to Jadual Aku', 'tapaufest' ); ?></button>
+			<button type="button" class="tf-btn tf-btn--cili" data-tf-star="<?php echo (int) $tf_s['id']; ?>" data-tf-star-label aria-pressed="false"><?php echo tapaufest_icon( 'star' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Add to Jadual Aku', 'tapaufest' ); ?></button>
 		<?php endif; ?>
 		<?php if ( $tf_a['profile'] ) : ?>
-			<a class="tf-btn" href="<?php echo esc_url( $tf_a['profile'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Profile on tapau.asia ↗', 'tapaufest' ); ?></a>
+			<a class="tf-btn" href="<?php echo esc_url( $tf_a['profile'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Profile on tapau.asia', 'tapaufest' ); ?> <?php echo tapaufest_icon( 'external' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<?php endif; ?>
 	</div>
 

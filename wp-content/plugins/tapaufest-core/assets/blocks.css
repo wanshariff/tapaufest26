@@ -439,10 +439,9 @@
 	cursor: pointer;
 	padding: 0;
 }
-.tf-play svg {
-	width: 14px;
-	height: 14px;
-	fill: currentColor;
+.tf-play .tf-icon {
+	width: 18px;
+	height: 18px;
 	margin-left: 2px;
 }
 .tf-poster {
@@ -927,15 +926,14 @@
 .tf-faq__item summary::-webkit-details-marker {
 	display: none;
 }
-.tf-faq__item summary::after {
-	content: "+";
-	font-family: var(--tf-display);
-	font-size: 24px;
-	line-height: 1;
+.tf-faq__toggle {
+	width: 22px;
+	height: 22px;
 	color: var(--tf-cili-ink);
+	transition: transform 200ms ease-out;
 }
-.tf-faq__item[open] summary::after {
-	content: "\2212";
+.tf-faq__item[open] .tf-faq__toggle {
+	transform: rotate(45deg);
 }
 .tf-faq__answer {
 	padding: 0 18px 16px;
@@ -1658,12 +1656,11 @@ a.tf-partner__in:hover {
 	box-shadow: 0 2px 0 rgba(30, 18, 8, 0.35), 0 6px 14px rgba(30, 18, 8, 0.25);
 	transition: transform 160ms ease-out;
 }
-.tf-pin svg,
+.tf-pin .tf-icon,
 .tf-pin b {
 	transform: rotate(45deg);
-	width: 18px;
-	height: 18px;
-	fill: #fff;
+	width: 20px;
+	height: 20px;
 	color: #fff;
 	font: 800 14px/18px var(--tf-body);
 	text-align: center;
@@ -1675,7 +1672,10 @@ a.tf-partner__in:hover {
 	transform: none;
 	border-width: 2px;
 }
+.tf-pin.is-small .tf-icon,
 .tf-pin.is-small b {
+	width: 16px;
+	height: 16px;
 	transform: none;
 	font-size: 13px;
 }
@@ -1895,4 +1895,91 @@ a.tf-partner__in:hover {
 .tf-map .leaflet-container {
 	background: #f2eee4;
 	font-family: var(--tf-body);
+}
+
+
+/* ---------------------------------------------------------------- icons
+ * Hand-drawn sprite (assets/icons/sprite.svg). Icons take the text colour and
+ * size with the text, so they work in buttons, links, pills and headings. */
+.tf-icon {
+	display: inline-block;
+	width: 1.25em;
+	height: 1.25em;
+	vertical-align: -0.28em;
+	flex: none;
+	overflow: visible;
+}
+a .tf-icon--arrow-right,
+a .tf-icon--external {
+	transition: transform 160ms ease-out;
+}
+a:hover .tf-icon--arrow-right {
+	transform: translateX(3px);
+}
+a:hover .tf-icon--external {
+	transform: translate(2px, -2px);
+}
+.tf-btn .tf-icon {
+	width: 1.2em;
+	height: 1.2em;
+}
+.tf-star .tf-icon {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+}
+.tf-hero__pills li {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+}
+.tf-hero__pills .tf-icon {
+	width: 18px;
+	height: 18px;
+	color: var(--tf-cili-ink);
+}
+.tf-tier__list {
+	list-style: none;
+	padding-left: 0;
+}
+.tf-tier__list li {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+}
+.tf-tier__list .tf-icon {
+	color: var(--tf-cili-ink);
+	margin-top: 0.1em;
+}
+.tf-tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+}
+.tf-tag .tf-icon {
+	width: 14px;
+	height: 14px;
+}
+.tf-stagecol__head .tf-icon,
+.wp-block-heading .tf-icon {
+	width: 1.1em;
+	height: 1.1em;
+	margin-right: 0.3em;
+	vertical-align: -0.15em;
+	color: var(--tf-cili-ink);
+}
+.tf-stagecol__head .tf-icon {
+	color: inherit;
+}
+.tf-map__fi {
+	display: inline-flex;
+}
+.tf-map__fi .tf-icon {
+	width: 18px;
+	height: 18px;
+}
+.tf-footer-links a {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
 }

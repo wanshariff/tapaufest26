@@ -134,6 +134,11 @@
 		return out;
 	}
 
+	// Icon from the shared sprite (printed once in the footer).
+	function icon( name ) {
+		return '<svg class="tf-icon tf-icon--' + name + '" aria-hidden="true" focusable="false"><use href="#tf-i-' + name + '"></use></svg>';
+	}
+
 	function render() {
 		var clash = clashes();
 		$$( '[data-tf-star]' ).forEach( function ( btn ) {
@@ -141,12 +146,12 @@
 			var on = has( id );
 			btn.setAttribute( 'aria-pressed', on ? 'true' : 'false' );
 			if ( btn.hasAttribute( 'data-tf-star-label' ) ) {
-				btn.textContent = on ? '★ In your Jadual Aku' : '☆ Add to Jadual Aku';
+				btn.innerHTML = icon( on ? 'star-filled' : 'star' ) + ' ' + ( on ? 'In your Jadual Aku' : 'Add to Jadual Aku' );
 				btn.classList.toggle( 'tf-btn--cili', ! on );
 			} else {
 				var glyph = btn.querySelector( 'span' );
 				if ( glyph ) {
-					glyph.textContent = on ? '★' : '☆';
+					glyph.innerHTML = icon( on ? 'star-filled' : 'star' );
 				}
 			}
 		} );
@@ -198,7 +203,7 @@
 			btn.setAttribute( 'data-tf-star', s.id );
 			btn.setAttribute( 'aria-pressed', 'true' );
 			btn.setAttribute( 'aria-label', 'Remove ' + s.title + ' from Jadual Aku' );
-			btn.innerHTML = '<span aria-hidden="true">★</span>';
+			btn.innerHTML = '<span aria-hidden="true">' + icon( 'star-filled' ) + '</span>';
 			li.appendChild( when );
 			li.appendChild( what );
 			li.appendChild( btn );
