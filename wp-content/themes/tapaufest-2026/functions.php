@@ -390,6 +390,9 @@ function tapaufest_title_parts( $parts ) {
 		$parts['title']   = $edition;
 		$parts['tagline'] = __( '12 & 13 Dec, Sungai Congkak', 'tapaufest-2026' );
 	} else {
+		if ( is_post_type_archive( 'tf_artist' ) ) {
+			$parts['title'] = __( 'Lineup', 'tapaufest-2026' );
+		}
 		$parts['site'] = $edition;
 	}
 	return $parts;
