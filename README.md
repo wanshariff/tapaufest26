@@ -13,7 +13,7 @@ The theme needs the plugin. No build step: plain PHP, CSS and JavaScript.
 
 ![Home page, desktop and phone](docs/screens.png)
 
-**[▶ Open a live preview](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/wanshariff/tapau-asia/main/blueprint.json)**: a fresh WordPress in your browser with the theme, plugin and mock content, logged in as admin. It takes about 30 seconds to load. Changes vanish when you close the tab. Switch site states in WP Admin > Settings > TAPAUfest.
+**[▶ Open a live preview](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/wanshariff/tapaufest26/main/blueprint.json)**: a fresh WordPress in your browser with the theme, plugin and mock content, logged in as admin. It takes about 30 seconds to load. Changes vanish when you close the tab. Switch site states in WP Admin > Settings > TAPAUfest.
 
 ## Install on tapaufest.asia
 

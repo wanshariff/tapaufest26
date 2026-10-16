@@ -19,7 +19,7 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "git:directory",
-				"url": "https://github.com/wanshariff/tapau-asia",
+				"url": "https://github.com/wanshariff/tapaufest26",
 				"ref": "main",
 				"refType": "branch",
 				"path": "wp-content/plugins/tapaufest-core"
@@ -33,7 +33,7 @@
 			"step": "installTheme",
 			"themeData": {
 				"resource": "git:directory",
-				"url": "https://github.com/wanshariff/tapau-asia",
+				"url": "https://github.com/wanshariff/tapaufest26",
 				"ref": "main",
 				"refType": "branch",
 				"path": "wp-content/themes/tapaufest-2026"
