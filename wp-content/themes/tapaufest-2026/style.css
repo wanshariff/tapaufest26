@@ -1,0 +1,382 @@
+/*
+Theme Name: TAPAUfest 2026
+Theme URI: https://tapaufest.asia/
+Author: TAPAUasia
+Author URI: https://tapau.asia/
+Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak. Gig-poster look from the 2026 logo: kopi brown, cili red, paper cream, thick ink outlines. Pair with the TAPAUfest Core plugin for the lineup, timetable, tickets and FAQ.
+Requires at least: 6.6
+Tested up to: 6.8
+Requires PHP: 7.4
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tapaufest-2026
+Tags: block-patterns, full-site-editing, custom-colors, wide-blocks
+*/
+
+/* Global styling lives in theme.json. These rules cover what it can't. */
+
+body {
+	-webkit-font-smoothing: antialiased;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	inset: 0 0 auto;
+	height: env(safe-area-inset-top, 0px);
+	z-index: 100;
+	background: var(--wp--preset--color--kopi-deep);
+}
+
+:focus-visible {
+	outline: 3px solid var(--wp--preset--color--specs);
+	outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+	text-wrap: balance;
+}
+
+/* Sticky header with the alert bar inside. */
+.tf-site-header {
+	position: sticky;
+	top: env(safe-area-inset-top, 0px);
+	z-index: 20;
+}
+.admin-bar .tf-site-header {
+	top: calc(32px + env(safe-area-inset-top, 0px));
+}
+@media (max-width: 782px) {
+	.admin-bar .tf-site-header {
+		top: env(safe-area-inset-top, 0px);
+	}
+}
+.tf-site-header .wp-block-navigation__responsive-container.is-menu-open {
+	background: var(--wp--preset--color--kopi-deep);
+	color: var(--wp--preset--color--paper);
+}
+.tf-nav .wp-block-navigation-item__content {
+	padding: 6px 12px;
+	border-radius: 999px;
+	border: 2px solid transparent;
+	text-decoration: none;
+}
+.tf-nav .current-menu-item > .wp-block-navigation-item__content,
+.tf-nav [aria-current="page"],
+.tf-nav .wp-block-navigation-item__content:hover {
+	border-color: currentColor;
+}
+
+/* Section bands: a thick ink rule between them, as on the gig posters. */
+.is-style-tf-band,
+.is-style-tf-paper-band {
+	border-top: 3px solid var(--wp--preset--color--ink);
+}
+.is-style-tf-paper-band {
+	background-color: var(--wp--preset--color--paper);
+	color: var(--wp--preset--color--ink);
+}
+.is-style-tf-paper-band :where(h1, h2) {
+	color: var(--wp--preset--color--cili);
+}
+.is-style-tf-paper-band .tf-eyebrow {
+	color: var(--wp--preset--color--muted);
+}
+
+/* Ink card: paper card with a thick outline and offset shadow. */
+.is-style-tf-ink-card {
+	background-color: var(--wp--preset--color--paper-hi);
+	color: var(--wp--preset--color--ink);
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 18px;
+	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	padding: 18px;
+	min-width: 0;
+}
+.is-style-tf-ink-card :where(h3) {
+	color: var(--wp--preset--color--cili);
+}
+.is-style-tf-ink-card :where(p) {
+	margin-block: 6px 0;
+}
+
+.tf-eyebrow {
+	font-size: 0.8125rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--gold);
+	margin: 0;
+}
+
+.tf-page-head {
+	padding-block: 40px 28px;
+}
+.tf-page-head h1 {
+	margin-block: 6px 0;
+}
+.tf-page-head .tf-lead {
+	max-width: 56ch;
+	font-size: 1.0625rem;
+	margin-top: 10px;
+}
+
+.tf-tbc {
+	background: var(--wp--preset--color--paper-lo);
+	color: var(--wp--preset--color--ink);
+	border-radius: 4px;
+	padding: 0 4px;
+	font-weight: 700;
+}
+
+.tf-sitemap img {
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 20px;
+	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+}
+
+.tf-timeline {
+	border-left: 4px solid var(--wp--preset--color--ink);
+	padding-left: 22px;
+	margin-left: 8px;
+}
+.tf-timeline > .is-style-tf-ink-card {
+	position: relative;
+}
+.tf-timeline > .is-style-tf-ink-card::before {
+	content: "";
+	position: absolute;
+	left: -38px;
+	top: 20px;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--cili);
+	border: 3px solid var(--wp--preset--color--ink);
+}
+.tf-year {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: 2rem;
+	line-height: 1;
+	color: var(--wp--preset--color--cili);
+	margin: 0;
+}
+
+.tf-checklist {
+	list-style: none;
+	padding-left: 0;
+}
+.tf-checklist li {
+	padding-left: 30px;
+	position: relative;
+	margin-bottom: 8px;
+}
+.tf-checklist li::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 3px;
+	width: 18px;
+	height: 18px;
+	border: 2px solid currentColor;
+	border-radius: 4px;
+}
+.tf-nolist li::before {
+	content: "\2715";
+	border: 0;
+	top: 0;
+	font-weight: 700;
+	color: var(--wp--preset--color--cili);
+}
+
+.tf-reel {
+	position: relative;
+	display: grid;
+	place-items: center;
+	aspect-ratio: 16 / 9;
+	max-width: 100%;
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 20px;
+	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+	background: radial-gradient(circle at 30% 30%, #8a4415, var(--wp--preset--color--kopi-deep));
+	color: var(--wp--preset--color--paper);
+	text-decoration: none;
+	overflow: hidden;
+}
+.tf-reel__play {
+	display: grid;
+	place-items: center;
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	background: var(--wp--preset--color--cili);
+	border: 3px solid var(--wp--preset--color--ink);
+}
+.tf-reel__play svg {
+	width: 28px;
+	fill: var(--wp--preset--color--paper-hi);
+	margin-left: 4px;
+}
+.tf-reel__cap {
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	bottom: 14px;
+	font-weight: 700;
+}
+.tf-stat {
+	margin: 0;
+}
+.tf-stat b {
+	display: block;
+	font-family: var(--wp--preset--font-family--display);
+	font-weight: 400;
+	font-size: 2rem;
+	line-height: 1;
+	color: var(--wp--preset--color--cili);
+}
+
+.tf-join {
+	background-color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--ink);
+	border-top: 3px solid var(--wp--preset--color--ink);
+}
+.tf-join h2 {
+	color: var(--wp--preset--color--paper-hi);
+}
+
+.tf-site-footer a {
+	text-decoration: none;
+}
+.tf-site-footer a:hover {
+	text-decoration: underline;
+}
+.tf-footer-head {
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--gold);
+	margin: 0 0 8px;
+}
+.tf-footer-links {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	gap: 6px;
+}
+.tf-hashtags {
+	color: var(--wp--preset--color--gold);
+	font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition: none !important;
+		animation: none !important;
+	}
+}
+
+/* Header + footer bars */
+.tf-site-header {
+	margin: 0;
+}
+.tf-header-bar {
+	background-color: var(--wp--preset--color--kopi-deep);
+	border-bottom: 3px solid var(--wp--preset--color--ink);
+	padding-block: 8px;
+}
+.tf-header-row {
+	gap: 16px;
+}
+.tf-logo {
+	margin: 0;
+	flex: none;
+}
+.tf-nav {
+	flex: 1;
+	min-width: 0;
+}
+.tf-footer-bar {
+	background-color: var(--wp--preset--color--kopi-deep);
+	border-top: 3px solid var(--wp--preset--color--ink);
+	padding-block: 40px 32px;
+	font-size: 0.875rem;
+}
+.tf-copyright {
+	opacity: 0.8;
+	margin-top: 24px;
+}
+
+/* Headings inside sections */
+.tf-section-head {
+	margin-bottom: var(--wp--preset--spacing--40);
+}
+.tf-section-head > * {
+	margin-block: 0;
+}
+.tf-section-head > * + * {
+	margin-top: 8px;
+}
+.tf-more {
+	font-weight: 700;
+	margin-top: var(--wp--preset--spacing--40);
+}
+.tf-note {
+	display: block;
+	font-size: 0.75rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--muted);
+}
+
+/* Artist page */
+.tf-back {
+	font-weight: 700;
+	margin: 0 0 12px;
+}
+.tf-artist-head {
+	gap: 32px;
+	align-items: flex-start;
+}
+.tf-artist-photo {
+	flex: 0 1 420px;
+	margin: 0;
+}
+.tf-artist-photo img {
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 20px;
+	box-shadow: 4px 4px 0 var(--wp--preset--color--ink);
+}
+.tf-artist-intro {
+	flex: 1 1 340px;
+	min-width: 0;
+}
+.tf-artist-intro > .wp-block-post-title {
+	margin-top: 0;
+}
+
+/* Bands sit flush against each other and against the header and footer. */
+.wp-site-blocks > * + *,
+main.wp-block-group > .alignfull,
+main.wp-block-group > .wp-block-post-content > .alignfull {
+	margin-block-start: 0;
+}
+main.wp-block-group > .wp-block-post-content {
+	margin-block-start: 0;
+}
+@media (max-width: 600px) {
+	.tf-reel {
+		aspect-ratio: auto;
+		padding: 40px 16px 20px;
+		gap: 18px;
+	}
+	.tf-reel__cap {
+		position: static;
+		text-align: center;
+	}
+}

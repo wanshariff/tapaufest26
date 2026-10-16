@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/timetable",
+	"title": "Timetable",
+	"category": "tapaufest",
+	"icon": "calendar-alt",
+	"description": "Set times per stage and day, with Jadual Aku: star sets, see clashes, export to calendar and share.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,17 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/alert-bar",
+	"title": "Alert bar",
+	"category": "tapaufest",
+	"icon": "megaphone",
+	"description": "Festival alert bar. Text and tag follow the site state in Settings > TAPAUfest.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": false
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/tickets",
+	"title": "Ticket tiers",
+	"category": "tapaufest",
+	"icon": "tickets",
+	"description": "Pass cards with early-bird or regular prices, plus an optional comparison table.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"attributes": {
+		"compare": {
+			"type": "boolean",
+			"default": false
+		},
+		"limit": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}
