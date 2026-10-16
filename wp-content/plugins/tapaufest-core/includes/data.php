@@ -355,5 +355,5 @@ function tapaufest_tier_art( $t ) {
 		$art = $t['campsite'] ? 'campers' : ( $t['people'] > 2 ? 'geng' : ( $t['days'] > 1 ? 'weekend' : 'day' ) );
 	}
 	$file = 'assets/tiers/tier-' . sanitize_key( $art ) . '.svg';
-	return file_exists( TAPAUFEST_DIR . $file ) ? TAPAUFEST_URL . $file : '';
+	return file_exists( TAPAUFEST_DIR . $file ) ? add_query_arg( 'ver', TAPAUFEST_VERSION, TAPAUFEST_URL . $file ) : '';
 }
