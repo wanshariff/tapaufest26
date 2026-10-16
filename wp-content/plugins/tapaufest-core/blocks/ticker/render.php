@@ -17,7 +17,7 @@ usort(
 );
 $tf_items = wp_list_pluck( $tf_artists, 'name' );
 if ( ! $tf_items ) {
-	$tf_items = array( 'PENTAS', 'LAYAR', 'BENGKEL', 'PASAR', 'WARUNG', 'KEMBARA', 'KHEMAH', 'UNGGUN' );
+	$tf_items = array( 'PENTAS', 'LAYAR', 'BENGKEL', 'PASAR', 'WARUNG', 'KEMBARA', 'CAMP VIBES', 'UNGGUN' );
 }
 $tf_label = isset( $attributes['label'] ) ? $attributes['label'] : __( 'Lineup', 'tapaufest' );
 ?>

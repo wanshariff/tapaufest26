@@ -278,6 +278,7 @@ function tapaufest_partner_tiers() {
 		'brand'     => __( 'Brand partner', 'tapaufest' ),
 		'media'     => __( 'Media partner', 'tapaufest' ),
 		'community' => __( 'Community and crew', 'tapaufest' ),
+		'past'      => __( 'Past sponsors and partners', 'tapaufest' ),
 	);
 }
 

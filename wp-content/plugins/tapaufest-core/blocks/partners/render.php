@@ -21,6 +21,9 @@ $tf_partners = get_posts(
 );
 $tf_groups   = array();
 foreach ( tapaufest_partner_tiers() as $tf_slug => $tf_label ) {
+	if ( $tf_compact && 'past' === $tf_slug ) {
+		continue; // The full list lives on the Partners page.
+	}
 	$tf_groups[ $tf_slug ] = array(
 		'label' => $tf_label,
 		'items' => array(),
@@ -28,6 +31,9 @@ foreach ( tapaufest_partner_tiers() as $tf_slug => $tf_label ) {
 }
 foreach ( $tf_partners as $tf_p ) {
 	$tf_tier = (string) get_post_meta( $tf_p->ID, 'tf_tier', true );
+	if ( $tf_compact && 'past' === $tf_tier ) {
+		continue;
+	}
 	$tf_tier = isset( $tf_groups[ $tf_tier ] ) ? $tf_tier : 'community';
 	$tf_groups[ $tf_tier ]['items'][] = $tf_p;
 }

@@ -284,14 +284,14 @@ function tapaufest_tbc( $text ) {
  */
 function tapaufest_zones() {
 	return array(
-		array( 'PENTAS', __( 'Main stage. Indie acts from across South East Asia, both nights.', 'tapaufest-2026' ), __( '12 acts from 4 countries in 2025', 'tapaufest-2026' ), 'pentas-day' ),
-		array( 'BENGKEL', __( 'Talks, sharing sessions and hands-on workshops.', 'tapaufest-2026' ), __( '2025: rubber-cut printmaking, mini zines', 'tapaufest-2026' ), 'crowd' ),
-		array( 'LAYAR', __( 'Indie short films and documentaries from around the region.', 'tapaufest-2026' ), __( '2025: SEA Short Film Festival picks', 'tapaufest-2026' ), 'layar' ),
-		array( 'PASAR', __( 'Indie market: merch, vinyl, zines and crafts.', 'tapaufest-2026' ), __( '2025: curated by Pekan Pop Up', 'tapaufest-2026' ), 'pasar' ),
-		array( 'WARUNG', __( 'All-day makan and drinks from local kitchens. Free water refills.', 'tapaufest-2026' ), '', 'warung' ),
-		array( 'KEMBARA', __( 'Outdoor programme: yoga, river time and slow mornings.', 'tapaufest-2026' ), __( 'Weather dependent', 'tapaufest-2026' ), 'kembara-yoga' ),
-		array( 'KHEMAH', __( 'Camp two nights at the official festival campsite, or stay nearby.', 'tapaufest-2026' ), __( 'With Duo Campers passes', 'tapaufest-2026' ), 'campsite' ),
-		array( 'UNGGUN', __( 'Late bonfire sets at the campsite.', 'tapaufest-2026' ), __( 'After midnight', 'tapaufest-2026' ), 'pentas-night' ),
+		array( 'PENTAS', __( 'Main stage. 12 live sets from top and rising South East Asian indie acts, both nights.', 'tapaufest-2026' ), __( 'Tentative lineup: 12 acts from 4 countries', 'tapaufest-2026' ), 'pentas-day' ),
+		array( 'BENGKEL', __( 'Interactive art workshops, sharing sessions and panels with indie ecosystem leaders, under a shaded tent.', 'tapaufest-2026' ), __( '10am to 4pm', 'tapaufest-2026' ), 'bengkel-sharing' ),
+		array( 'LAYAR', __( 'Indie shorts and documentaries. After PENTAS, an open-air starlight cinema under the forest canopy.', 'tapaufest-2026' ), __( 'Night screenings weather permitting', 'tapaufest-2026' ), 'layar' ),
+		array( 'PASAR', __( 'Indie market: artworks, records and band merch, with DJs spinning while you shop.', 'tapaufest-2026' ), __( 'Indie artisans, brands and musicians', 'tapaufest-2026' ), 'pasar-dj' ),
+		array( 'WARUNG', __( 'A curated pasar malam of Malaysian street food from indie businesses and Hulu Langat vendors, at fair prices.', 'tapaufest-2026' ), __( 'Free refills at the Water Station', 'tapaufest-2026' ), 'warung-forest' ),
+		array( 'KEMBARA', __( 'River dips, Skytrex canopy zip-lines, forest treks, and morning bike and trail runs.', 'tapaufest-2026' ), __( 'Weather dependent', 'tapaufest-2026' ), 'kembara-skytrex' ),
+		array( 'CAMP VIBES', __( 'Camp two nights inside the festival grounds at Santuy Campsite, or book a campsite or chalet nearby.', 'tapaufest-2026' ), __( 'Set up by the Santrav team', 'tapaufest-2026' ), 'santuy-campsite' ),
+		array( 'UNGGUN', __( 'Bonfire sessions at Santuy Campsite, late into the night.', 'tapaufest-2026' ), __( 'After PENTAS closes', 'tapaufest-2026' ), 'santuy-bonfire' ),
 	);
 }
 
@@ -366,18 +366,18 @@ function tapaufest_more_link( $label, $path ) {
  */
 function tapaufest_page_descriptions() {
 	return array(
-		'/'           => __( 'TAPAUfest 2026: two days of South East Asian indie music, films, workshops and camping at Sungai Congkak, Selangor. 12 and 13 Dec. Tickets on TAPAUtix.', 'tapaufest-2026' ),
+		'/'           => __( 'TAPAUfest 2026: an art x nature weekend of South East Asian indie music, films, workshops and camping at Chongkak Park & Resort, Hulu Langat. 12 and 13 Dec. Tickets on TAPAUtix.', 'tapaufest-2026' ),
 		'lineup'      => __( 'Who’s playing TAPAUfest 2026. Filter by day and country, and play a track before you go.', 'tapaufest-2026' ),
 		'timetable'   => __( 'Set times for every stage at TAPAUfest 2026. Star your sets, catch clashes and add them to your calendar.', 'tapaufest-2026' ),
-		'tickets'     => __( 'Solo Day, Solo Weekend, Geng Weekend and Duo Campers passes for TAPAUfest 2026, sold on TAPAUtix.', 'tapaufest-2026' ),
-		'experience'  => __( 'PENTAS, BENGKEL, LAYAR, PASAR, WARUNG, KEMBARA and the campsite: everything running at TAPAUfest 2026.', 'tapaufest-2026' ),
-		'plan'        => __( 'Getting to Sungai Congkak, where to camp or stay, and what to pack for TAPAUfest 2026.', 'tapaufest-2026' ),
+		'tickets'     => __( 'Day, Weekend and Student Weekend Tickets for TAPAUfest 2026, from RM98. Sold on TAPAUtix.', 'tapaufest-2026' ),
+		'experience'  => __( 'PENTAS, BENGKEL, LAYAR, PASAR, WARUNG, KEMBARA and CAMP VIBES: everything running at TAPAUfest 2026.', 'tapaufest-2026' ),
+		'plan'        => __( 'Getting to Chongkak Park & Resort by car or MRT and shuttle, where to camp or stay, and what to pack for TAPAUfest 2026.', 'tapaufest-2026' ),
 		'map'         => __( 'Site map, first aid, lost and found and live updates for TAPAUfest 2026.', 'tapaufest-2026' ),
 		'faq'         => __( 'Tickets, kids, rain, refunds and what you can bring to TAPAUfest 2026.', 'tapaufest-2026' ),
 		'recap'       => __( 'Photos, the aftermovie and set recordings from TAPAUfest.', 'tapaufest-2026' ),
 		'archive'     => __( 'Every TAPAUfest since the first crowdfunded edition in Penang in 2014.', 'tapaufest-2026' ),
 		'partners'    => __( 'The supporters, brands, programme partners and media behind TAPAUfest.', 'tapaufest-2026' ),
-		'sell'        => __( 'Apply for a food, market, brand or activity stall at TAPAUfest 2026, Sungai Congkak, 12 and 13 Dec.', 'tapaufest-2026' ),
+		'sell'        => __( 'Apply for a food, market, brand or activity stall at TAPAUfest 2026, Chongkak Park & Resort, 12 and 13 Dec.', 'tapaufest-2026' ),
 	);
 }
 
@@ -391,7 +391,7 @@ function tapaufest_title_parts( $parts ) {
 	$edition = tapaufest_theme_setting( 'edition', 'TAPAUfest 2026' );
 	if ( is_front_page() ) {
 		$parts['title']   = $edition;
-		$parts['tagline'] = __( '12 & 13 Dec, Sungai Congkak', 'tapaufest-2026' );
+		$parts['tagline'] = __( '12 & 13 Dec, Chongkak Park, Hulu Langat', 'tapaufest-2026' );
 	} else {
 		if ( is_post_type_archive( 'tf_artist' ) ) {
 			$parts['title'] = __( 'Lineup', 'tapaufest-2026' );
@@ -510,3 +510,51 @@ function tapaufest_footer_icon( $url ) {
 	}
 	return '';
 }
+
+/**
+ * Keep the festival name as "TAPAUfest" even where a style sets capitals
+ * (eyebrows, notes, footer heads). Wraps the name in text, never inside
+ * tags or attributes.
+ *
+ * @param string $content Block HTML.
+ * @return string
+ */
+function tapaufest_keep_name_case( $content ) {
+	if ( false === strpos( $content, 'TAPAUfest' ) ) {
+		return $content;
+	}
+	$parts = preg_split( '/(<[^>]+>)/', $content, -1, PREG_SPLIT_DELIM_CAPTURE );
+	$skip  = 0;
+	foreach ( $parts as $i => $part ) {
+		if ( '' === $part ) {
+			continue;
+		}
+		if ( '<' === $part[0] ) {
+			if ( preg_match( '#^<(script|style|textarea|title|option)\b#i', $part ) ) {
+				++$skip;
+			} elseif ( preg_match( '#^</(script|style|textarea|title|option)>#i', $part ) ) {
+				$skip = max( 0, $skip - 1 );
+			} elseif ( preg_match( '#^<span class="tf-name">#', $part ) ) {
+				return $content; // Already done.
+			}
+			continue;
+		}
+		if ( ! $skip && false !== strpos( $part, 'TAPAUfest' ) ) {
+			$parts[ $i ] = str_replace( 'TAPAUfest', '<span class="tf-name">TAPAUfest</span>', $part );
+		}
+	}
+	return implode( '', $parts );
+}
+add_filter(
+	'render_block',
+	function ( $content, $block ) {
+		$name = isset( $block['blockName'] ) ? (string) $block['blockName'] : '';
+		// Leaf text blocks only, so nested groups are not wrapped twice.
+		if ( in_array( $name, array( 'core/paragraph', 'core/heading', 'core/list-item', 'core/button' ), true ) || 0 === strpos( $name, 'tapaufest/' ) ) {
+			return tapaufest_keep_name_case( $content );
+		}
+		return $content;
+	},
+	30,
+	2
+);

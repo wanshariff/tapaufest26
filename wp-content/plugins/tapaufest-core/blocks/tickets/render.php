@@ -58,15 +58,15 @@ if ( $tf_limit > 0 ) {
 					<h3 class="tf-tier__name"><?php echo esc_html( $tf_t['name'] ); ?></h3>
 					<?php if ( $tf_t['soldout'] ) : ?>
 						<span class="tf-badge tf-badge--out"><?php esc_html_e( 'Sold out', 'tapaufest' ); ?></span>
-					<?php elseif ( $tf_early ) : ?>
+					<?php elseif ( $tf_early && $tf_t['early'] && $tf_t['early'] < $tf_t['regular'] ) : ?>
 						<span class="tf-badge"><?php esc_html_e( 'Early bird · waitlist', 'tapaufest' ); ?></span>
-					<?php else : ?>
+					<?php elseif ( ! $tf_early ) : ?>
 						<span class="tf-badge"><?php esc_html_e( 'Regular price', 'tapaufest' ); ?></span>
 					<?php endif; ?>
 					<p class="tf-price">
 						<?php if ( $tf_early && $tf_t['early'] ) : ?>
 							<b><?php echo esc_html( tapaufest_rm( $tf_t['early'] ) ); ?></b>
-							<?php if ( $tf_t['regular'] ) : ?>
+							<?php if ( $tf_t['regular'] && $tf_t['regular'] > $tf_t['early'] ) : ?>
 								<?php /* translators: %s: regular price. */ ?>
 								<span class="tf-price__was"><?php echo esc_html( sprintf( __( 'Regular %s', 'tapaufest' ), tapaufest_rm( $tf_t['regular'] ) ) ); ?></span>
 							<?php endif; ?>
@@ -87,7 +87,7 @@ if ( $tf_limit > 0 ) {
 						<?php /* translators: %s: tier name. */ ?>
 						<a class="tf-btn tf-btn--cili" href="<?php echo esc_url( $tf_t['url'] ? $tf_t['url'] : $tf_default ); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr( sprintf( __( 'Buy %s on TAPAUtix (opens in a new tab)', 'tapaufest' ), $tf_t['name'] ) ); ?>">
 							<?php
-							echo esc_html( $tf_early ? __( 'Buy with your code', 'tapaufest' ) : __( 'Get this pass', 'tapaufest' ) ) . ' ' . tapaufest_icon( 'external' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							echo esc_html( ( $tf_early && $tf_t['early'] && $tf_t['early'] < $tf_t['regular'] ) ? __( 'Buy with your code', 'tapaufest' ) : __( 'Get this pass', 'tapaufest' ) ) . ' ' . tapaufest_icon( 'external' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 							?>
 						</a>
 					<?php endif; ?>
@@ -121,12 +121,14 @@ if ( $tf_limit > 0 ) {
 								<td><?php echo esc_html( number_format_i18n( $tf_t['days'] ) ); ?></td>
 							<?php endforeach; ?>
 						</tr>
+						<?php if ( array_filter( wp_list_pluck( $tf_tiers, 'campsite' ) ) ) : ?>
 						<tr>
 							<th scope="row"><?php esc_html_e( 'Festival campsite', 'tapaufest' ); ?></th>
 							<?php foreach ( $tf_tiers as $tf_t ) : ?>
 								<td class="<?php echo $tf_t['campsite'] ? 'tf-yes' : ''; ?>"><?php echo esc_html( $tf_t['campsite'] ? __( 'Yes', 'tapaufest' ) : __( 'No', 'tapaufest' ) ); ?></td>
 							<?php endforeach; ?>
 						</tr>
+						<?php endif; ?>
 						<tr>
 							<th scope="row"><?php esc_html_e( 'Price per person', 'tapaufest' ); ?></th>
 							<?php foreach ( $tf_tiers as $tf_t ) : ?>

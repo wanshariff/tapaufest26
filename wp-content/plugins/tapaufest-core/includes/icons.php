@@ -94,7 +94,7 @@ function tapaufest_glyphs_to_icons( $html ) {
  */
 function tapaufest_zone_heading_icon( $html ) {
 	return preg_replace_callback(
-		'/(<h[2-4]\b[^>]*>)\s*(PENTAS|LAYAR|BENGKEL|KEMBARA|UNGGUN|KHEMAH|WARUNG|PASAR)\s*(<\/h[2-4]>)/',
+		'/(<h[2-4]\b[^>]*>)\s*(PENTAS|LAYAR|BENGKEL|KEMBARA|UNGGUN|KHEMAH|CAMP VIBES|WARUNG|PASAR)\s*(<\/h[2-4]>)/',
 		function ( $m ) {
 			return $m[1] . tapaufest_icon( tapaufest_stage_icon( $m[2] ) ) . $m[2] . $m[3];
 		},
@@ -170,6 +170,7 @@ function tapaufest_stage_icon( $stage ) {
 		'KEMBARA' => 'outdoor',
 		'UNGGUN'  => 'fire',
 		'KHEMAH'  => 'tent',
+		'CAMP VIBES' => 'tent',
 		'WARUNG'  => 'food',
 		'PASAR'   => 'market',
 		'GATE'    => 'gate',
@@ -204,7 +205,7 @@ function tapaufest_nav_icons( $html ) {
 		$cta   = tapaufest_cta();
 		$when  = '';
 		$extra = '<div class="tf-nav__extra">'
-			. '<p class="tf-nav__when">' . tapaufest_icon( 'calendar' ) . esc_html( $when ? $when : __( '12 & 13 Dec 2026, Sungai Congkak', 'tapaufest' ) ) . '</p>'
+			. '<p class="tf-nav__when">' . tapaufest_icon( 'calendar' ) . esc_html( $when ? $when : __( '12 & 13 Dec 2026, Chongkak Park, Hulu Langat', 'tapaufest' ) ) . '</p>'
 			. '<a class="tf-btn tf-btn--cili" href="' . esc_url( $cta['url'] ) . '">' . esc_html( $cta['label'] ) . ' ' . tapaufest_icon( 'arrow-right' ) . '</a>'
 			. '</div>';
 		$pos = strrpos( $html, '</ul>' );

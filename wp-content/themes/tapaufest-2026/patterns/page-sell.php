@@ -41,7 +41,7 @@ echo tapaufest_band_open( 'kopi' ); // phpcs:ignore WordPress.Security.EscapeOut
 <li><strong><?php esc_html_e( '3. Confirm', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'Stall fee, size, power and setup times come with your offer.', 'tapaufest-2026' ); ?> <?php echo tapaufest_tbc( __( 'Fees TBC', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
-<li><strong><?php esc_html_e( '4. Trade', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( '12 and 13 Dec at Sungai Congkak. Your stall gets its own page on this site.', 'tapaufest-2026' ); ?></li>
+<li><strong><?php esc_html_e( '4. Trade', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( '12 and 13 Dec at Chongkak Park & Resort. Your stall gets its own page on this site.', 'tapaufest-2026' ); ?></li>
 <!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->

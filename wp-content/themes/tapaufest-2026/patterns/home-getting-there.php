@@ -15,23 +15,23 @@ echo tapaufest_band_open( 'paper', 'tf-home-getting-there' ); // phpcs:ignore Wo
 <div class="wp-block-columns are-vertically-aligned-center tf-split">
 <!-- wp:column {"verticalAlignment":"center","width":"46%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:46%">
-<?php echo tapaufest_photo( 'campsite', __( 'Tents and string lights at the 2025 festival campsite', 'tapaufest-2026' ), 'tf-split-photo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<?php echo tapaufest_photo( 'venue-river', __( 'The river running through Chongkak Park & Resort', 'tapaufest-2026' ), 'tf-split-photo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 </div>
 <!-- /wp:column -->
 
 <!-- wp:column {"verticalAlignment":"center","width":"54%"} -->
 <div class="wp-block-column is-vertically-aligned-center" style="flex-basis:54%">
-<?php echo tapaufest_heading( __( 'New venue', 'tapaufest-2026' ), __( 'Two nights by the river', 'tapaufest-2026' ), __( 'This year we move to Sungai Congkak in Hulu Langat, Selangor. Pitch a tent at the festival campsite or stay nearby.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<?php echo tapaufest_heading( __( 'Our new playground', 'tapaufest-2026' ), __( 'Under the canopy, by the river', 'tapaufest-2026' ), __( 'TAPAUfest moves to Chongkak Park & Resort in Hulu Langat: towering trees overhead and clear river streams running right through the festival grounds.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 <!-- wp:list {"className":"tf-facts"} -->
 <ul class="wp-block-list tf-facts">
 <!-- wp:list-item -->
-<li><strong><?php esc_html_e( 'Festival campsite', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'A short walk from PENTAS. Included with Duo Campers.', 'tapaufest-2026' ); ?></li>
+<li><strong><?php esc_html_e( 'Santuy Campsite', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'Pitch a tent inside the festival grounds for both nights.', 'tapaufest-2026' ); ?></li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
-<li><strong><?php esc_html_e( 'Nearby stays', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'Riverside campsites, homestays and resorts around Hulu Langat and Semenyih.', 'tapaufest-2026' ); ?></li>
+<li><strong><?php esc_html_e( 'Nearby stays', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'Chalet staycations at the park, and locally run campsites close by.', 'tapaufest-2026' ); ?></li>
 <!-- /wp:list-item -->
 <!-- wp:list-item -->
-<li><strong><?php esc_html_e( 'Getting there', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'Drive, Grab or carpool. Drop-off and parking details by 6 Nov.', 'tapaufest-2026' ); ?></li>
+<li><strong><?php esc_html_e( 'Getting there', 'tapaufest-2026' ); ?></strong> <?php esc_html_e( 'About an hour’s drive from KL, or take the MRT Kajang Line to Sri Raya and hop on the official festival shuttle.', 'tapaufest-2026' ); ?></li>
 <!-- /wp:list-item -->
 </ul>
 <!-- /wp:list -->

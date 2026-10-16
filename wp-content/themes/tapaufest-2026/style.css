@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.7.1
+Version: 1.8.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -948,4 +948,150 @@ html:not(.tf-motion) .tf-ticker__set + .tf-ticker__set {
 		font-size: 17px;
 		padding: 14px;
 	}
+}
+
+/* ================================================================
+ * Kopi Poster colours (Oct 16): kopi pages, cream text, kopi-deep
+ * header and footer, gold alert bar, cili for buttons and headlines.
+ * Kertas Zine fonts, corners and ink shadows stay.
+ * ================================================================ */
+body::before {
+	background: var(--wp--preset--color--kopi-deep);
+}
+/* Notes that sit straight on a kopi band read in cream. */
+.is-style-tf-band :where(.tf-map__note, .tf-partners__note, .tf-tickets__via, .tf-more),
+.tf-hero :where(.tf-hero__note, .tf-hero__tags) {
+	color: var(--wp--preset--color--paper);
+}
+.tf-hero__pills li {
+	color: var(--wp--preset--color--ink);
+}
+:focus-visible {
+	outline-color: var(--wp--preset--color--gold);
+}
+.tf-header-bar {
+	background-color: var(--wp--preset--color--kopi-deep);
+	color: var(--wp--preset--color--paper);
+}
+.tf-footer-bar {
+	background-color: var(--wp--preset--color--kopi-deep);
+	color: var(--wp--preset--color--paper);
+}
+.tf-alert {
+	background: var(--wp--preset--color--gold);
+	color: var(--wp--preset--color--ink);
+}
+.tf-alert__tag {
+	background: var(--wp--preset--color--ink);
+	color: var(--wp--preset--color--gold);
+}
+.tf-alert a {
+	color: var(--wp--preset--color--ink);
+}
+
+/* Bands: kopi (default) and paper alternate. */
+.is-style-tf-band {
+	background-color: var(--wp--preset--color--kopi);
+	color: var(--wp--preset--color--paper);
+}
+.is-style-tf-band .tf-eyebrow,
+.tf-page-head .tf-eyebrow {
+	color: var(--wp--preset--color--gold);
+}
+.is-style-tf-band .tf-lead,
+.is-style-tf-band .tf-section-head .tf-lead {
+	color: var(--wp--preset--color--paper);
+}
+.is-style-tf-band .tf-note {
+	color: var(--wp--preset--color--gold);
+}
+.is-style-tf-paper-band {
+	background-color: var(--wp--preset--color--paper);
+	color: var(--wp--preset--color--ink);
+	--tf-muted: #5a3a20;
+}
+.is-style-tf-paper-band :where(h1, h2) {
+	color: var(--wp--preset--color--cili-deep);
+}
+.is-style-tf-paper-band .tf-eyebrow {
+	color: var(--wp--preset--color--kopi);
+}
+.is-style-tf-paper-band .is-style-tf-ink-card {
+	background-color: var(--wp--preset--color--paper-hi);
+}
+.is-style-tf-paper-band .tf-lead {
+	color: var(--wp--preset--color--muted);
+}
+/* Cards keep ink on cream wherever they sit. */
+.is-style-tf-ink-card {
+	--tf-muted: #5a3a20;
+}
+.is-style-tf-ink-card :where(h3) {
+	color: var(--wp--preset--color--cili-deep);
+}
+.is-style-tf-ink-card a {
+	color: var(--wp--preset--color--ink);
+}
+
+/* Page heads sit on kopi. */
+.tf-page-head {
+	background-color: var(--wp--preset--color--kopi);
+	color: var(--wp--preset--color--paper);
+}
+.tf-page-head .tf-lead {
+	color: var(--wp--preset--color--paper);
+}
+
+/* Hero on kopi, the date stays a gold sticker. */
+.tf-hero {
+	background: var(--wp--preset--color--kopi);
+	color: var(--wp--preset--color--paper);
+}
+.tf-hero__note {
+	color: var(--wp--preset--color--paper);
+	opacity: 0.85;
+}
+.tf-hero__when {
+	color: var(--wp--preset--color--ink);
+}
+
+/* Header buttons and the phone menu. */
+.tf-site-header .wp-block-navigation__responsive-container-open,
+.tf-site-header .wp-block-navigation__responsive-container-close {
+	color: var(--wp--preset--color--ink);
+}
+@media (max-width: 599px) {
+	.tf-site-header .wp-block-navigation__responsive-container.is-menu-open {
+		background: var(--wp--preset--color--kopi-deep) !important;
+		color: var(--wp--preset--color--paper) !important;
+	}
+	.tf-site-header .is-menu-open .wp-block-navigation-item__content {
+		border-bottom-color: var(--wp--preset--color--paper) !important;
+	}
+	.tf-site-header .is-menu-open [aria-current="page"],
+	.tf-site-header .is-menu-open .current-menu-item > .wp-block-navigation-item__content,
+	.tf-site-header .is-menu-open .tf-nav__arrow {
+		color: var(--wp--preset--color--gold);
+	}
+	.tf-site-header .is-menu-open .tf-nav__when {
+		color: var(--wp--preset--color--paper);
+	}
+}
+
+/* Join band stays cili. Footer accents gold. */
+.tf-footer-head,
+.tf-hashtags {
+	color: var(--wp--preset--color--gold);
+}
+.wp-block-heading .tf-icon {
+	color: var(--wp--preset--color--gold);
+}
+.is-style-tf-paper-band .wp-block-heading .tf-icon,
+.is-style-tf-ink-card .wp-block-heading .tf-icon {
+	color: var(--wp--preset--color--cili-deep);
+}
+
+/* The festival name keeps its own case inside capitalised labels. */
+.tf-name {
+	text-transform: none;
 }
