@@ -13,6 +13,10 @@ echo tapaufest_page_head( __( 'Experience', 'tapaufest-2026' ), __( 'Lepak all w
 echo tapaufest_band_open( 'paper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_heading( __( 'Zones', 'tapaufest-2026' ), __( 'Eight zones, one weekend', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_zone_cards(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_heading( __( 'Find your way', 'tapaufest-2026' ), __( 'Explore the site', 'tapaufest-2026' ), __( 'Hover or tap a zone to see what’s on and who’s selling.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+<!-- wp:tapaufest/site-map {"align":"wide"} /-->
+<?php
 echo tapaufest_band_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_band_open( 'kopi' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>

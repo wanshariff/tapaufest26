@@ -34,6 +34,10 @@
 		"strip": {
 			"type": "boolean",
 			"default": false
+		},
+		"hosts": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"editorScript": "tapaufest-blocks-editor",

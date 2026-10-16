@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/site-map",
+	"title": "Interactive site map",
+	"category": "tapaufest",
+	"icon": "location-alt",
+	"description": "Festival map. Hover, tap or tab to a zone or facility to see what is there, what\u2019s on next and who\u2019s selling.",
+	"textdomain": "tapaufest",
+	"supports": {
+		"html": false,
+		"align": [
+			"wide",
+			"full"
+		]
+	},
+	"attributes": {},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php",
+	"version": "1.4.0"
+}

@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 $tf_limit   = isset( $attributes['limit'] ) ? (int) $attributes['limit'] : 0;
 $tf_filters = ! empty( $attributes['filters'] ) && 0 === $tf_limit;
-$tf_artists = array_map( 'tapaufest_artist_data', tapaufest_get_artists( $tf_limit ) );
+$tf_artists = array_map( 'tapaufest_artist_data', tapaufest_get_artists( $tf_limit, ! empty( $attributes['hosts'] ) ) );
 if ( ! empty( $attributes['headlinersFirst'] ) ) {
 	// Stable sort: headliners first, everyone else keeps the running order.
 	$tf_order = array_flip( wp_list_pluck( $tf_artists, 'id' ) );

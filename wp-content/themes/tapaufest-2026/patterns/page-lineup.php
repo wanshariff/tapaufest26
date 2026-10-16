@@ -15,3 +15,9 @@ echo tapaufest_band_open( 'paper' ); // phpcs:ignore WordPress.Security.EscapeOu
 <!-- wp:tapaufest/lineup {"align":"wide"} /-->
 <?php
 echo tapaufest_band_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_band_open( 'kopi', 'tf-hosts' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_heading( __( 'On the mic', 'tapaufest-2026' ), __( 'Your hosts', 'tapaufest-2026' ), __( 'The voices between sets. Stand-ins from 2025 until this year’s hosts are announced.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+<!-- wp:tapaufest/lineup {"filters":false,"hosts":true} /-->
+<?php
+echo tapaufest_band_close(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

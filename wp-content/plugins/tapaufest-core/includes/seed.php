@@ -34,6 +34,33 @@ function tapaufest_demo_artists() {
 		array( 'Insomniacks', 'MY', 'Pop rock', false, 'A Day 2 singalong with one of Malaysia’s best-loved bands.', 'insomniacks' ),
 		array( 'Perunggu', 'ID', 'Rock', false, 'Jakarta rock band, loud and big-hearted.', 'perunggu' ),
 		array( 'Couple', 'MY', 'Indie rock', true, 'Reunited their Top of the Pops lineup for the first time since 2006: a 14-song set for their 30th anniversary.', 'couple' ),
+		array( 'Iedil Dzuhrie', 'MY', 'Host', false, 'Hosted TAPAUfest 2025 and the 2021 online edition. Your voice between sets.', '', 'mc' ),
+		array( 'Nadia Nash', 'MY', 'Host', false, 'Co-hosted TAPAUfest 2025 by the lake in Lenggong.', '', 'mc' ),
+	);
+}
+
+/**
+ * Show page descriptions for the demo sessions, keyed by title.
+ *
+ * @return array
+ */
+function tapaufest_demo_session_notes() {
+	return array(
+		'Yoga with Sesi Tikar Mengkuang'     => 'An easy morning flow by the water with Sesi Tikar Mengkuang, who ran yoga at KEMBARA in 2025. Bring a mat or a sarong.',
+		'Kayaking (weather dependent)'       => 'Paddle out with the KEMBARA crew. Life jackets provided. Runs only when the water is safe.',
+		'Rubber-cut printmaking'             => 'Carve a stamp, ink it, print it on paper or a tote. All materials provided. 2025 favourite.',
+		'Talk: building a visual identity'   => 'How indie bands and labels build a look on a small budget: logos, posters and merch.',
+		'Mini-zine making'                   => 'Fold, cut, collage and staple your own zine to take home. No experience needed.',
+		'SEA Short Film Festival: Vietnam'   => 'Short films from Vietnam, picked with the SEA Short Film Festival.',
+		'SEA Short Film Festival: Myanmar'   => 'Short films from Myanmar, picked with the SEA Short Film Festival.',
+		'SEA Short Film Festival: Malaysia'  => 'Short films from Malaysian directors, picked with the SEA Short Film Festival.',
+		'Night shorts'                       => 'A late block of shorts in the LAYAR tent for anyone taking a break from PENTAS.',
+		'Bonfire sets at the campsite'       => 'Unplugged and surprise sets around the fire after PENTAS closes. In 2025 these were unannounced.',
+		'Bonfire jam, open to all'           => 'Bring a guitar or just your voice. Last songs of the weekend around the fire.',
+		'Sunrise yoga'                       => 'A slow start to Day 2 by the river.',
+		'Boat ride (weather dependent)'      => 'A short ride on the river with the KEMBARA crew. Runs only when the water is safe.',
+		'Talk: the ASEAN indie circuit'      => 'Artists and organisers from around the region on touring, collaborating and getting heard.',
+		'Zine swap and print jam'            => 'Bring a zine, take a zine, and print on the shared press.',
 	);
 }
 
@@ -153,7 +180,7 @@ function tapaufest_demo_insert( $type, $title, $meta = array(), $args = array() 
 function tapaufest_seed() {
 	$existing = get_posts(
 		array(
-			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'page' ),
+			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'tf_partner', 'page' ),
 			'posts_per_page' => 1,
 			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key
 			'fields'         => 'ids',
@@ -172,6 +199,7 @@ function tapaufest_seed() {
 				'tf_country'   => $a[1],
 				'tf_genre'     => $a[2],
 				'tf_headliner' => $a[3],
+				'tf_billing'   => isset( $a[6] ) ? $a[6] : 'act',
 				'tf_profile'   => 'https://tapau.asia/',
 			),
 			array(
@@ -187,6 +215,7 @@ function tapaufest_seed() {
 		1 => tapaufest_setting( 'day1' ),
 		2 => tapaufest_setting( 'day2' ),
 	);
+	$tf_notes = tapaufest_demo_session_notes();
 	foreach ( tapaufest_demo_sessions() as $i => $s ) {
 		$is_act = isset( $artist_ids[ $s[4] ] );
 		$parts  = $is_act ? array( 'act', $s[4] ) : explode( ':', $s[4], 2 );
@@ -201,7 +230,11 @@ function tapaufest_seed() {
 				'tf_kind'   => $parts[0],
 				'tf_artist' => $is_act ? $artist_ids[ $s[4] ] : 0,
 			),
-			array( 'menu_order' => $i )
+			array(
+				'menu_order'   => $i,
+				'post_content' => isset( $tf_notes[ $parts[1] ] ) ? '<!-- wp:paragraph --><p>' . esc_html( $tf_notes[ $parts[1] ] ) . '</p><!-- /wp:paragraph -->' : '',
+				'post_excerpt' => isset( $tf_notes[ $parts[1] ] ) ? $tf_notes[ $parts[1] ] : '',
+			)
 		);
 	}
 
@@ -276,9 +309,10 @@ function tapaufest_seed() {
 		}
 	}
 
+	// Only vendors confirmed in public 2025 coverage. Add 2026 stalls in wp-admin.
 	$vendors = array(
-		array( 'pasar', 'TAPAUfest x Humblezing', 'Festival merch. Sold out fast in 2025.' ),
-		array( 'pasar', 'Pekan Pop Up', 'Curators of the 2025 PASAR' ),
+		array( 'pasar', 'TAPAUfest x Humblezing', 'Official festival merch', 'The 2025 collab line sold out fast. Watch for the 2026 drop.', 'Merch, Limited run', '2025' ),
+		array( 'pasar', 'Pekan Pop Up', 'Indie market curators', 'Curated the 2025 PASAR: indie brands, art, crafts and vinyl.', 'Curated, Local brands', '2025' ),
 	);
 	foreach ( $vendors as $i => $v ) {
 		tapaufest_demo_insert(
@@ -287,6 +321,47 @@ function tapaufest_seed() {
 			array(
 				'tf_vendor_type' => $v[0],
 				'tf_note'        => $v[2],
+				'tf_tags'        => $v[4],
+				'tf_year'        => $v[5],
+			),
+			array(
+				'menu_order'   => $i,
+				'post_excerpt' => $v[3],
+			)
+		);
+	}
+
+	// TAPAUfest 2025 partners, as credited on the 2025 poster and in press coverage.
+	$partners = array(
+		array( 'supporter', 'ASEAN Malaysia 2025', 'Main supporter of the ASEAN edition', '' ),
+		array( 'supporter', 'Visit Malaysia 2026', 'Main supporter, with Tourism Malaysia', '' ),
+		array( 'strategic', 'KBS', 'Kementerian Belia dan Sukan (Ministry of Youth and Sports)', '' ),
+		array( 'strategic', 'IMPACT', 'Impact Integrated, strategic partner', '' ),
+		array( 'strategic', 'Majlis Daerah Lenggong', 'Local council and host of the 2025 site at Resort Tasik Raban', '' ),
+		array( 'programme', 'Pekan Pop Up', 'Curated the PASAR market', '' ),
+		array( 'programme', 'SEA Short Film Festival', 'Short films for LAYAR', '' ),
+		array( 'programme', 'Sesi Tikar Mengkuang', 'Yoga at KEMBARA', '' ),
+		array( 'programme', 'Santuy Travellers', 'Campsite and late-night bonfire sets', '' ),
+		array( 'programme', 'Slow Cub Camp', 'Campsite', '' ),
+		array( 'brand', 'Spritzer', 'Free drinking water for everyone on site', '' ),
+		array( 'brand', 'Humblezing', 'TAPAUfest x Humblezing merch', '' ),
+		array( 'media', 'ERA', 'Media partner', '' ),
+		array( 'media', 'hitz', 'Media partner', '' ),
+		array( 'media', 'VOCKET', 'Media partner', '' ),
+		array( 'media', 'Noisy Headspace', 'Media partner', 'https://noisyheadspace.com/' ),
+		array( 'media', 'Rakita 107.9', 'Media partner', '' ),
+		array( 'community', 'NRDN Photography', 'Festival photography', '' ),
+		array( 'community', 'TAPAUtix', 'Ticketing', 'https://tapautix.asia/' ),
+	);
+	foreach ( $partners as $i => $p ) {
+		tapaufest_demo_insert(
+			'tf_partner',
+			$p[1],
+			array(
+				'tf_tier' => $p[0],
+				'tf_role' => $p[2],
+				'tf_url'  => $p[3],
+				'tf_year' => '2025',
 			),
 			array( 'menu_order' => $i )
 		);
@@ -299,6 +374,7 @@ function tapaufest_seed() {
 		'plan'       => 'Plan your trip',
 		'map'        => 'Map and help',
 		'faq'        => 'FAQ',
+		'partners'   => 'Partners',
 		'recap'      => 'Recap',
 		'archive'    => 'Past editions',
 	);
@@ -327,7 +403,7 @@ function tapaufest_seed() {
 function tapaufest_unseed() {
 	$ids = get_posts(
 		array(
-			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'page' ),
+			'post_type'      => array( 'tf_artist', 'tf_session', 'tf_tier', 'tf_faq', 'tf_vendor', 'tf_partner', 'page' ),
 			'post_status'    => 'any',
 			'posts_per_page' => -1,
 			'meta_key'       => '_tapaufest_demo', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_key

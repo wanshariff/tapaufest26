@@ -64,6 +64,11 @@ function tapaufest_fields() {
 				'label' => __( 'Genre', 'tapaufest' ),
 				'type'  => 'text',
 			),
+			'tf_billing'   => array(
+				'label'   => __( 'Billing', 'tapaufest' ),
+				'type'    => 'select',
+				'options' => 'tapaufest_billing_types',
+			),
 			'tf_headliner' => array(
 				'label' => __( 'Headliner (bigger card)', 'tapaufest' ),
 				'type'  => 'checkbox',
@@ -165,7 +170,93 @@ function tapaufest_fields() {
 				'label' => __( 'What they sell', 'tapaufest' ),
 				'type'  => 'text',
 			),
+			'tf_signature'   => array(
+				'label' => __( 'Must-try (one item)', 'tapaufest' ),
+				'type'  => 'text',
+			),
+			'tf_price'       => array(
+				'label'   => __( 'Price range', 'tapaufest' ),
+				'type'    => 'select',
+				'options' => 'tapaufest_price_ranges',
+			),
+			'tf_tags'        => array(
+				'label' => __( 'Tags, comma separated (e.g. Halal, Vegetarian options, Cashless, Late night)', 'tapaufest' ),
+				'type'  => 'text',
+			),
+			'tf_instagram'   => array(
+				'label' => __( 'Instagram handle (without @)', 'tapaufest' ),
+				'type'  => 'text',
+			),
+			'tf_year'        => array(
+				'label' => __( 'Edition (e.g. 2026, or 2025 for a returning favourite)', 'tapaufest' ),
+				'type'  => 'text',
+			),
 		),
+		'tf_partner' => array(
+			'tf_tier' => array(
+				'label'   => __( 'Credit', 'tapaufest' ),
+				'type'    => 'select',
+				'options' => 'tapaufest_partner_tiers',
+			),
+			'tf_role' => array(
+				'label' => __( 'What they did (one line)', 'tapaufest' ),
+				'type'  => 'text',
+			),
+			'tf_url'  => array(
+				'label' => __( 'Website or Instagram link', 'tapaufest' ),
+				'type'  => 'url',
+			),
+			'tf_year' => array(
+				'label' => __( 'Edition', 'tapaufest' ),
+				'type'  => 'text',
+			),
+		),
+	);
+}
+
+/**
+ * Who someone is on the bill. Hosts show in their own row, not the lineup grid.
+ *
+ * @return array
+ */
+function tapaufest_billing_types() {
+	return array(
+		'act'        => __( 'Act (band or artist)', 'tapaufest' ),
+		'dj'         => __( 'DJ', 'tapaufest' ),
+		'mc'         => __( 'MC or host', 'tapaufest' ),
+		'speaker'    => __( 'Speaker', 'tapaufest' ),
+		'filmmaker'  => __( 'Filmmaker', 'tapaufest' ),
+		'facilitator' => __( 'Workshop or activity host', 'tapaufest' ),
+	);
+}
+
+/**
+ * Price ranges for vendors.
+ *
+ * @return array
+ */
+function tapaufest_price_ranges() {
+	return array(
+		''    => __( 'Not set', 'tapaufest' ),
+		'$'   => __( 'Under RM10', 'tapaufest' ),
+		'$$'  => __( 'RM10 to RM20', 'tapaufest' ),
+		'$$$' => __( 'Over RM20', 'tapaufest' ),
+	);
+}
+
+/**
+ * Partner credit tiers, in display order.
+ *
+ * @return array
+ */
+function tapaufest_partner_tiers() {
+	return array(
+		'supporter' => __( 'Main supporter', 'tapaufest' ),
+		'strategic' => __( 'Strategic partner', 'tapaufest' ),
+		'programme' => __( 'Programme partner', 'tapaufest' ),
+		'brand'     => __( 'Brand partner', 'tapaufest' ),
+		'media'     => __( 'Media partner', 'tapaufest' ),
+		'community' => __( 'Community and crew', 'tapaufest' ),
 	);
 }
 

@@ -44,11 +44,32 @@ function tapaufest_format_time( $time ) {
  * @param int $limit Max artists, 0 for all.
  * @return WP_Post[]
  */
-function tapaufest_get_artists( $limit = 0 ) {
+function tapaufest_get_artists( $limit = 0, $hosts = false ) {
+	// Hosts (billing "mc") get their own row; everyone else is the lineup.
+	$billing = $hosts
+		? array(
+			array(
+				'key'   => 'tf_billing',
+				'value' => 'mc',
+			),
+		)
+		: array(
+			'relation' => 'OR',
+			array(
+				'key'     => 'tf_billing',
+				'compare' => 'NOT EXISTS',
+			),
+			array(
+				'key'     => 'tf_billing',
+				'value'   => 'mc',
+				'compare' => '!=',
+			),
+		);
 	return get_posts(
 		array(
 			'post_type'      => 'tf_artist',
 			'posts_per_page' => $limit > 0 ? $limit : -1,
+			'meta_query'     => $billing, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_query
 			'orderby'        => array(
 				'menu_order' => 'ASC',
 				'title'      => 'ASC',
@@ -81,6 +102,7 @@ function tapaufest_artist_data( $artist ) {
 		'country_name' => isset( $countries[ $country ] ) ? $countries[ $country ] : $country,
 		'genre'        => (string) get_post_meta( $artist->ID, 'tf_genre', true ),
 		'headliner'    => (bool) get_post_meta( $artist->ID, 'tf_headliner', true ),
+		'billing'      => (string) get_post_meta( $artist->ID, 'tf_billing', true ),
 		'listen'       => (string) get_post_meta( $artist->ID, 'tf_listen', true ),
 		'profile'      => (string) get_post_meta( $artist->ID, 'tf_profile', true ),
 		'initials'     => $initials,
@@ -148,12 +170,15 @@ function tapaufest_session_data( $post ) {
 	if ( 'act' === $kind && $artist && 'publish' === get_post_status( $artist ) ) {
 		$title = get_the_title( $artist );
 		$url   = get_permalink( $artist );
+	} elseif ( 'prayer' !== $kind ) {
+		$url = get_permalink( $post );
 	}
 	$start_min = tapaufest_minutes( $start );
 	return array(
 		'id'        => $post->ID,
 		'title'     => $title,
 		'url'       => $url,
+		'page'      => get_permalink( $post ),
 		'kind'      => $kind,
 		'artist'    => $artist,
 		'day'       => (string) get_post_meta( $post->ID, 'tf_day', true ),

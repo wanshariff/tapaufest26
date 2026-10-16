@@ -34,7 +34,11 @@ foreach ( tapaufest_get_artists() as $tf_other ) {
 }
 ?>
 <div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-artist-details' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-	<p class="tf-eyebrow"><?php echo esc_html( implode( ' · ', array_filter( array( $tf_a['country_name'], $tf_a['genre'] ) ) ) ); ?></p>
+	<?php
+	$tf_bill_types = tapaufest_billing_types();
+	$tf_bill       = ( $tf_a['billing'] && 'act' !== $tf_a['billing'] && isset( $tf_bill_types[ $tf_a['billing'] ] ) ) ? $tf_bill_types[ $tf_a['billing'] ] : '';
+	?>
+	<p class="tf-eyebrow"><?php echo esc_html( implode( ' · ', array_filter( array( $tf_bill, $tf_a['country_name'], $tf_a['genre'] ) ) ) ); ?></p>
 
 	<?php if ( $tf_s ) : ?>
 		<dl class="tf-facts"<?php echo tapaufest_session_attrs( $tf_s ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>

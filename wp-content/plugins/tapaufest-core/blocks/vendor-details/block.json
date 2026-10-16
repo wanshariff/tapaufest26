@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/vendor-details",
+	"title": "Vendor details",
+	"category": "tapaufest",
+	"icon": "info",
+	"description": "Zone, must-try, tags and links for a stall. Use on vendor pages.",
+	"textdomain": "tapaufest",
+	"version": "1.4.0",
+	"usesContext": [ "postId", "postType" ],
+	"supports": {
+		"html": false
+	},
+	"attributes": {},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

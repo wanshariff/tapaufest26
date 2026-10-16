@@ -16,6 +16,7 @@ $tf_cols = array(
 		home_url( '/timetable/' )  => __( 'Timetable', 'tapaufest-2026' ),
 		home_url( '/tickets/' )    => __( 'Tickets', 'tapaufest-2026' ),
 		home_url( '/experience/' ) => __( 'Experience', 'tapaufest-2026' ),
+		home_url( '/partners/' )   => __( 'Partners', 'tapaufest-2026' ),
 	),
 	__( 'Plan', 'tapaufest-2026' )      => array(
 		home_url( '/plan/' ) => __( 'Plan your trip', 'tapaufest-2026' ),
