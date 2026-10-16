@@ -1,0 +1,63 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "TAPAUfest 2026 preview",
+		"description": "Fresh WordPress with the TAPAUfest 2026 theme, the TAPAUfest Core plugin and mock content.",
+		"author": "wanshariff"
+	},
+	"landingPage": "/",
+	"preferredVersions": {
+		"php": "8.2",
+		"wp": "latest"
+	},
+	"features": {
+		"networking": true
+	},
+	"login": true,
+	"steps": [
+		{
+			"step": "installPlugin",
+			"pluginData": {
+				"resource": "git:directory",
+				"url": "https://github.com/wanshariff/tapau-asia",
+				"ref": "main",
+				"refType": "branch",
+				"path": "wp-content/plugins/tapaufest-core"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "tapaufest-core"
+			}
+		},
+		{
+			"step": "installTheme",
+			"themeData": {
+				"resource": "git:directory",
+				"url": "https://github.com/wanshariff/tapau-asia",
+				"ref": "main",
+				"refType": "branch",
+				"path": "wp-content/themes/tapaufest-2026"
+			},
+			"options": {
+				"activate": true,
+				"targetFolderName": "tapaufest-2026"
+			}
+		},
+		{
+			"step": "setSiteOptions",
+			"options": {
+				"blogname": "TAPAUfest 2026",
+				"timezone_string": "Asia/Kuala_Lumpur",
+				"permalink_structure": "/%postname%/"
+			}
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp tapaufest seed"
+		},
+		{
+			"step": "wp-cli",
+			"command": "wp rewrite flush"
+		}
+	]
+}
