@@ -17,7 +17,6 @@
 	"attributes": {},
 	"editorScript": "tapaufest-blocks-editor",
 	"style": "tapaufest-blocks",
-	"viewScript": "file:./view.js",
 	"render": "file:./render.php",
-	"version": "1.4.0"
+	"version": "1.6.0"
 }

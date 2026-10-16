@@ -153,6 +153,11 @@ function tapaufest_fields() {
 				'label' => __( 'Sold out', 'tapaufest' ),
 				'type'  => 'checkbox',
 			),
+			'tf_art'      => array(
+				'label'   => __( 'Illustration', 'tapaufest' ),
+				'type'    => 'select',
+				'options' => 'tapaufest_tier_art_options',
+			),
 		),
 		'tf_faq'     => array(
 			'tf_featured' => array(
@@ -227,6 +232,22 @@ function tapaufest_billing_types() {
 		'speaker'    => __( 'Speaker', 'tapaufest' ),
 		'filmmaker'  => __( 'Filmmaker', 'tapaufest' ),
 		'facilitator' => __( 'Workshop or activity host', 'tapaufest' ),
+	);
+}
+
+/**
+ * Ticket tier illustrations.
+ *
+ * @return array
+ */
+function tapaufest_tier_art_options() {
+	return array(
+		''        => __( 'Automatic (from what the pass includes)', 'tapaufest' ),
+		'day'     => __( 'One ticket, one sun (day pass)', 'tapaufest' ),
+		'weekend' => __( 'Sun and moon (weekend pass)', 'tapaufest' ),
+		'geng'    => __( 'Four tickets (group pass)', 'tapaufest' ),
+		'campers' => __( 'Tent and bonfire (camping pass)', 'tapaufest' ),
+		'none'    => __( 'No illustration', 'tapaufest' ),
 	);
 }
 

@@ -32,6 +32,10 @@ function tapaufest_register_blocks() {
 		true
 	);
 	wp_register_script( 'tapaufest-view', TAPAUFEST_URL . 'assets/view.js', array(), TAPAUFEST_VERSION, array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	// Interactive map: Leaflet (bundled, BSD-2) plus our map script.
+	wp_register_style( 'tapaufest-leaflet', TAPAUFEST_URL . 'assets/vendor/leaflet/leaflet.css', array(), '1.9.4' );
+	wp_register_script( 'tapaufest-leaflet', TAPAUFEST_URL . 'assets/vendor/leaflet/leaflet.js', array(), '1.9.4', array( 'in_footer' => true ) );
+	wp_register_script( 'tapaufest-map', TAPAUFEST_URL . 'assets/map.js', array( 'tapaufest-leaflet' ), TAPAUFEST_VERSION, array( 'in_footer' => true ) );
 	wp_localize_script(
 		'tapaufest-view',
 		'tapaufestView',

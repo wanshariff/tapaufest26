@@ -237,6 +237,7 @@ function tapaufest_get_tiers() {
 			'campsite' => (bool) get_post_meta( $post->ID, 'tf_campsite', true ),
 			'url'      => (string) get_post_meta( $post->ID, 'tf_url', true ),
 			'soldout'  => (bool) get_post_meta( $post->ID, 'tf_soldout', true ),
+			'art'      => (string) get_post_meta( $post->ID, 'tf_art', true ),
 		);
 	}
 	return $out;
@@ -336,4 +337,23 @@ function tapaufest_days_to_go() {
 	}
 	$diff = $start->getTimestamp() - time();
 	return max( 0, (int) ceil( $diff / DAY_IN_SECONDS ) );
+}
+
+/**
+ * Illustration for a ticket tier. Uses the tier's own pick, or guesses from
+ * what the pass includes: campsite, group size, then number of days.
+ *
+ * @param array $t Tier data from tapaufest_get_tiers().
+ * @return string Image URL, or '' for none.
+ */
+function tapaufest_tier_art( $t ) {
+	$art = $t['art'];
+	if ( 'none' === $art ) {
+		return '';
+	}
+	if ( ! $art ) {
+		$art = $t['campsite'] ? 'campers' : ( $t['people'] > 2 ? 'geng' : ( $t['days'] > 1 ? 'weekend' : 'day' ) );
+	}
+	$file = 'assets/tiers/tier-' . sanitize_key( $art ) . '.svg';
+	return file_exists( TAPAUFEST_DIR . $file ) ? TAPAUFEST_URL . $file : '';
 }

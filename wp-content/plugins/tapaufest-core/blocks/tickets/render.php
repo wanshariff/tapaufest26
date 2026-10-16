@@ -50,6 +50,10 @@ if ( $tf_limit > 0 ) {
 		<div class="tf-tiers">
 			<?php foreach ( $tf_tiers as $tf_t ) : ?>
 				<article class="tf-tier">
+					<?php $tf_art = tapaufest_tier_art( $tf_t ); ?>
+					<?php if ( $tf_art ) : ?>
+						<img class="tf-tier__art" src="<?php echo esc_url( $tf_art ); ?>" alt="" width="360" height="260" loading="lazy">
+					<?php endif; ?>
 					<p class="tf-tier__who"><?php echo esc_html( $tf_t['who'] ); ?></p>
 					<h3 class="tf-tier__name"><?php echo esc_html( $tf_t['name'] ); ?></h3>
 					<?php if ( $tf_t['soldout'] ) : ?>

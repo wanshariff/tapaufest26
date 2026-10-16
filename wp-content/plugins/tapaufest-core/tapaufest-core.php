@@ -3,7 +3,7 @@
  * Plugin Name:       TAPAUfest Core
  * Plugin URI:        https://tapaufest.asia/
  * Description:       Festival content and blocks for tapaufest.asia: lineup, timetable with Jadual Aku, ticket tiers, FAQ, vendors and the site state switch (early access, public sale, festival day, recap).
- * Version: 1.5.0
+ * Version: 1.6.0
  * Requires at least: 6.6
  * Requires PHP:      7.4
  * Author:            TAPAUasia
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TAPAUFEST_VERSION', '1.5.0' );
+define( 'TAPAUFEST_VERSION', '1.6.0' );
 define( 'TAPAUFEST_FILE', __FILE__ );
 define( 'TAPAUFEST_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TAPAUFEST_URL', plugin_dir_url( __FILE__ ) );

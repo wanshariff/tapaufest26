@@ -10,15 +10,13 @@
  */
 
 $tf_wa = tapaufest_theme_setting( 'whatsapp_url' );
-echo tapaufest_page_head( __( 'Map and help', 'tapaufest-2026' ), __( 'Site map and help', 'tapaufest-2026' ), __( 'Hover or tap any zone to see what’s there, what’s on next and who’s selling. Save it before you arrive: signal on site can be weak.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_page_head( __( 'Map and help', 'tapaufest-2026' ), __( 'Site map and help', 'tapaufest-2026' ), __( 'Hover or tap any pin to see what’s there, what’s on next and who’s selling. Screenshot it before you arrive: signal on site can be weak.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_band_open( 'paper' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_sr_heading( __( 'Site map', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
 <!-- wp:tapaufest/site-map {"align":"wide"} /-->
 
-<!-- wp:paragraph {"className":"tf-more"} -->
-<p class="tf-more"><a href="<?php echo esc_url( get_theme_file_uri( 'assets/images/site-map-draft.svg' ) ); ?>" download="tapaufest-2026-site-map.svg"><?php esc_html_e( 'Save the map to your phone ↓', 'tapaufest-2026' ); ?></a> <span class="tf-note"><?php esc_html_e( 'Draft layout. The final map comes from production.', 'tapaufest-2026' ); ?></span></p>
-<!-- /wp:paragraph -->
+
 <?php
 echo tapaufest_heading( __( 'Help on site', 'tapaufest-2026' ), __( 'Need a hand?', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_grid( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
