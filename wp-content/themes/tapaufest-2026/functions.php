@@ -24,6 +24,8 @@ add_action( 'after_setup_theme', 'tapaufest_theme_setup' );
  */
 function tapaufest_theme_assets() {
 	wp_enqueue_style( 'tapaufest-2026', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
+	// In <head>, not deferred: the pagereveal listener has to exist before first render.
+	wp_enqueue_script( 'tapaufest-2026-view-transitions', get_theme_file_uri( 'assets/view-transitions.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => false ) );
 	wp_enqueue_script( 'tapaufest-2026-motion', get_theme_file_uri( 'assets/motion.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }
 add_action( 'wp_enqueue_scripts', 'tapaufest_theme_assets' );

@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.9.0
+Version: 1.10.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -1132,5 +1132,75 @@ body::before {
 	.tf-site-header .is-menu-open .tf-social .tf-icon {
 		width: 26px;
 		height: 26px;
+	}
+}
+
+/* ---------------------------------------------------------------- view transitions
+ * Cards grow into their detail pages (artists, shows, vendors) and shrink back.
+ * Cross-document view transitions: Chrome/Edge 126+, Safari 18.2+. Elsewhere,
+ * and for reduced-motion visitors, pages simply load. */
+@media (prefers-reduced-motion: no-preference) {
+	@view-transition {
+		navigation: auto;
+	}
+	/* Header and alert bar stay put while the page changes under them. */
+	.tf-site-header {
+		view-transition-name: tf-header;
+	}
+	/* The detail page's photo and title are the other half of the pair
+	 * (only when no card on this page is already using the names). */
+	html:not(:has(.tf-vt-active)) .tf-artist-head .tf-artist-photo img {
+		view-transition-name: tf-vt-img;
+	}
+	html:not(:has(.tf-vt-active)) .tf-artist-intro > .wp-block-post-title {
+		view-transition-name: tf-vt-title;
+	}
+	::view-transition-group(tf-vt-img),
+	::view-transition-group(tf-vt-title) {
+		animation-duration: 420ms;
+		animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+	}
+	::view-transition-group(tf-vt-img) {
+		border-radius: 6px;
+		overflow: hidden;
+	}
+	/* The photo keeps its crop while it morphs, instead of stretching. */
+	::view-transition-old(tf-vt-img),
+	::view-transition-new(tf-vt-img) {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+	}
+	::view-transition-old(tf-vt-title),
+	::view-transition-new(tf-vt-title) {
+		height: 100%;
+		width: auto;
+	}
+	::view-transition-old(root) {
+		animation: 200ms ease-out both tf-vt-fade-out;
+	}
+	::view-transition-new(root) {
+		animation: 300ms ease-out 60ms both tf-vt-fade-in;
+	}
+	::view-transition-group(tf-header) {
+		animation: none;
+	}
+	@keyframes tf-vt-fade-out {
+		to {
+			opacity: 0;
+		}
+	}
+	@keyframes tf-vt-fade-in {
+		from {
+			opacity: 0;
+			transform: translateY(8px);
+		}
+	}
+	/* A card being morphed is never hidden by the scroll reveal. */
+	.tf-motion .tf-vt-active.tf-reveal,
+	.tf-motion .tf-vt-active .tf-reveal {
+		opacity: 1;
+		transform: none;
+		transition: none;
 	}
 }
