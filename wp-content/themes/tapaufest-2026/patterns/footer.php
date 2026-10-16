@@ -23,14 +23,14 @@ $tf_cols = array(
 		home_url( '/faq/' )  => __( 'FAQ', 'tapaufest-2026' ),
 	),
 	__( 'Look back', 'tapaufest-2026' ) => array(
-		home_url( '/recap/' )   => __( '2026 recap', 'tapaufest-2026' ),
+		home_url( '/recap/' )   => tapaufest_is_recap() ? __( '2026 recap', 'tapaufest-2026' ) : __( '2025 recap', 'tapaufest-2026' ),
 		home_url( '/archive/' ) => __( 'Past editions', 'tapaufest-2026' ),
 		'https://tapau.asia/'   => __( 'tapau.asia', 'tapaufest-2026' ),
 	),
 	__( 'Follow', 'tapaufest-2026' )    => array(
 		'https://www.instagram.com/tapaufest/' => 'Instagram',
 		'https://www.tiktok.com/@tapaufest'    => 'TikTok',
-		'https://x.com/TAPAUfest'              => 'X',
+		'https://x.com/TAPAUfest'              => 'X (Twitter)',
 		'https://www.facebook.com/TAPAUfest/'  => 'Facebook',
 	),
 );
@@ -42,7 +42,7 @@ $tf_cols = array(
 <!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group">
 <!-- wp:image {"width":"120px","sizeSlug":"full"} -->
-<figure class="wp-block-image size-full is-resized"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/tapaufest-2026-logo.webp' ) ); ?>" alt="" style="width:120px"/></figure>
+<figure class="wp-block-image size-full is-resized"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/images/tapaufest-2026-logo.webp' ) ); ?>" alt="TAPAUfest 2026" style="width:120px"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"className":"tf-hashtags"} -->

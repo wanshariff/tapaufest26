@@ -7,13 +7,15 @@
 	--tf-kopi: var(--wp--preset--color--kopi, #6f310b);
 	--tf-kopi-deep: var(--wp--preset--color--kopi-deep, #4e2207);
 	--tf-cili: var(--wp--preset--color--cili, #e33d07);
+	/* Deep cili for text and filled buttons: 6.2:1 with paper-hi text, 5.1:1 as text on paper. */
+	--tf-cili-ink: var(--wp--preset--color--cili-deep, #a82e05);
 	--tf-paper: var(--wp--preset--color--paper, #f8daa5);
 	--tf-paper-hi: var(--wp--preset--color--paper-hi, #fff2da);
 	--tf-paper-lo: var(--wp--preset--color--paper-lo, #f1cc8e);
 	--tf-gold: var(--wp--preset--color--gold, #f2a93b);
 	--tf-specs: var(--wp--preset--color--specs, #3d8bd0);
 	--tf-ink: var(--wp--preset--color--ink, #1e1208);
-	--tf-muted: var(--wp--preset--color--muted, #8a5a33);
+	--tf-muted: var(--wp--preset--color--muted, #5a3a20);
 	--tf-ok: #2e7d32;
 	--tf-display: var(--wp--preset--font-family--display, "Bagel Fat One", "Arial Black", Impact, sans-serif);
 	--tf-body: var(--wp--preset--font-family--body, Archivo, "Helvetica Neue", Arial, sans-serif);
@@ -51,7 +53,7 @@
 }
 .tf-btn--cili,
 .tf-btn--cili:hover {
-	background: var(--tf-cili);
+	background: var(--tf-cili-ink);
 	color: var(--tf-paper-hi);
 }
 .tf-btn--sm {
@@ -70,7 +72,7 @@
 .tf-toggle button:focus-visible,
 .tf-star:focus-visible,
 .tf-play:focus-visible {
-	outline: 3px solid var(--tf-specs);
+	outline: 3px solid var(--tf-ink);
 	outline-offset: 3px;
 }
 .tf-ctas {
@@ -211,7 +213,7 @@
 	font-family: var(--tf-display);
 	font-weight: 400;
 	font-size: 30px;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 
 /* ---------- now / next ---------- */
@@ -235,7 +237,7 @@
 	font-family: var(--tf-display);
 	font-weight: 400;
 	font-size: 24px;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-stagecard__now {
 	display: flex;
@@ -264,7 +266,7 @@
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
-	background: var(--tf-cili);
+	background: var(--tf-cili-ink);
 	animation: tf-pulse 1.4s infinite;
 }
 @keyframes tf-pulse {
@@ -378,7 +380,7 @@
 	text-shadow: 3px 3px 0 var(--tf-ink);
 }
 .tf-card__ph {
-	background-color: var(--tf-cili);
+	background-color: var(--tf-cili-ink);
 }
 .tf-artist--big:not(.is-filtered) .tf-card__img,
 .tf-artist--big:not(.is-filtered) .tf-card__ph {
@@ -432,7 +434,7 @@
 	height: 40px;
 	border-radius: 50%;
 	border: var(--tf-line);
-	background: var(--tf-cili);
+	background: var(--tf-cili-ink);
 	color: var(--tf-paper-hi);
 	cursor: pointer;
 	padding: 0;
@@ -602,7 +604,7 @@
 }
 .tf-slot__clash {
 	font-weight: 700;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-slot__clash[hidden] {
 	display: none;
@@ -636,7 +638,7 @@
 	cursor: pointer;
 }
 .tf-star[aria-pressed="true"] {
-	background: var(--tf-cili);
+	background: var(--tf-cili-ink);
 	color: var(--tf-paper-hi);
 }
 .tf-mine__empty {
@@ -803,7 +805,7 @@
 	font-family: var(--tf-display);
 	font-weight: 400;
 	font-size: 34px;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-price__was {
 	font-size: 14px;
@@ -904,7 +906,7 @@
 	font-family: var(--tf-display);
 	font-weight: 400;
 	font-size: 28px;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-faq__item {
 	border: var(--tf-line);
@@ -930,7 +932,7 @@
 	font-family: var(--tf-display);
 	font-size: 24px;
 	line-height: 1;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-faq__item[open] summary::after {
 	content: "\2212";
@@ -1031,7 +1033,7 @@
 	font-family: var(--tf-display);
 	font-weight: 400;
 	font-size: 28px;
-	color: var(--tf-cili);
+	color: var(--tf-cili-ink);
 }
 .tf-sheet__acts {
 	margin: 12px 0 0;
@@ -1076,4 +1078,42 @@
 
 .tf-artist-details .tf-player {
 	max-width: 760px;
+}
+
+/* ---------- home lineup strip (phones) ---------- */
+@media (max-width: 600px) {
+	.tf-lineup--strip .tf-grid {
+		display: flex;
+		gap: 12px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+		padding: 4px max(16px, env(safe-area-inset-left, 0px)) 14px;
+		scrollbar-width: none;
+	}
+	.tf-lineup--strip .tf-grid::-webkit-scrollbar {
+		display: none;
+	}
+	.tf-lineup--strip .tf-artist,
+	.tf-lineup--strip .tf-artist--big:not(.is-filtered) {
+		flex: 0 0 62%;
+		scroll-snap-align: start;
+		grid-column: auto;
+	}
+	.tf-lineup--strip .tf-artist--big:not(.is-filtered) .tf-card__img {
+		aspect-ratio: 4 / 3;
+	}
+	.tf-lineup--strip .tf-artist--big:not(.is-filtered) .tf-artist__name {
+		font-size: 21px;
+	}
+}
+
+/* ---------- mini FAQ ---------- */
+.tf-faq--mini .tf-faq__group {
+	margin: 0;
+}
+
+/* ---------- comfortable targets (WCAG 2.5.8) ---------- */
+.tf-toggle button {
+	min-height: 44px;
 }

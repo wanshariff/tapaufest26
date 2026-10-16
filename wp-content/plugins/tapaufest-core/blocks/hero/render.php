@@ -55,15 +55,9 @@ $tf_join = tapaufest_setting( 'join_url' );
 				<a class="tf-btn" href="<?php echo esc_url( $tf_join ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Join Geng TAPAU. It’s free.', 'tapaufest' ); ?></a>
 			<?php endif; ?>
 		</div>
-		<p class="tf-hero__note">
-			<?php
-			echo esc_html(
-				'early' === $tf_state
-					? __( 'Waitlist first: use the code in your email for the early-bird price. Public sale opens after.', 'tapaufest' )
-					: __( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' )
-			);
-			?>
-		</p>
+		<?php if ( 'public' === $tf_state ) : ?>
+			<p class="tf-hero__note"><?php esc_html_e( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' ); ?></p>
+		<?php endif; ?>
 		<?php $tf_left = tapaufest_days_to_go(); ?>
 		<?php if ( $tf_left > 0 ) : ?>
 			<p class="tf-countdown"><b><?php echo esc_html( number_format_i18n( $tf_left ) ); ?></b> <span><?php echo esc_html( _n( 'day to go', 'days to go', $tf_left, 'tapaufest' ) ); ?></span></p>

@@ -9,15 +9,16 @@
  */
 
 echo tapaufest_band_open( 'kopi' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-echo tapaufest_heading( __( 'Last year', 'tapaufest-2026' ), __( 'What it feels like', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_heading( __( 'Last year', 'tapaufest-2026' ), __( 'What it feels like', 'tapaufest-2026' ), __( 'TAPAUfest 2025 ASEAN, by the lake in Lenggong.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_film( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	__( 'Watch: TAPAUfest 2025 ASEAN, The Aftermovie ↗', 'tapaufest-2026' ),
 	tapaufest_theme_setting( 'aftermovie_url', 'https://player.castr.com/vod/0OnEi4OQE72IphJS' ),
 	array(
 		'2,000+'        => __( 'festival-goers in 2025', 'tapaufest-2026' ),
 		'12 acts'       => __( 'from 4 ASEAN countries', 'tapaufest-2026' ),
-		'Best Festival' => __( 'voted on Juice Best Of ’25', 'tapaufest-2026' ),
-	)
+	),
+	'pentas-day',
+	true
 );
 echo tapaufest_photo_strip( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	array(

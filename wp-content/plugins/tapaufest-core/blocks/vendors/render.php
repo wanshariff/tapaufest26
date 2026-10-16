@@ -23,7 +23,7 @@ $tf_vendors = get_posts(
 ?>
 <div <?php echo get_block_wrapper_attributes( array( 'class' => 'tf-vendors' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 	<?php if ( ! $tf_vendors ) : ?>
-		<p class="tf-empty"><?php esc_html_e( 'Vendor list coming soon.', 'tapaufest' ); ?></p>
+		<p class="tf-empty"><?php esc_html_e( 'This year’s stalls are announced in November.', 'tapaufest' ); ?></p>
 	<?php else : ?>
 		<ul class="tf-vendors__list">
 			<?php foreach ( $tf_vendors as $tf_v ) : ?>

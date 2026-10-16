@@ -10,8 +10,10 @@
  */
 
 $tf_maps = tapaufest_theme_setting( 'maps_url', 'https://www.google.com/maps/search/Sungai+Congkak+Hulu+Langat' );
-echo tapaufest_page_head( __( 'Plan your trip', 'tapaufest-2026' ), __( 'Getting to Sungai Congkak', 'tapaufest-2026' ), __( 'New venue this year. Here’s how to get there, where to sleep and what to pack.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_page_head( __( 'Plan your trip', 'tapaufest-2026' ), __( 'Getting to Sungai Congkak', 'tapaufest-2026' ), __( 'New venue this year: a riverside site in Hulu Langat, Selangor. Here’s how to get there, where to sleep and what to pack. The full guide, with parking and drop-off points, lands by 6 Nov.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_band_open( 'kopi' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_photo( 'aerial', __( 'The 2025 festival site from above', 'tapaufest-2026' ), 'tf-wide-photo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_heading( __( 'Getting there', 'tapaufest-2026' ), __( 'Car, Grab or carpool', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_grid( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	array(
 		tapaufest_card( __( 'Address', 'tapaufest-2026' ), array( esc_html( tapaufest_theme_setting( 'venue', 'Sungai Congkak, Hulu Langat, Selangor' ) ) . ' ' . tapaufest_tbc( __( 'exact site TBC', 'tapaufest-2026' ) ), '<a href="' . esc_url( $tf_maps ) . '">' . esc_html__( 'Open in Maps ↗', 'tapaufest-2026' ) . '</a>' ) ),
@@ -25,7 +27,7 @@ echo tapaufest_band_open( 'paper' ); // phpcs:ignore WordPress.Security.EscapeOu
 echo tapaufest_heading( __( 'Where to sleep', 'tapaufest-2026' ), __( 'Camp or check in', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_grid( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	array(
-		tapaufest_card( __( 'Festival campsite', 'tapaufest-2026' ), array( esc_html__( 'The official campsite, a short walk from PENTAS. Included with Duo Campers passes, with bonfire sets after midnight.', 'tapaufest-2026' ) ) ),
+		tapaufest_card( __( 'Festival campsite', 'tapaufest-2026' ), array( esc_html__( 'The official campsite, a short walk from PENTAS. Included with Duo Campers passes, with bonfire sets after midnight.', 'tapaufest-2026' ) ), 'campsite' ),
 		tapaufest_card( __( 'Nearby campsites', 'tapaufest-2026' ), array( esc_html__( 'Other campsites along the river. Book with them directly.', 'tapaufest-2026' ), tapaufest_tbc( __( 'List coming soon', 'tapaufest-2026' ) ) ) ),
 		tapaufest_card( __( 'Homestays and resorts', 'tapaufest-2026' ), array( esc_html__( 'Around Hulu Langat and Semenyih.', 'tapaufest-2026' ), tapaufest_tbc( __( 'Partner deals TBC', 'tapaufest-2026' ) ) ) ),
 	)

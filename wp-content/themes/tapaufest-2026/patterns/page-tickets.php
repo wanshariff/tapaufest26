@@ -9,8 +9,9 @@
  * @package Tapaufest2026
  */
 
-echo tapaufest_page_head( __( 'Tickets', 'tapaufest-2026' ), __( 'Pick your pass', 'tapaufest-2026' ), __( 'Checkout happens on TAPAUtix. Your e-ticket arrives by email.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_page_head( __( 'Tickets', 'tapaufest-2026' ), __( 'Pick your pass', 'tapaufest-2026' ), __( 'Four passes for one weekend by the river. Pay on TAPAUtix and your e-ticket arrives by email.', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 echo tapaufest_band_open( 'kopi' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_sr_heading( __( 'Passes', 'tapaufest-2026' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
 <!-- wp:tapaufest/tickets {"compare":true} /-->
 <?php

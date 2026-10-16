@@ -233,12 +233,12 @@ function tapaufest_seed() {
 		'The basics' => array(
 			array( 'When and where is it?', '12 and 13 Dec 2026 at Sungai Congkak, Hulu Langat, Selangor. Gates open at 11am (to be confirmed).' ),
 			array( 'Can I go solo?', 'Plenty do. Grab a Solo pass and say hi to Geng TAPAU at the WARUNG.' ),
-			array( 'Can I bring my kids?', 'Yes. Children aged 12 and below must stay with a parent or guardian at all times.' ),
+			array( 'Can I bring my kids?', 'Yes. Children aged 12 and below must stay with a parent or guardian at all times.', true ),
 		),
 		'Tickets'    => array(
 			array( 'How do my tickets work?', 'Your e-ticket arrives by email from TAPAUtix. Swap it for a wristband at the gate and keep it on all weekend. Lost wristbands can’t be replaced.' ),
-			array( 'Can I get a refund?', 'All sales are final, unless the festival is cancelled or postponed.' ),
-			array( 'What is early access?', 'People on the waitlist get a code by email. Enter it at TAPAUtix checkout for the early-bird price before public sale opens.' ),
+			array( 'Can I get a refund?', 'All sales are final, unless the festival is cancelled or postponed.', true ),
+			array( 'What is early access?', 'People on the waitlist get a code by email. Enter it at TAPAUtix checkout for the early-bird price before public sale opens.', true ),
 		),
 		'On site'    => array(
 			array( 'What can’t I bring?', 'Glass and bottles, cigarettes and vapes, professional recording gear, weapons, lasers, fireworks and flares, and animals.' ),
@@ -246,7 +246,7 @@ function tapaufest_seed() {
 			array( 'Can I pay by card?', 'Most stalls take DuitNow QR and cards. Bring some cash for smaller stalls.' ),
 		),
 		'Weather'    => array(
-			array( 'What happens if it rains?', 'December is rainy season. Our rain and cancellation policy goes here before tickets go on sale.' ),
+			array( 'What happens if it rains?', 'December is rainy season, so pack a poncho and slippers that can get wet. Weather updates and any set changes post to the alert bar at the top of every page first. All sales are final unless the festival is cancelled or postponed.', true ),
 			array( 'Are river activities safe?', 'KEMBARA activities only run when water levels are safe. Changes post to the alert bar and the WhatsApp channel first.' ),
 		),
 	);
@@ -264,7 +264,7 @@ function tapaufest_seed() {
 			$id = tapaufest_demo_insert(
 				'tf_faq',
 				$item[0],
-				array(),
+				! empty( $item[2] ) ? array( 'tf_featured' => true ) : array(),
 				array(
 					'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $item[1] ) . '</p><!-- /wp:paragraph -->',
 					'menu_order'   => $order++,
@@ -277,18 +277,8 @@ function tapaufest_seed() {
 	}
 
 	$vendors = array(
-		array( 'warung', 'Warung Pak Din', 'Nasi lemak, all day' ),
-		array( 'warung', 'Roti John Bros', 'Roti john, late night' ),
-		array( 'warung', 'Kopi Lepak', 'Kopi, teh tarik, Milo ais' ),
-		array( 'warung', 'Satay Corner', 'Satay and ketupat' ),
-		array( 'warung', 'Kedai Hijau', 'Vegetarian rice bowls' ),
-		array( 'warung', 'Ais Kacang Kak Mah', 'Desserts' ),
 		array( 'pasar', 'TAPAUfest x Humblezing', 'Festival merch. Sold out fast in 2025.' ),
 		array( 'pasar', 'Pekan Pop Up', 'Curators of the 2025 PASAR' ),
-		array( 'pasar', 'Rak Vinyl', 'Indie vinyl and tapes' ),
-		array( 'pasar', 'Zine Corner', 'Zines and prints' ),
-		array( 'pasar', 'Hulu Langat Handmade', 'Local crafts' ),
-		array( 'pasar', 'Cetak Studio', 'Live screenprinting' ),
 	);
 	foreach ( $vendors as $i => $v ) {
 		tapaufest_demo_insert(

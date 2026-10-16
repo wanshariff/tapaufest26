@@ -7,7 +7,7 @@ Description: Block theme for tapaufest.asia, the 2026 edition at Sungai Congkak.
 Requires at least: 6.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Version: 1.1.0
+Version: 1.2.0
 License: GNU General Public License v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: tapaufest-2026
@@ -35,7 +35,7 @@ body::before {
 }
 
 :focus-visible {
-	outline: 3px solid var(--wp--preset--color--specs);
+	outline: 3px solid var(--wp--preset--color--ink);
 	outline-offset: 3px;
 }
 
@@ -186,7 +186,7 @@ h3 {
 	font-weight: 700;
 	letter-spacing: 0.14em;
 	text-transform: uppercase;
-	color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--cili-deep);
 	margin: 0;
 }
 
@@ -233,14 +233,14 @@ h3 {
 	width: 20px;
 	height: 20px;
 	border-radius: 50%;
-	background: var(--wp--preset--color--cili);
+	background: var(--wp--preset--color--cili-deep);
 	border: 3px solid var(--wp--preset--color--ink);
 }
 .tf-year {
 	font-family: var(--wp--preset--font-family--display);
 	font-size: 2rem;
 	line-height: 1;
-	color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--cili-deep);
 	margin: 0;
 }
 
@@ -268,7 +268,7 @@ h3 {
 	border: 0;
 	top: 0;
 	font-weight: 700;
-	color: var(--wp--preset--color--cili);
+	color: var(--wp--preset--color--cili-deep);
 }
 
 .tf-reel {
@@ -291,7 +291,7 @@ h3 {
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
-	background: var(--wp--preset--color--cili);
+	background: var(--wp--preset--color--cili-deep);
 	border: 3px solid var(--wp--preset--color--ink);
 }
 .tf-reel__play svg {
@@ -496,4 +496,173 @@ main.wp-block-group > .wp-block-post-content {
 }
 .tf-footer-bar .tf-tbc {
 	background: var(--wp--preset--color--gold);
+}
+
+/* ---------- Elevation pass, 16 Oct (audit fixes and plan sections) ---------- */
+.screen-reader-text {
+	border: 0;
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+/* Text links that act as buttons get a 44px target. */
+.tf-more a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+.tf-footer-links {
+	gap: 2px;
+}
+.tf-footer-links a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 32px;
+}
+.tf-site-header .wp-block-navigation__responsive-container-open {
+	width: 44px;
+	height: 44px;
+	justify-content: center;
+	border: 2px solid currentColor;
+	border-radius: 6px;
+}
+
+/* Section heads: a little more air between the head and the content. */
+.tf-section-head .tf-lead {
+	max-width: 58ch;
+	color: var(--wp--preset--color--muted);
+}
+
+/* Juice Best Of '25 badge */
+.tf-juice {
+	display: grid;
+	gap: 6px;
+	justify-items: start;
+}
+.tf-juice figure {
+	margin: 0;
+}
+.tf-juice img {
+	width: min(220px, 100%);
+	height: auto;
+}
+.tf-juice__cap {
+	margin: 0;
+	font-weight: 700;
+}
+
+/* Photo + text split (home: getting there) */
+.tf-split-photo {
+	margin: 0;
+}
+.tf-split-photo img,
+.tf-wide-photo img,
+.tf-band-photo img {
+	display: block;
+	width: 100%;
+	object-fit: cover;
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+	box-shadow: 5px 5px 0 var(--wp--preset--color--ink);
+}
+.tf-split-photo img {
+	aspect-ratio: 4 / 3;
+}
+.tf-wide-photo {
+	margin: 0 0 var(--wp--preset--spacing--50);
+}
+.tf-wide-photo img {
+	aspect-ratio: 21 / 8;
+}
+.tf-band-photo {
+	margin: 0 0 16px;
+}
+.tf-band-photo img {
+	aspect-ratio: 16 / 9;
+}
+.tf-facts {
+	list-style: none;
+	padding: 0;
+	margin: 0 0 var(--wp--preset--spacing--40);
+	display: grid;
+	gap: 10px;
+}
+.tf-facts li {
+	padding-left: 18px;
+	border-left: 4px solid var(--wp--preset--color--gold);
+}
+.tf-facts strong {
+	display: block;
+}
+.wp-block-button.is-style-outline .wp-block-button__link {
+	background: transparent;
+	color: var(--wp--preset--color--ink);
+	border-color: var(--wp--preset--color--ink);
+}
+
+/* Archive: 2025 poster and photo */
+.tf-archive-media {
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	gap: 14px;
+	margin-top: 14px;
+}
+.tf-archive-media figure {
+	margin: 0;
+}
+.tf-archive-media img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: 3px solid var(--wp--preset--color--ink);
+	border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+	.wp-block-group .tf-hero {
+		padding-block: 20px 28px;
+	}
+	.tf-hero .tf-hero__logo {
+		width: min(300px, 78%);
+	}
+	.tf-hero .tf-countdown {
+		margin-top: 14px;
+	}
+	.tf-wide-photo img {
+		aspect-ratio: 16 / 9;
+	}
+	.tf-archive-media {
+		grid-template-columns: 1fr;
+	}
+	.tf-archive-media .tf-archive-photo {
+		display: none;
+	}
+	/* Zones: two up on phones so the home page stays short. */
+	.wp-block-group.tf-zone-grid {
+		grid-template-columns: 1fr 1fr;
+		gap: 12px;
+	}
+	.tf-zone-grid .tf-photo-card {
+		padding-bottom: 12px;
+	}
+	.tf-zone-grid .tf-photo-card > :not(.tf-card-photo) {
+		margin-inline: 10px;
+	}
+	.tf-zone-grid .tf-photo-card h3 {
+		font-size: 1.125rem;
+	}
+	.tf-zone-grid .tf-photo-card p {
+		font-size: 0.875rem;
+		line-height: 1.4;
+	}
+	.tf-zone-grid .tf-note {
+		font-size: 0.625rem;
+	}
 }

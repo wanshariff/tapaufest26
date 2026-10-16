@@ -38,6 +38,17 @@ echo tapaufest_band_open( 'paper' ); // phpcs:ignore WordPress.Security.EscapeOu
 <!-- wp:paragraph -->
 <p><?php echo esc_html( $tf_e[2] ); ?></p>
 <!-- /wp:paragraph -->
+<?php if ( '2025' === $tf_e[0] ) : ?>
+<!-- wp:group {"className":"tf-archive-media","layout":{"type":"default"}} -->
+<div class="wp-block-group tf-archive-media">
+<?php
+echo tapaufest_photo( 'poster-2025', __( 'TAPAUfest 2025 ASEAN poster', 'tapaufest-2026' ), 'tf-archive-poster' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+echo tapaufest_photo( 'pentas-day', __( 'PENTAS by the lake at Resort Tasik Raban, 2025', 'tapaufest-2026' ), 'tf-archive-photo' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+?>
+</div>
+<!-- /wp:group -->
+<?php echo tapaufest_more_link( __( '2025 photos and aftermovie →', 'tapaufest-2026' ), '/recap/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+<?php endif; ?>
 </div>
 <!-- /wp:group -->
 <?php endforeach; ?>

@@ -149,6 +149,12 @@ function tapaufest_fields() {
 				'type'  => 'checkbox',
 			),
 		),
+		'tf_faq'     => array(
+			'tf_featured' => array(
+				'label' => __( 'Show on the home page (mini FAQ)', 'tapaufest' ),
+				'type'  => 'checkbox',
+			),
+		),
 		'tf_vendor'  => array(
 			'tf_vendor_type' => array(
 				'label'   => __( 'Zone', 'tapaufest' ),

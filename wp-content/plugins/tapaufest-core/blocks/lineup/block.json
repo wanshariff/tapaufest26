@@ -26,6 +26,14 @@
 		"moreLink": {
 			"type": "boolean",
 			"default": false
+		},
+		"headlinersFirst": {
+			"type": "boolean",
+			"default": false
+		},
+		"strip": {
+			"type": "boolean",
+			"default": false
 		}
 	},
 	"editorScript": "tapaufest-blocks-editor",

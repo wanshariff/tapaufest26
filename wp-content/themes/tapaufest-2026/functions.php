@@ -245,12 +245,25 @@ function tapaufest_photo_strip( $photos ) {
  *
  * @param string[] $cards Card markup.
  * @param string   $min   Minimum column width.
+ * @param string   $class Extra class name.
  * @return string
  */
-function tapaufest_grid( $cards, $min = '15rem' ) {
-	return '<!-- wp:group {"layout":{"type":"grid","minimumColumnWidth":"' . esc_attr( $min ) . '"}} --><div class="wp-block-group">'
+function tapaufest_grid( $cards, $min = '15rem', $class = '' ) {
+	$attrs = $class ? ',"className":"' . esc_attr( $class ) . '"' : '';
+	return '<!-- wp:group {"layout":{"type":"grid","minimumColumnWidth":"' . esc_attr( $min ) . '"}' . $attrs . '} --><div class="wp-block-group' . ( $class ? ' ' . esc_attr( $class ) : '' ) . '">'
 		. implode( '', $cards )
 		. '</div><!-- /wp:group -->';
+}
+
+/**
+ * Heading for screen readers only, to keep the outline in order where a
+ * visible heading would repeat the page title.
+ *
+ * @param string $text Heading text.
+ * @return string
+ */
+function tapaufest_sr_heading( $text ) {
+	return '<!-- wp:heading {"className":"screen-reader-text"} --><h2 class="wp-block-heading screen-reader-text">' . esc_html( $text ) . '</h2><!-- /wp:heading -->';
 }
 
 /**
@@ -300,7 +313,7 @@ function tapaufest_zone_cards( $limit = 0 ) {
 		}
 		$cards[] = tapaufest_card( $z[0], $paras, isset( $z[3] ) ? $z[3] : '' );
 	}
-	return tapaufest_grid( $cards, '14rem' );
+	return tapaufest_grid( $cards, '14rem', 'tf-zone-grid' );
 }
 
 /**
@@ -310,9 +323,10 @@ function tapaufest_zone_cards( $limit = 0 ) {
  * @param string $url     Link URL.
  * @param array  $stats   Number => label pairs.
  * @param string $photo   Background photo name, or '' for none.
+ * @param bool   $juice   Add the Juice Best Of '25 badge card.
  * @return string
  */
-function tapaufest_film( $caption, $url, $stats, $photo = 'pentas-day' ) {
+function tapaufest_film( $caption, $url, $stats, $photo = 'pentas-day', $juice = false ) {
 	$out  = '<!-- wp:columns --><div class="wp-block-columns">';
 	$out .= '<!-- wp:column {"width":"66.66%"} --><div class="wp-block-column" style="flex-basis:66.66%">';
 	$out .= '<!-- wp:html --><a class="tf-reel" href="' . esc_url( $url ) . '"' . ( $photo ? ' style="background-image:linear-gradient(rgba(30,18,8,.25),rgba(30,18,8,.55)),url(' . esc_url( tapaufest_photo_url( $photo ) ) . ')"' : '' ) . '><span class="tf-reel__play" aria-hidden="true"><svg viewBox="0 0 10 12"><path d="M0 0L10 6L0 12z"/></svg></span><span class="tf-reel__cap">' . esc_html( $caption ) . '</span></a><!-- /wp:html -->';
@@ -321,6 +335,12 @@ function tapaufest_film( $caption, $url, $stats, $photo = 'pentas-day' ) {
 	foreach ( $stats as $num => $label ) {
 		$out .= '<!-- wp:group {"className":"is-style-tf-ink-card","layout":{"type":"default"}} --><div class="wp-block-group is-style-tf-ink-card">';
 		$out .= '<!-- wp:paragraph {"className":"tf-stat"} --><p class="tf-stat"><b>' . esc_html( $num ) . '</b>' . esc_html( $label ) . '</p><!-- /wp:paragraph -->';
+		$out .= '</div><!-- /wp:group -->';
+	}
+	if ( $juice ) {
+		$out .= '<!-- wp:group {"className":"is-style-tf-ink-card tf-juice","layout":{"type":"default"}} --><div class="wp-block-group is-style-tf-ink-card tf-juice">';
+		$out .= '<!-- wp:image {"sizeSlug":"full"} --><figure class="wp-block-image size-full"><img src="' . esc_url( get_theme_file_uri( 'assets/images/juice-best-of-25.webp' ) ) . '" alt="' . esc_attr__( 'Juice Best Of ’25', 'tapaufest-2026' ) . '" width="600" height="271" loading="lazy"/></figure><!-- /wp:image -->';
+		$out .= '<!-- wp:paragraph {"className":"tf-juice__cap"} --><p class="tf-juice__cap">' . esc_html__( 'Voted Best Festival on Juice Best Of ’25', 'tapaufest-2026' ) . '</p><!-- /wp:paragraph -->';
 		$out .= '</div><!-- /wp:group -->';
 	}
 	$out .= '</div><!-- /wp:column --></div><!-- /wp:columns -->';
@@ -336,4 +356,114 @@ function tapaufest_film( $caption, $url, $stats, $photo = 'pentas-day' ) {
  */
 function tapaufest_more_link( $label, $path ) {
 	return '<!-- wp:paragraph {"className":"tf-more"} --><p class="tf-more"><a href="' . esc_url( home_url( $path ) ) . '">' . esc_html( $label ) . '</a></p><!-- /wp:paragraph -->';
+}
+
+/**
+ * Page descriptions used for the meta description and social cards.
+ *
+ * @return array Path => description.
+ */
+function tapaufest_page_descriptions() {
+	return array(
+		'/'           => __( 'TAPAUfest 2026: two days of South East Asian indie music, films, workshops and camping at Sungai Congkak, Selangor. 12 and 13 Dec. Tickets on TAPAUtix.', 'tapaufest-2026' ),
+		'lineup'      => __( 'Who’s playing TAPAUfest 2026. Filter by day and country, and play a track before you go.', 'tapaufest-2026' ),
+		'timetable'   => __( 'Set times for every stage at TAPAUfest 2026. Star your sets, catch clashes and add them to your calendar.', 'tapaufest-2026' ),
+		'tickets'     => __( 'Solo Day, Solo Weekend, Geng Weekend and Duo Campers passes for TAPAUfest 2026, sold on TAPAUtix.', 'tapaufest-2026' ),
+		'experience'  => __( 'PENTAS, BENGKEL, LAYAR, PASAR, WARUNG, KEMBARA and the campsite: everything running at TAPAUfest 2026.', 'tapaufest-2026' ),
+		'plan'        => __( 'Getting to Sungai Congkak, where to camp or stay, and what to pack for TAPAUfest 2026.', 'tapaufest-2026' ),
+		'map'         => __( 'Site map, first aid, lost and found and live updates for TAPAUfest 2026.', 'tapaufest-2026' ),
+		'faq'         => __( 'Tickets, kids, rain, refunds and what you can bring to TAPAUfest 2026.', 'tapaufest-2026' ),
+		'recap'       => __( 'Photos, the aftermovie and set recordings from TAPAUfest.', 'tapaufest-2026' ),
+		'archive'     => __( 'Every TAPAUfest since the first crowdfunded edition in Penang in 2014.', 'tapaufest-2026' ),
+	);
+}
+
+/**
+ * Title: "Lineup · TAPAUfest 2026", and the date and venue on the home page.
+ *
+ * @param array $parts Title parts.
+ * @return array
+ */
+function tapaufest_title_parts( $parts ) {
+	$edition = tapaufest_theme_setting( 'edition', 'TAPAUfest 2026' );
+	if ( is_front_page() ) {
+		$parts['title']   = $edition;
+		$parts['tagline'] = __( '12 & 13 Dec, Sungai Congkak', 'tapaufest-2026' );
+	} else {
+		$parts['site'] = $edition;
+	}
+	return $parts;
+}
+add_filter( 'document_title_parts', 'tapaufest_title_parts' );
+add_filter(
+	'document_title_separator',
+	function () {
+		return '·';
+	}
+);
+
+/**
+ * Meta description, canonical, Open Graph and X card tags.
+ */
+function tapaufest_social_meta() {
+	if ( is_admin() || is_404() ) {
+		return;
+	}
+	$desc  = tapaufest_page_descriptions();
+	$text  = $desc['/'];
+	$image = get_theme_file_uri( 'assets/images/og-tapaufest-2026.jpg' );
+	$url   = home_url( '/' );
+	if ( is_singular( 'tf_artist' ) ) {
+		$post  = get_queried_object();
+		$text  = has_excerpt( $post ) ? get_the_excerpt( $post ) : $desc['lineup'];
+		$url   = get_permalink( $post );
+		$thumb = get_the_post_thumbnail_url( $post, 'large' );
+		$image = $thumb ? $thumb : $image;
+	} elseif ( is_post_type_archive( 'tf_artist' ) ) {
+		$text = $desc['lineup'];
+		$url  = get_post_type_archive_link( 'tf_artist' );
+	} elseif ( is_page() ) {
+		$slug = get_post_field( 'post_name', get_queried_object_id() );
+		$text = isset( $desc[ $slug ] ) ? $desc[ $slug ] : $text;
+		$url  = get_permalink();
+	}
+	$title = wp_get_document_title();
+	$tags  = array(
+		array( 'name', 'description', $text ),
+		array( 'property', 'og:type', 'website' ),
+		array( 'property', 'og:site_name', 'TAPAUfest' ),
+		array( 'property', 'og:title', $title ),
+		array( 'property', 'og:description', $text ),
+		array( 'property', 'og:url', $url ),
+		array( 'property', 'og:image', $image ),
+		array( 'property', 'og:locale', 'en_MY' ),
+		array( 'name', 'twitter:card', 'summary_large_image' ),
+		array( 'name', 'twitter:site', '@TAPAUfest' ),
+	);
+	foreach ( $tags as $tag ) {
+		printf( '<meta %s="%s" content="%s">' . "\n", esc_attr( $tag[0] ), esc_attr( $tag[1] ), esc_attr( $tag[2] ) );
+	}
+	if ( ! is_singular() || is_front_page() ) {
+		printf( '<link rel="canonical" href="%s">' . "\n", esc_url( $url ) );
+	}
+}
+add_action( 'wp_head', 'tapaufest_social_meta', 5 );
+
+/**
+ * Whether the site is in the recap state.
+ *
+ * @return bool
+ */
+function tapaufest_is_recap() {
+	return function_exists( 'tapaufest_state' ) && 'recap' === tapaufest_state();
+}
+
+/**
+ * A setup note for editors only. Logged-out visitors see nothing.
+ *
+ * @param string $text Note.
+ * @return string
+ */
+function tapaufest_admin_note( $text ) {
+	return current_user_can( 'edit_pages' ) ? tapaufest_tbc( $text ) : '';
 }
