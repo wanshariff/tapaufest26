@@ -167,7 +167,7 @@
 				}
 			}
 		} );
-		$$( '.tf-slot[data-tf-session], .tf2-slot[data-tf-session]' ).forEach( function ( slot ) {
+		$$( '.tf-slot[data-tf-session], .tf2-slot[data-tf-session], .tf2-lrow[data-tf-session]' ).forEach( function ( slot ) {
 			var id = slot.getAttribute( 'data-tf-session' );
 			slot.classList.toggle( 'is-mine', has( id ) );
 			slot.classList.toggle( 'is-clash', !! clash[ id ] );

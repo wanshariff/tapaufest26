@@ -28,12 +28,13 @@ $tf_logo  = tapaufest_logo_url();
 				<img src="<?php echo esc_url( $tf_logo ); ?>" alt="">
 			<?php endif; ?>
 			<div class="tf2-loader__bar"><i></i></div>
+			<div class="tf2-loader__dots"><i></i><i></i><i></i></div>
 			<span><?php esc_html_e( 'Tapau-ing the good stuff', 'tapaufest-2026' ); ?></span>
 		</div>
 	</div>
 <?php endif; ?>
 
-<section class="tf2-wrap tf2-hero">
+<section class="tf2-wrap tf2-hero" data-tf-tickets>
 	<?php if ( 'live' === $tf_state ) : ?>
 		<?php
 		$tf_now  = tapaufest_now();
@@ -162,9 +163,18 @@ $tf_logo  = tapaufest_logo_url();
 					<p class="tf2-note"><?php esc_html_e( 'Public sale opens soon. Follow @tapaufest for the date.', 'tapaufest-2026' ); ?></p>
 				<?php endif; ?>
 			</div>
-			<div class="tf2-hero__art tf2-up">
-				<?php echo tf2_photo( 'venue-river', __( 'The river at Chongkak Park', 'tapaufest-2026' ), 'tf2-photo--shadow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<div class="tf2-hero__art">
+				<?php echo tf2_photo( 'venue-river', __( 'The river at Chongkak Park', 'tapaufest-2026' ), 'tf2-photo--shadow tf2-zoom' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<div class="tf2-card tf2-card--gold tf2-hero__sticker"><b><?php esc_html_e( 'Our new playground', 'tapaufest-2026' ); ?></b><span><?php echo esc_html( tf2_where() ); ?></span></div>
+				<?php
+				$tf_dkeys = array_keys( tapaufest_days() );
+				if ( $tf_dkeys ) :
+					$tf_tz = tapaufest_timezone();
+					$tf_d1 = strtotime( $tf_dkeys[0] . ' 12:00:00' );
+					$tf_d2 = strtotime( end( $tf_dkeys ) . ' 12:00:00' );
+					?>
+					<div class="tf2-card tf2-card--gold tf2-hero__date tf2-drop" aria-hidden="true"><b><?php echo esc_html( wp_date( 'j', $tf_d1, $tf_tz ) . ( $tf_d1 !== $tf_d2 ? ' & ' . wp_date( 'j', $tf_d2, $tf_tz ) : '' ) ); ?></b><span><?php echo esc_html( wp_date( 'M Y', $tf_d2, $tf_tz ) ); ?></span></div>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endif; ?>
@@ -178,9 +188,9 @@ $tf_logo  = tapaufest_logo_url();
 			<?php /* translators: %d: number of acts. */ ?>
 			<a href="<?php echo esc_url( home_url( '/lineup/' ) ); ?>" style="font:800 1rem var(--tf2-text)"><?php echo esc_html( sprintf( __( 'All %d acts', 'tapaufest-2026' ), count( $tf_artists ) ) ); ?></a>
 		</div>
-		<div class="tf2-auto">
+		<div class="tf2-auto tf2-rail" data-tf2-reveal>
 			<?php
-			foreach ( array_slice( $tf_artists, 0, 4 ) as $tf_a ) {
+			foreach ( array_slice( $tf_artists, 0, 6 ) as $tf_a ) {
 				echo tf2_artist_card( $tf_a ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 			?>
@@ -202,7 +212,7 @@ $tf_logo  = tapaufest_logo_url();
 <section class="tf2-band">
 	<div class="tf2-wrap tf2-sec">
 		<?php echo tf2_head( __( 'Passes', 'tapaufest-2026' ), __( 'One pass, every stage', 'tapaufest-2026' ), '', 'h2' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-		<div class="tf2-auto" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px">
+		<div class="tf2-auto tf2-passes" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px" data-tf2-reveal>
 			<?php foreach ( $tf_tiers as $tf_t ) : ?>
 				<div class="tf2-stack tf2-stack--sm">
 					<?php echo tf2_tier( $tf_t, 'card' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -219,7 +229,7 @@ $tf_logo  = tapaufest_logo_url();
 <?php endif; ?>
 
 <?php if ( 'recap' !== $tf_state && 'postponed' !== $tf_state ) : ?>
-<section class="tf2-wrap tf2-sec">
+<section class="tf2-wrap tf2-sec tf2-getthere">
 	<div class="tf2-two tf2-two--center">
 		<?php echo tf2_photo( 'venue-forest', __( 'Festival-goers under the trees at Chongkak Park', 'tapaufest-2026' ), '' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<div class="tf2-stack">

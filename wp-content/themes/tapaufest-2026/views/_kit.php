@@ -267,7 +267,7 @@ function tf2_zone_grid( $limit = 0, $desc = false ) {
 		);
 		$zones = array_slice( $zones, 0, $limit );
 	}
-	$out = '<div class="tf2-auto tf2-auto--lg">';
+	$out = '<div class="tf2-auto tf2-auto--lg tf2-zones">';
 	foreach ( $zones as $z ) {
 		$n     = isset( $notices[ $z[0] ] ) ? $notices[ $z[0] ] : null;
 		$href  = in_array( $z[0], array( 'WARUNG', 'PASAR' ), true ) ? home_url( '/makan-pasar/' ) : home_url( '/experience/#zone-' . sanitize_title( $z[0] ) );
@@ -299,11 +299,11 @@ function tf2_now_card( $s, $now ) {
 	$end = tapaufest_format_time( sprintf( '%02d:%02d', floor( $s['end_min'] / 60 ), $s['end_min'] % 60 ) );
 	$tag = $s['url'] ? 'a href="' . esc_url( $s['url'] ) . '"' : 'div';
 	/* translators: %s: stage. */
-	return '<' . $tag . ' class="tf2-card tf2-lift tf2-now">' . $img . '<span class="tf2-now__body"><span class="tf2-eb tf2-eb--cili">' . esc_html( sprintf( __( 'On now · %s', 'tapaufest-2026' ), $s['stage'] ) ) . '</span>'
+	return '<' . $tag . ' class="tf2-card tf2-lift tf2-now">' . $img . '<span class="tf2-now__body"><span class="tf2-eb tf2-eb--cili tf2-now__eb"><span class="tf2-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>' . esc_html( sprintf( __( 'On now · %s', 'tapaufest-2026' ), $s['stage'] ) ) . '</span>'
 		. '<span class="tf2-d" style="font-size:2.2rem;color:var(--tf2-cili)">' . esc_html( html_entity_decode( $s['title'] ) ) . '</span>'
 		/* translators: 1: start, 2: end. */
 		. '<span style="font:600 .95rem var(--tf2-text);color:var(--tf2-ink)">' . esc_html( sprintf( __( '%1$s till %2$s', 'tapaufest-2026' ), $s['label'], $end ) ) . '</span>'
-		. '<span class="tf2-progress" role="progressbar" aria-valuenow="' . (int) $pct . '" aria-valuemin="0" aria-valuemax="100" aria-label="' . esc_attr__( 'Set progress', 'tapaufest-2026' ) . '"><span style="width:' . (int) $pct . '%"></span></span></span></' . ( 'div' === $tag ? 'div' : 'a' ) . '>';
+		. '<span class="tf2-progress tf2-progress--live" role="progressbar" aria-valuenow="' . (int) $pct . '" aria-valuemin="0" aria-valuemax="100" aria-label="' . esc_attr__( 'Set progress', 'tapaufest-2026' ) . '"><span style="width:' . (int) $pct . '%"></span></span></span></' . ( 'div' === $tag ? 'div' : 'a' ) . '>';
 }
 
 /**

@@ -48,7 +48,7 @@ $tf_live    = 'live' === tapaufest_state();
 						<span class="tf2-eb tf2-eb--cili"><?php echo esc_html( $tf_stage . ( $tf_pair['now'] ? '' : ' · ' . __( 'next', 'tapaufest-2026' ) ) ); ?></span>
 						<strong><?php echo $tf_s['url'] ? '<a href="' . esc_url( $tf_s['url'] ) . '" style="color:var(--tf2-ink)">' . esc_html( html_entity_decode( $tf_s['title'] ) ) . '</a>' : esc_html( html_entity_decode( $tf_s['title'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></strong>
 						<?php if ( $tf_pair['now'] ) : ?>
-							<span class="tf2-progress"><span style="width:<?php echo (int) $tf_pct; ?>%"></span></span>
+							<span class="tf2-progress tf2-progress--live"><span style="width:<?php echo (int) $tf_pct; ?>%"></span></span>
 						<?php endif; ?>
 					</span>
 					<span class="tf2-stage-now__time"><?php echo esc_html( $tf_off ? __( 'Off tonight', 'tapaufest-2026' ) : $tf_s['label'] . ' till ' . $tf_end ); ?></span>

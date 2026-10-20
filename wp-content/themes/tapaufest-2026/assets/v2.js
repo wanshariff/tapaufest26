@@ -1007,4 +1007,102 @@
 			} );
 		} );
 	} );
+	/* ---------- set times on phones: one stage at a time ---------- */
+	$$( '[data-tf2-stagelist]' ).forEach( function ( list ) {
+		var chips = $$( '[data-tf2-stage]', list );
+		var cards = $$( '.tf2-ttstage', list );
+		chips.forEach( function ( c ) {
+			c.addEventListener( 'click', function () {
+				var key = c.getAttribute( 'data-tf2-stage' );
+				chips.forEach( function ( x ) {
+					x.setAttribute( 'aria-pressed', x === c ? 'true' : 'false' );
+				} );
+				cards.forEach( function ( card ) {
+					card.hidden = !! key && card.getAttribute( 'data-stage' ) !== key;
+					if ( ! card.hidden ) {
+						motion( card, 'tf2-swap' );
+					}
+				} );
+			} );
+		} );
+	} );
+
+	/* ---------- motion: reveal on scroll, panel swaps, little pops ---------- */
+	function motion( el, cls ) {
+		if ( reduced || ! el ) {
+			return;
+		}
+		el.classList.remove( cls );
+		void el.offsetWidth;
+		el.classList.add( cls );
+		el.addEventListener( 'animationend', function done() {
+			el.classList.remove( cls );
+			el.removeEventListener( 'animationend', done );
+		} );
+	}
+	if ( ! reduced && 'IntersectionObserver' in window ) {
+		var groups = [
+			'.tf2-auto > *',
+			'.tf2-tiers > *',
+			'.tf2-steps > *',
+			'.tf2-pack > *',
+			'.tf2-ttstage',
+			'.tf2-faqgroup',
+			'.tf2-gallery figure',
+			'.tf2-main > .tf2-two > *',
+			'.tf2-sec .tf2-two > *',
+			'.tf2-main > .tf2-stack > *',
+			'.tf2-route-step',
+			'.tf2-nolist li'
+		].join( ',' );
+		var targets = $$( groups ).filter( function ( el ) {
+			return ! el.closest( '.tf2-hero' ) && ! el.classList.contains( 'tf2-up' ) && ! el.closest( '.tf2-rv' ) && ! el.closest( '.tf2-order' );
+		} );
+		var io = new IntersectionObserver( function ( entries ) {
+			var batch = entries.filter( function ( e ) {
+				return e.isIntersecting;
+			} );
+			batch.forEach( function ( e, i ) {
+				var el = e.target;
+				el.style.setProperty( '--tf2-d', Math.min( i, 6 ) * 60 + 'ms' );
+				el.classList.add( 'is-in' );
+				io.unobserve( el );
+				setTimeout( function () {
+					el.classList.remove( 'tf2-rv', 'is-in' );
+					el.style.removeProperty( '--tf2-d' );
+				}, 700 + Math.min( i, 6 ) * 60 );
+			} );
+		}, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 } );
+		targets.forEach( function ( el ) {
+			el.classList.add( 'tf2-rv' );
+			io.observe( el );
+		} );
+	}
+	// Tabs (days, route modes, vendor zones): the shown panel slides in.
+	document.addEventListener( 'click', function ( e ) {
+		var tab = e.target.closest( '[data-tf2-tab]' );
+		if ( tab ) {
+			var root = tab.closest( '[data-tf2-tabs]' );
+			var p = root && $( '[data-tf2-panel="' + tab.getAttribute( 'data-tf2-tab' ) + '"]', root );
+			motion( p, 'tf2-swap' );
+			return;
+		}
+		if ( e.target.closest( '.tf2-tier--row:not(.is-out), [data-tf2-step]' ) ) {
+			setTimeout( function () {
+				motion( $( '[data-tf2-total]' ), 'tf2-pop' );
+			}, 0 );
+		}
+	} );
+	// Pack list: a small cheer when everything is in the bag.
+	$$( '[data-tf2-pack]' ).forEach( function ( root ) {
+		root.addEventListener( 'change', function () {
+			var boxes = $$( 'input[type="checkbox"]', root );
+			if ( boxes.every( function ( b ) {
+				return b.checked;
+			} ) ) {
+				motion( $( '[data-tf2-packed]', root ), 'tf2-cheer' );
+			}
+		} );
+	} );
+
 } )();

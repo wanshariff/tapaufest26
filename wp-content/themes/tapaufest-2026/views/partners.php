@@ -37,7 +37,7 @@ foreach ( $tf_all as $tf_p ) {
 			<?php if ( ! $tf_g[1] ) { continue; } ?>
 			<section class="tf2-stack tf2-stack--sm">
 				<h2 class="tf2-eb"><?php echo esc_html( $tf_g[0] ); ?></h2>
-				<div class="tf2-auto" style="grid-template-columns:repeat(auto-fill,minmax(<?php echo 'past' === $tf_slug ? '160' : '200'; ?>px,1fr));gap:16px">
+				<div class="tf2-auto tf2-logos" style="grid-template-columns:repeat(auto-fill,minmax(<?php echo 'past' === $tf_slug ? '160' : '200'; ?>px,1fr));gap:16px">
 					<?php foreach ( $tf_g[1] as $tf_p ) : ?>
 						<?php
 						$tf_url  = (string) get_post_meta( $tf_p->ID, 'tf_url', true );

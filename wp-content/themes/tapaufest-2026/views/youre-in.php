@@ -7,7 +7,8 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<div class="tf2-wrap tf2-main" style="padding-block:72px">
+<div class="tf2-wrap tf2-main tf2-yay" style="padding-block:72px">
+	<div class="tf2-confetti" aria-hidden="true"><?php for ( $tf_c = 0; $tf_c < 14; $tf_c++ ) : ?><i></i><?php endfor; ?></div>
 	<div class="tf2-two tf2-two--center">
 		<div class="tf2-stack">
 			<svg class="tf2-done-mark" viewBox="0 0 96 96" width="110" height="110" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="48" cy="48" r="41" fill="#F2A93B" opacity=".25"></circle><circle class="circ" cx="48" cy="48" r="41" stroke="#F2A93B" stroke-width="5"></circle><path class="draw" d="M30 49l12 12 25-26" stroke="#F8DAA5" stroke-width="7"></path></svg>
