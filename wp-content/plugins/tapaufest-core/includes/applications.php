@@ -92,23 +92,37 @@ add_action( 'init', 'tapaufest_register_applications' );
  */
 function tapaufest_handle_application() {
 	$back = wp_get_referer() ? wp_get_referer() : home_url( '/sell/' );
-	$back = remove_query_arg( array( 'applied', 'apply_error' ), $back );
+	$back = remove_query_arg( array( 'applied', 'apply_error', 'apply_fields', 'draft', 'since' ), $back );
+	$ajax = ! empty( $_POST['tf_ajax'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing -- checked below.
+
+	// One exit for every outcome: JSON for the page script, a redirect without it.
+	$finish = function ( $args, $data = array() ) use ( $back, $ajax ) {
+		if ( $ajax ) {
+			if ( isset( $args['applied'] ) ) {
+				wp_send_json_success( array( 'redirect' => add_query_arg( 'applied', '1', $back ) ) );
+			}
+			wp_send_json_error( $args, 'slow' === ( isset( $args['apply_error'] ) ? $args['apply_error'] : '' ) ? 429 : 400 );
+		}
+		if ( $data ) {
+			// Keep what they typed for ten minutes so the form comes back filled in.
+			$draft = wp_generate_password( 12, false );
+			set_transient( 'tf_app_draft_' . $draft, $data, 10 * MINUTE_IN_SECONDS );
+			$args['draft'] = $draft;
+		}
+		wp_safe_redirect( add_query_arg( $args, $back ) . '#apply' );
+		exit;
+	};
 
 	// phpcs:disable WordPress.Security.NonceVerification.Missing -- verified just below.
 	if ( ! isset( $_POST['tf_app_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['tf_app_nonce'] ) ), 'tapaufest_apply' ) ) {
-		wp_safe_redirect( add_query_arg( 'apply_error', 'expired', $back ) . '#apply' );
-		exit;
+		$finish( array( 'apply_error' => 'expired' ) );
 	}
 	// Honeypot: real people leave this empty.
 	if ( ! empty( $_POST['tf_app_website'] ) ) {
-		wp_safe_redirect( add_query_arg( 'applied', '1', $back ) . '#apply' );
-		exit;
+		$finish( array( 'applied' => '1' ) );
 	}
-	// One application per minute per visitor IP.
-	$ip_key = 'tf_app_' . md5( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
-	if ( get_transient( $ip_key ) ) {
-		wp_safe_redirect( add_query_arg( 'apply_error', 'slow', $back ) . '#apply' );
-		exit;
+	if ( ! tapaufest_setting( 'apply_open' ) ) {
+		$finish( array( 'apply_error' => 'closed' ) );
 	}
 
 	$data   = array();
@@ -138,14 +152,39 @@ function tapaufest_handle_application() {
 	if ( $data['tf_app_email'] && ! is_email( $data['tf_app_email'] ) ) {
 		$errors[] = 'tf_app_email';
 	}
+	if ( $data['tf_app_phone'] && strlen( preg_replace( '/\D/', '', $data['tf_app_phone'] ) ) < 9 ) {
+		$errors[] = 'tf_app_phone';
+	}
 	if ( empty( $_POST['tf_app_consent'] ) ) {
 		$errors[] = 'tf_app_consent';
 	}
 	// phpcs:enable
 
 	if ( $errors ) {
-		wp_safe_redirect( add_query_arg( 'apply_error', 'missing', $back ) . '#apply' );
-		exit;
+		$finish(
+			array(
+				'apply_error'  => 'missing',
+				'apply_fields' => implode( ',', array_unique( $errors ) ),
+			),
+			$data
+		);
+	}
+
+	// Already applied with this email or Instagram? Say so instead of filing a second one.
+	$dupe = tapaufest_find_application( $data['tf_app_email'], $data['tf_app_instagram'] );
+	if ( $dupe ) {
+		$finish(
+			array(
+				'apply_error' => 'duplicate',
+				'since'       => get_the_date( 'j M', $dupe ),
+			)
+		);
+	}
+
+	// One application per minute per visitor IP.
+	$ip_key = 'tf_app_' . md5( isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '' );
+	if ( get_transient( $ip_key ) ) {
+		$finish( array( 'apply_error' => 'slow' ), $data );
 	}
 
 	$types = tapaufest_application_types();
@@ -157,14 +196,14 @@ function tapaufest_handle_application() {
 		)
 	);
 	if ( ! $id || is_wp_error( $id ) ) {
-		wp_safe_redirect( add_query_arg( 'apply_error', 'server', $back ) . '#apply' );
-		exit;
+		$finish( array( 'apply_error' => 'server' ), $data );
 	}
 	foreach ( $data as $key => $val ) {
 		update_post_meta( $id, $key, $val );
 	}
 	update_post_meta( $id, 'tf_app_status', 'new' );
 	update_post_meta( $id, 'tf_app_consent', current_time( 'mysql' ) );
+	update_post_meta( $id, 'tf_app_handle', tapaufest_handle_key( $data['tf_app_instagram'] ) );
 	set_transient( $ip_key, 1, MINUTE_IN_SECONDS );
 
 	$edition = tapaufest_setting( 'edition' );
@@ -184,8 +223,57 @@ function tapaufest_handle_application() {
 		sprintf( __( "Hi %1\$s,\n\nThanks for applying to open %2\$s at TAPAUfest. The team reviews every application and replies by email or WhatsApp once stall selection is done.\n\nTerima kasih,\nTAPAUfest", 'tapaufest' ), $data['tf_app_contact'], $data['tf_app_business'] )
 	);
 
-	wp_safe_redirect( add_query_arg( 'applied', '1', $back ) . '#apply' );
-	exit;
+	$finish( array( 'applied' => '1' ) );
+}
+
+/**
+ * Normalise an Instagram handle or URL for duplicate checks.
+ *
+ * @param string $raw Handle, @handle or profile URL.
+ * @return string
+ */
+function tapaufest_handle_key( $raw ) {
+	$raw = strtolower( trim( (string) $raw ) );
+	$raw = preg_replace( '#^https?://(www\.)?instagram\.com/#', '', $raw );
+	return trim( $raw, "@/ \t" );
+}
+
+/**
+ * An existing application for this edition with the same email or handle.
+ *
+ * @param string $email  Email.
+ * @param string $handle Instagram handle or website.
+ * @return int Post ID or 0.
+ */
+function tapaufest_find_application( $email, $handle ) {
+	$or  = array( 'relation' => 'OR' );
+	$key = tapaufest_handle_key( $handle );
+	if ( $email ) {
+		$or[] = array(
+			'key'   => 'tf_app_email',
+			'value' => $email,
+		);
+	}
+	if ( strlen( $key ) > 2 ) {
+		$or[] = array(
+			'key'   => 'tf_app_handle',
+			'value' => $key,
+		);
+	}
+	if ( count( $or ) < 2 ) {
+		return 0;
+	}
+	$found = get_posts(
+		array(
+			'post_type'      => 'tf_application',
+			'post_status'    => 'any',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			'date_query'     => array( array( 'after' => '-10 months' ) ),
+			'meta_query'     => $or, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_query_meta_query
+		)
+	);
+	return $found ? (int) $found[0] : 0;
 }
 add_action( 'admin_post_tapaufest_apply', 'tapaufest_handle_application' );
 add_action( 'admin_post_nopriv_tapaufest_apply', 'tapaufest_handle_application' );

@@ -26,6 +26,8 @@ function tapaufest_theme_assets() {
 	wp_enqueue_style( 'tapaufest-2026', get_stylesheet_uri(), array(), wp_get_theme()->get( 'Version' ) );
 	// In <head>, not deferred: the pagereveal listener has to exist before first render.
 	wp_enqueue_script( 'tapaufest-2026-view-transitions', get_theme_file_uri( 'assets/view-transitions.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => false ) );
+	wp_enqueue_style( 'tapaufest-2026-screens', get_theme_file_uri( 'assets/v2.css' ), array( 'tapaufest-2026' ), wp_get_theme()->get( 'Version' ) );
+	wp_enqueue_script( 'tapaufest-2026-screens', get_theme_file_uri( 'assets/v2.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	wp_enqueue_script( 'tapaufest-2026-motion', get_theme_file_uri( 'assets/motion.js' ), array(), wp_get_theme()->get( 'Version' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }
 add_action( 'wp_enqueue_scripts', 'tapaufest_theme_assets' );
@@ -560,3 +562,17 @@ add_filter(
 	30,
 	2
 );
+
+require_once get_theme_file_path( 'views/_kit.php' );
+
+/**
+ * Body class for pages built from festival screens.
+ *
+ * @param string[] $classes Classes.
+ * @return string[]
+ */
+function tapaufest_screen_body_class( $classes ) {
+	$classes[] = 'tf2-page';
+	return $classes;
+}
+add_filter( 'body_class', 'tapaufest_screen_body_class' );

@@ -142,6 +142,10 @@
 			} );
 			var m = L.marker( [ H - p.y, p.x ], { icon: icon, title: p.label, alt: p.label, riseOnHover: true, keyboard: true } );
 			m.tfCat = p.cat;
+			// Pages with a side panel (wide screens) listen for this.
+			m.on( 'click', function () {
+				root.dispatchEvent( new CustomEvent( 'tf:map-pick', { bubbles: true, detail: { key: p.key } } ) );
+			} );
 			if ( useSheet ) {
 				m.on( 'click', function () {
 					openSheet( m, p.key );

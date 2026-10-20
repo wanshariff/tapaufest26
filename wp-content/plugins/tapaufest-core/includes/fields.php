@@ -153,6 +153,10 @@ function tapaufest_fields() {
 				'label' => __( 'Sold out', 'tapaufest' ),
 				'type'  => 'checkbox',
 			),
+			'tf_cap'      => array(
+				'label' => __( 'Limited to (number of passes, e.g. 500). Shown when it sells out.', 'tapaufest' ),
+				'type'  => 'number',
+			),
 			'tf_art'      => array(
 				'label'   => __( 'Illustration', 'tapaufest' ),
 				'type'    => 'select',

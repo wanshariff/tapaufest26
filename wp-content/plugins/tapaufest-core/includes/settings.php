@@ -39,6 +39,9 @@ function tapaufest_default_settings() {
 		'apply_open'     => 1,
 		'apply_deadline' => '',
 		'apply_email'    => '',
+		'notices'        => '',
+		'door_price'     => '198',
+		'door_pay'       => 'Card, DuitNow QR and cash',
 	);
 }
 
@@ -49,10 +52,12 @@ function tapaufest_default_settings() {
  */
 function tapaufest_states() {
 	return array(
-		'early'  => __( 'Early access (waitlist window)', 'tapaufest' ),
-		'public' => __( 'Public sale', 'tapaufest' ),
-		'live'   => __( 'Festival day (live mode)', 'tapaufest' ),
-		'recap'  => __( 'Recap', 'tapaufest' ),
+		'early'     => __( 'Early access (waitlist window)', 'tapaufest' ),
+		'public'    => __( 'Public sale', 'tapaufest' ),
+		'door'      => __( 'Online sales closed, tickets at the door', 'tapaufest' ),
+		'live'      => __( 'Festival day (live mode)', 'tapaufest' ),
+		'postponed' => __( 'Postponed', 'tapaufest' ),
+		'recap'     => __( 'Recap', 'tapaufest' ),
 	);
 }
 
@@ -141,16 +146,41 @@ function tapaufest_days() {
 function tapaufest_alert( $state = '' ) {
 	$state    = $state ? $state : tapaufest_state();
 	$defaults = array(
-		'early'  => array( __( 'Early access', 'tapaufest' ), __( 'Waitlist window is open. Use your email code at checkout.', 'tapaufest' ) ),
-		'public' => array( __( 'On sale', 'tapaufest' ), __( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' ) ),
-		'live'   => array( __( 'Live', 'tapaufest' ), __( 'Set changes and weather updates post here first.', 'tapaufest' ) ),
-		'recap'  => array( __( 'Recap', 'tapaufest' ), __( 'Photos are up. Find yourself in the Day 1 and Day 2 galleries.', 'tapaufest' ) ),
+		'early'     => array( __( 'Early access', 'tapaufest' ), __( 'Waitlist only for now. Use the code from your email.', 'tapaufest' ), __( 'Use my code', 'tapaufest' ), '/tickets/' ),
+		'public'    => array( __( 'On sale', 'tapaufest' ), __( 'Tickets are on sale now on TAPAUtix.', 'tapaufest' ), __( 'Get tickets', 'tapaufest' ), '/tickets/' ),
+		/* translators: %s: door price. */
+		'door'      => array( __( 'Door only', 'tapaufest' ), sprintf( __( 'Online sales closed. RM%s at the gate.', 'tapaufest' ), tapaufest_setting( 'door_price' ) ), __( 'Getting there', 'tapaufest' ), '/plan/' ),
+		'live'      => array( __( 'Live', 'tapaufest' ), __( 'Set changes and weather updates post here first.', 'tapaufest' ), __( 'On now', 'tapaufest' ), '/now/' ),
+		'postponed' => array( __( 'Postponed', 'tapaufest' ), __( 'New dates coming. Your pass is safe.', 'tapaufest' ), __( 'What happens to my pass', 'tapaufest' ), '/tickets/' ),
+		'recap'     => array( __( 'Recap', 'tapaufest' ), __( 'Photos are up. Find yourself in the galleries.', 'tapaufest' ), __( 'See the photos', 'tapaufest' ), '/recap/' ),
 	);
 	$custom = trim( (string) tapaufest_setting( 'alert_text' ) );
 	return array(
 		'tag'  => $defaults[ $state ][0],
 		'text' => '' !== $custom ? $custom : $defaults[ $state ][1],
+		'cta'  => $defaults[ $state ][2],
+		'url'  => home_url( $defaults[ $state ][3] ),
 	);
+}
+
+/**
+ * Zone notices set by the crew on the day (weather, river level).
+ *
+ * @return array Zone => array( status, message ).
+ */
+function tapaufest_notices() {
+	$out = array();
+	foreach ( preg_split( '/\r\n|\r|\n/', (string) tapaufest_setting( 'notices' ) ) as $line ) {
+		$parts = array_map( 'trim', explode( '|', $line, 3 ) );
+		if ( count( $parts ) < 2 || '' === $parts[0] ) {
+			continue;
+		}
+		$out[ strtoupper( $parts[0] ) ] = array(
+			'status'  => in_array( strtolower( $parts[1] ), array( 'off', 'paused' ), true ) ? strtolower( $parts[1] ) : 'paused',
+			'message' => isset( $parts[2] ) ? $parts[2] : '',
+		);
+	}
+	return $out;
 }
 
 /**
@@ -210,6 +240,9 @@ function tapaufest_sanitize_settings( $input ) {
 	foreach ( array( 'maps_url', 'tickets_url', 'join_url', 'waitlist_url', 'aftermovie_url', 'survey_url', 'takedown_url', 'whatsapp_url' ) as $key ) {
 		$out[ $key ] = isset( $input[ $key ] ) ? esc_url_raw( $input[ $key ] ) : '';
 	}
+	$out['notices']    = isset( $input['notices'] ) ? sanitize_textarea_field( $input['notices'] ) : '';
+	$out['door_price'] = isset( $input['door_price'] ) ? preg_replace( '/[^0-9]/', '', (string) $input['door_price'] ) : $defaults['door_price'];
+	$out['door_pay']   = isset( $input['door_pay'] ) ? sanitize_text_field( $input['door_pay'] ) : $defaults['door_pay'];
 	$out['stages']    = isset( $input['stages'] ) ? sanitize_textarea_field( $input['stages'] ) : $defaults['stages'];
 	$out['explainer'] = isset( $input['explainer'] ) ? sanitize_textarea_field( $input['explainer'] ) : $defaults['explainer'];
 
@@ -240,6 +273,8 @@ function tapaufest_render_settings_page() {
 		'survey_url'     => __( 'Feedback survey link', 'tapaufest' ),
 		'takedown_url'   => __( 'Photo takedown form link', 'tapaufest' ),
 		'whatsapp_url'   => __( 'WhatsApp channel link', 'tapaufest' ),
+		'door_price'     => __( 'Door price (RM, shown in door-only mode)', 'tapaufest' ),
+		'door_pay'       => __( 'How to pay at the door', 'tapaufest' ),
 	);
 	?>
 	<div class="wrap">

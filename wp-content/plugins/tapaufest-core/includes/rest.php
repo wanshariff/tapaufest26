@@ -24,8 +24,12 @@ function tapaufest_register_routes() {
 			'args'                => array(
 				'ids' => array(
 					'type'              => 'string',
-					'required'          => true,
+					'required'          => false,
 					'sanitize_callback' => 'sanitize_text_field',
+				),
+				'fest' => array(
+					'type'     => 'boolean',
+					'required' => false,
 				),
 			),
 		)
@@ -51,7 +55,8 @@ function tapaufest_ics_escape( $text ) {
  */
 function tapaufest_rest_ics( $request ) {
 	$ids = array_slice( array_filter( array_map( 'absint', explode( ',', (string) $request->get_param( 'ids' ) ) ) ), 0, 60 );
-	if ( ! $ids ) {
+	$fest = (bool) $request->get_param( 'fest' );
+	if ( ! $ids && ! $fest ) {
 		return new WP_Error( 'tapaufest_no_sets', __( 'Pick at least one set first.', 'tapaufest' ), array( 'status' => 400 ) );
 	}
 
@@ -62,6 +67,25 @@ function tapaufest_rest_ics( $request ) {
 	$venue   = tapaufest_setting( 'venue' );
 	$lines   = array( 'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//TAPAUasia//TAPAUfest//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:' . tapaufest_ics_escape( $edition . ' · Jadual Aku' ) );
 	$stamp   = gmdate( 'Ymd\THis\Z' );
+
+	if ( $fest ) {
+		// The festival itself: gate open till late, each day.
+		foreach ( array_keys( tapaufest_days() ) as $n => $day ) {
+			$open = DateTimeImmutable::createFromFormat( 'Y-m-d H:i', $day . ' ' . tapaufest_setting( 'gates_open' ), $tz );
+			if ( ! $open ) {
+				continue;
+			}
+			$lines[] = 'BEGIN:VEVENT';
+			$lines[] = 'UID:tapaufest-day-' . $day . '@' . $host;
+			$lines[] = 'DTSTAMP:' . $stamp;
+			$lines[] = 'DTSTART:' . $open->setTimezone( $utc )->format( 'Ymd\THis\Z' );
+			$lines[] = 'DTEND:' . $open->setTime( 23, 59 )->setTimezone( $utc )->format( 'Ymd\THis\Z' );
+			$lines[] = 'SUMMARY:' . tapaufest_ics_escape( $edition . ' · Day ' . ( $n + 1 ) );
+			$lines[] = 'LOCATION:' . tapaufest_ics_escape( $venue );
+			$lines[] = 'URL:' . esc_url_raw( home_url( '/' ) );
+			$lines[] = 'END:VEVENT';
+		}
+	}
 
 	foreach ( tapaufest_get_sessions() as $s ) {
 		if ( ! in_array( (int) $s['id'], $ids, true ) || ! $s['day'] || '' === $s['start'] ) {

@@ -357,6 +357,13 @@
 			"postTypes": [
 				"page"
 			]
+		},
+		{
+			"name": "page-screen",
+			"title": "Festival screen (full page from festival data)",
+			"postTypes": [
+				"page"
+			]
 		}
 	],
 	"templateParts": [

@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @return string[]
  */
 function tapaufest_block_names() {
-	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta', 'ticker', 'site-map', 'partners', 'session-details', 'vendor-details', 'vendor-apply' );
+	return array( 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta', 'ticker', 'site-map', 'partners', 'session-details', 'vendor-details', 'vendor-apply', 'screen' );
 }
 
 /**
@@ -232,13 +232,23 @@ function tapaufest_cta() {
 	switch ( tapaufest_state() ) {
 		case 'live':
 			return array(
-				'label' => __( 'Map and help', 'tapaufest' ),
-				'url'   => home_url( '/map/' ),
+				'label' => __( 'On now', 'tapaufest' ),
+				'url'   => home_url( '/now/' ),
 			);
 		case 'recap':
 			return array(
 				'label' => __( 'See the recap', 'tapaufest' ),
 				'url'   => home_url( '/recap/' ),
+			);
+		case 'postponed':
+			return array(
+				'label' => __( 'Your pass', 'tapaufest' ),
+				'url'   => home_url( '/tickets/' ),
+			);
+		case 'door':
+			return array(
+				'label' => __( 'Door tickets', 'tapaufest' ),
+				'url'   => home_url( '/tickets/' ),
 			);
 		default:
 			return array(

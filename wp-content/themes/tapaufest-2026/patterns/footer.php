@@ -13,16 +13,18 @@
 $tf_cols = array(
 	__( 'Festival', 'tapaufest-2026' )  => array(
 		home_url( '/lineup/' )     => __( 'Lineup', 'tapaufest-2026' ),
-		home_url( '/timetable/' )  => __( 'Timetable', 'tapaufest-2026' ),
+		home_url( '/timetable/' )  => __( 'Set times', 'tapaufest-2026' ),
 		home_url( '/tickets/' )    => __( 'Tickets', 'tapaufest-2026' ),
-		home_url( '/experience/' ) => __( 'Experience', 'tapaufest-2026' ),
+		home_url( '/experience/' ) => __( 'What’s on', 'tapaufest-2026' ),
 		home_url( '/partners/' )   => __( 'Partners', 'tapaufest-2026' ),
 	),
 	__( 'Plan', 'tapaufest-2026' )      => array(
-		home_url( '/plan/' ) => __( 'Plan your trip', 'tapaufest-2026' ),
-		home_url( '/map/' )  => __( 'Map and help', 'tapaufest-2026' ),
-		home_url( '/faq/' )  => __( 'FAQ', 'tapaufest-2026' ),
-		home_url( '/sell/' ) => __( 'Sell at TAPAUfest', 'tapaufest-2026' ),
+		home_url( '/jadual-aku/' )  => __( 'Jadual Aku', 'tapaufest-2026' ),
+		home_url( '/plan/' )        => __( 'Getting there', 'tapaufest-2026' ),
+		home_url( '/map/' )         => __( 'Map', 'tapaufest-2026' ),
+		home_url( '/makan-pasar/' ) => __( 'Makan & Pasar', 'tapaufest-2026' ),
+		home_url( '/faq/' )         => __( 'FAQ', 'tapaufest-2026' ),
+		home_url( '/sell/' )        => __( 'Sell with us', 'tapaufest-2026' ),
 	),
 	__( 'Look back', 'tapaufest-2026' ) => array(
 		home_url( '/recap/' )   => tapaufest_is_recap() ? __( '2026 recap', 'tapaufest-2026' ) : __( '2025 recap', 'tapaufest-2026' ),

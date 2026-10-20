@@ -11,17 +11,24 @@
  */
 
 $tf_links = array(
-	'/lineup/'     => __( 'Lineup', 'tapaufest-2026' ),
-	'/timetable/'  => __( 'Timetable', 'tapaufest-2026' ),
+	'/lineup/'      => __( 'Lineup', 'tapaufest-2026' ),
+	'/timetable/'   => __( 'Set times', 'tapaufest-2026' ),
+	'/jadual-aku/'  => __( 'Jadual Aku', 'tapaufest-2026' ),
+	'/plan/'        => __( 'Getting there', 'tapaufest-2026' ),
+	'/map/'         => __( 'Map', 'tapaufest-2026' ),
+	'/makan-pasar/' => __( 'Makan & Pasar', 'tapaufest-2026' ),
+	'/faq/'         => __( 'FAQ', 'tapaufest-2026' ),
+);
+// Phone menu only: the rest of the site.
+$tf_more = array(
+	'/experience/' => __( 'What’s on', 'tapaufest-2026' ),
 	'/tickets/'    => __( 'Tickets', 'tapaufest-2026' ),
-	'/experience/' => __( 'Experience', 'tapaufest-2026' ),
-	'/plan/'       => __( 'Plan your trip', 'tapaufest-2026' ),
-	'/map/'        => __( 'Map and help', 'tapaufest-2026' ),
-	'/faq/'        => __( 'FAQ', 'tapaufest-2026' ),
+	'/help/'       => __( 'Help on site', 'tapaufest-2026' ),
+	'/sell/'       => __( 'Sell with us', 'tapaufest-2026' ),
+	'/partners/'   => __( 'Partners', 'tapaufest-2026' ),
+	'/archive/'    => __( 'Past editions', 'tapaufest-2026' ),
 );
 ?>
-<!-- wp:tapaufest/alert-bar /-->
-
 <!-- wp:group {"align":"full","className":"tf-header-bar","layout":{"type":"constrained","contentSize":"1120px"}} -->
 <div class="wp-block-group alignfull tf-header-bar">
 <!-- wp:group {"className":"tf-header-row","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
@@ -34,6 +41,9 @@ $tf_links = array(
 <?php foreach ( $tf_links as $tf_path => $tf_label ) : ?>
 <!-- wp:navigation-link {"label":"<?php echo esc_attr( $tf_label ); ?>","url":"<?php echo esc_url( home_url( $tf_path ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <?php endforeach; ?>
+<?php foreach ( $tf_more as $tf_path => $tf_label ) : ?>
+<!-- wp:navigation-link {"label":"<?php echo esc_attr( $tf_label ); ?>","url":"<?php echo esc_url( home_url( $tf_path ) ); ?>","kind":"custom","isTopLevelLink":true,"className":"tf-nav__more"} /-->
+<?php endforeach; ?>
 <!-- /wp:navigation -->
 
 <!-- wp:tapaufest/header-cta /-->
@@ -41,3 +51,5 @@ $tf_links = array(
 <!-- /wp:group -->
 </div>
 <!-- /wp:group -->
+
+<!-- wp:tapaufest/alert-bar /-->

@@ -418,6 +418,9 @@ function tapaufest_seed() {
 		);
 	}
 
+	// Festival pages are built from screens (see includes/screens.php).
+	tapaufest_install_screen_pages();
+
 	flush_rewrite_rules();
 	return true;
 }

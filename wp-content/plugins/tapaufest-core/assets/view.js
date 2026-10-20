@@ -89,7 +89,14 @@
 		try {
 			window.localStorage.setItem( KEY, JSON.stringify( mine ) );
 		} catch ( err ) {}
+		document.dispatchEvent( new CustomEvent( 'tf:jadual', { detail: { mine: mine.slice() } } ) );
 	}
+	// Other scripts (the screens) can change picks too; keep this copy in step.
+	document.addEventListener( 'tf:jadual-set', function ( e ) {
+		mine = ( e.detail && e.detail.mine ? e.detail.mine : [] ).map( String );
+		save();
+		render();
+	} );
 	function has( id ) {
 		return mine.indexOf( String( id ) ) !== -1;
 	}
@@ -146,8 +153,13 @@
 			var on = has( id );
 			btn.setAttribute( 'aria-pressed', on ? 'true' : 'false' );
 			if ( btn.hasAttribute( 'data-tf-star-label' ) ) {
-				btn.innerHTML = icon( on ? 'star-filled' : 'star' ) + ' ' + ( on ? 'In your Jadual Aku' : 'Add to Jadual Aku' );
-				btn.classList.toggle( 'tf-btn--cili', ! on );
+				btn.innerHTML = icon( on ? 'star-filled' : 'star' ) + ' <span>' + ( on ? 'In your Jadual Aku' : 'Add to Jadual Aku' ) + '</span>';
+				if ( btn.classList.contains( 'tf2-btn' ) ) {
+					btn.classList.toggle( 'tf2-btn--cili', ! on );
+					btn.classList.toggle( 'tf2-btn--paper', on );
+				} else {
+					btn.classList.toggle( 'tf-btn--cili', ! on );
+				}
 			} else {
 				var glyph = btn.querySelector( 'span' );
 				if ( glyph ) {
@@ -155,7 +167,7 @@
 				}
 			}
 		} );
-		$$( '.tf-slot[data-tf-session]' ).forEach( function ( slot ) {
+		$$( '.tf-slot[data-tf-session], .tf2-slot[data-tf-session]' ).forEach( function ( slot ) {
 			var id = slot.getAttribute( 'data-tf-session' );
 			slot.classList.toggle( 'is-mine', has( id ) );
 			slot.classList.toggle( 'is-clash', !! clash[ id ] );

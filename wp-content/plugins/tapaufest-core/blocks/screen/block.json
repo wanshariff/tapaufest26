@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "tapaufest/screen",
+	"title": "Festival screen",
+	"category": "tapaufest",
+	"icon": "layout",
+	"description": "A full festival page (home, lineup, tickets, Jadual Aku and the rest), rendered from live festival data.",
+	"textdomain": "tapaufest",
+	"attributes": {
+		"screen": {
+			"type": "string",
+			"default": "home",
+			"enum": [
+				"home",
+				"lineup",
+				"artist",
+				"session",
+				"vendor",
+				"times",
+				"jadual",
+				"tickets",
+				"checkout",
+				"youre-in",
+				"route",
+				"map",
+				"vendors",
+				"faq",
+				"sell",
+				"now",
+				"help",
+				"zones",
+				"partners",
+				"archive",
+				"recap",
+				"404"
+			]
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [
+			"full"
+		],
+		"inserter": true
+	},
+	"editorScript": "tapaufest-blocks-editor",
+	"style": "tapaufest-blocks",
+	"render": "file:./render.php"
+}

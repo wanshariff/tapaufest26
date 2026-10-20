@@ -22,7 +22,8 @@
 		moreLink: __( 'Link to the full lineup', 'tapaufest' ),
 		compare: __( 'Show the comparison table', 'tapaufest' ),
 		type: __( 'Zone', 'tapaufest' ),
-		group: __( 'Only this FAQ group (slug, blank for all)', 'tapaufest' )
+		group: __( 'Only this FAQ group (slug, blank for all)', 'tapaufest' ),
+		screen: __( 'Which page', 'tapaufest' )
 	};
 
 	function controlFor( name, def, props ) {
@@ -53,7 +54,7 @@
 		return el( components.TextControl, { key: name, label: labels[ name ] || name, value: value || '', onChange: set, __nextHasNoMarginBottom: true } );
 	}
 
-	var names = [ 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta' ];
+	var names = [ 'alert-bar', 'header-cta', 'hero', 'lineup', 'artist-details', 'timetable', 'now-next', 'tickets', 'vendors', 'faq', 'sticky-cta', 'screen' ];
 	names.forEach( function ( slug ) {
 		var name = 'tapaufest/' + slug;
 		wp.blocks.registerBlockType( name, {

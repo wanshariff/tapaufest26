@@ -237,6 +237,7 @@ function tapaufest_get_tiers() {
 			'campsite' => (bool) get_post_meta( $post->ID, 'tf_campsite', true ),
 			'url'      => (string) get_post_meta( $post->ID, 'tf_url', true ),
 			'soldout'  => (bool) get_post_meta( $post->ID, 'tf_soldout', true ),
+			'cap'      => (int) get_post_meta( $post->ID, 'tf_cap', true ),
 			'art'      => (string) get_post_meta( $post->ID, 'tf_art', true ),
 		);
 	}
