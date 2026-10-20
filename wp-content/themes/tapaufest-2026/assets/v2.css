@@ -2442,7 +2442,7 @@ body.tf2-page {
 	.tf2-legend span:last-child { flex-basis: 100%; }
 
 	/* Tickets: the order panel becomes a bottom sheet. */
-	.tf2 [data-tf2-order] { padding-bottom: 170px; }
+	.tf2 [data-tf2-order] { padding-bottom: 110px; gap: 16px; }
 	.tf2 .tf2-order {
 		position: fixed;
 		left: 0;
