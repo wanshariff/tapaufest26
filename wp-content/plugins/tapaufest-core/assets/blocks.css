@@ -17,7 +17,7 @@
 	--tf-ink: var(--wp--preset--color--ink, #1e1208);
 	--tf-muted: var(--wp--preset--color--muted, #5a3a20);
 	--tf-ok: #2e7d32;
-	--tf-display: var(--wp--preset--font-family--display, "Bagel Fat One", "Arial Black", Impact, sans-serif);
+	--tf-display: var(--wp--preset--font-family--display, Huisea, "Bagel Fat One", "Arial Black", Impact, sans-serif);
 	--tf-body: var(--wp--preset--font-family--body, Archivo, "Helvetica Neue", Arial, sans-serif);
 	--tf-shadow: 4px 4px 0 var(--tf-ink);
 	/* Themes can set --tf-radius (cards) and --tf-btn-radius (buttons) on body. */

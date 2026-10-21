@@ -1,6 +1,6 @@
 /*
  * TAPAUfest 2026 · screens (canvas match, Oct 2026)
- * Kopi ground, cream cards with ink outlines, Bagel display, Archivo text.
+ * Kopi ground, cream cards with ink outlines, Huisea display, Archivo text.
  * Everything here is scoped to .tf2 or the site header/footer.
  */
 
@@ -14,7 +14,7 @@
 	--tf2-gold: #f2a93b;
 	--tf2-blue: #3d8bd0;
 	--tf2-muted: #5a3a20;
-	--tf2-display: "Bagel Fat One", var(--wp--preset--font-family--display, sans-serif);
+	--tf2-display: Huisea, "Bagel Fat One", var(--wp--preset--font-family--display, sans-serif);
 	--tf2-text: "Archivo", var(--wp--preset--font-family--body, system-ui, sans-serif);
 	--tf2-gutter: 40px;
 }

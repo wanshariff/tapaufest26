@@ -91,8 +91,24 @@
 			"fluid": true,
 			"fontFamilies": [
 				{
-					"name": "Bagel Fat One",
+					"name": "Huisea",
 					"slug": "display",
+					"fontFamily": "Huisea, \"Bagel Fat One\", \"Arial Black\", Impact, sans-serif",
+					"fontFace": [
+						{
+							"fontFamily": "Huisea",
+							"fontWeight": "400",
+							"fontStyle": "normal",
+							"fontDisplay": "swap",
+							"src": [
+								"file:./assets/fonts/huisea-400.woff2"
+							]
+						}
+					]
+				},
+				{
+					"name": "Bagel Fat One",
+					"slug": "display-alt",
 					"fontFamily": "\"Bagel Fat One\", \"Arial Black\", Impact, sans-serif",
 					"fontFace": [
 						{

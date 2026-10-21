@@ -576,3 +576,11 @@ function tapaufest_screen_body_class( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'tapaufest_screen_body_class' );
+
+/**
+ * Preload the headline font so headings don't flash in the fallback.
+ */
+function tapaufest_preload_display_font() {
+	printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( get_theme_file_uri( 'assets/fonts/huisea-400.woff2' ) ) );
+}
+add_action( 'wp_head', 'tapaufest_preload_display_font', 1 );
