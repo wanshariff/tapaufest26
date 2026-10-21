@@ -11,7 +11,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $tf_state = tapaufest_state();
-if ( 'recap' === $tf_state || is_404() || is_page( array( 'tickets', 'checkout', 'youre-in', 'sell', 'jadual-aku', 'now', 'help' ) ) ) {
+if ( 'recap' === $tf_state || is_404() || is_page( array( 'tickets', 'checkout', 'youre-in', 'sell', 'jadual-aku', 'now', 'help' ) ) || is_post_type_archive( 'tf_artist' ) ) {
 	return;
 }
 $tf_cta  = tapaufest_cta();

@@ -2693,3 +2693,406 @@ body.tf2-page {
 	}
 	.tf2-hero__date { transform: rotate(-6deg); }
 }
+
+/* =====================================================================
+ * Lineup: the reel (desktop) and reel + stories (phone). Canvas E / H.
+ * ===================================================================== */
+.tf2-show-sm { display: none !important; }
+.tf2-lineup { padding-bottom: 0; }
+.tf2-reelhead { align-items: flex-end; margin-bottom: 20px; }
+.tf2-reelnav { gap: 10px; }
+.tf2-reelarrows { display: inline-flex; gap: 8px; margin-left: 8px; }
+.tf2-reelarrow {
+	width: 52px;
+	height: 52px;
+	display: grid;
+	place-items: center;
+	border: 3px solid var(--tf2-ink);
+	border-radius: 50%;
+	background: var(--tf2-paper);
+	color: var(--tf2-ink);
+	box-shadow: 3px 3px 0 var(--tf2-ink);
+	cursor: pointer;
+	transition: transform 0.12s ease-out, box-shadow 0.12s ease-out;
+}
+.tf2-reelarrow:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--tf2-ink); }
+.tf2-reelarrow:disabled { opacity: 0.4; cursor: default; }
+.tf2-reelarrow .tf-icon { width: 24px; height: 24px; }
+.tf2-reel {
+	--tf2-reel-pad: max(var(--tf2-gutter), calc((100vw - 1280px) / 2 + var(--tf2-gutter)));
+	display: flex;
+	gap: 20px;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scroll-padding-inline: var(--tf2-reel-pad);
+	padding: 12px var(--tf2-reel-pad) 30px;
+	scrollbar-width: none;
+	scroll-behavior: smooth;
+}
+.tf2-reel::-webkit-scrollbar { display: none; }
+.tf2-reel:focus-visible { outline: 3px solid var(--tf2-gold); outline-offset: -3px; }
+.tf2-reelend { flex: none; width: 1px; }
+.tf2-reeldiv {
+	flex: none;
+	width: 260px;
+	height: 680px;
+	scroll-snap-align: start;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: 12px;
+	padding: 0 8px 28px 0;
+}
+.tf2-reeldiv__num {
+	align-self: flex-start;
+	font: 400 1.9rem/1 var(--tf2-display);
+	color: var(--tf2-cili);
+	background: var(--tf2-gold);
+	border: 3px solid var(--tf2-ink);
+	border-radius: 6px;
+	padding: 6px 12px 3px;
+}
+.tf2-reeldiv__label { font-size: 4.75rem; line-height: 0.9; }
+.tf2-reeldiv__sub { font: 700 1rem var(--tf2-text); }
+.tf2-reeldiv__run { font: 800 1rem/1.35 var(--tf2-text); color: var(--tf2-gold); }
+.tf2-poster {
+	position: relative;
+	flex: none;
+	width: 440px;
+	height: 680px;
+	scroll-snap-align: center;
+	border: 3px solid var(--tf2-ink);
+	border-radius: 8px;
+	overflow: hidden;
+	background: var(--tf2-ink);
+	color: var(--tf2-hi);
+	box-shadow: 6px 6px 0 var(--tf2-ink);
+}
+.tf2-poster.is-head {
+	width: 900px;
+	border-color: var(--tf2-gold);
+	box-shadow: 8px 8px 0 var(--tf2-cili);
+}
+.tf2-poster__img {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border: 0 !important;
+	transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@media (hover: hover) {
+	.tf2-poster:hover .tf2-poster__img { transform: scale(1.04); }
+}
+.tf2-poster__ph {
+	display: grid;
+	place-items: center;
+	background: repeating-linear-gradient(135deg, var(--tf2-deep) 0 18px, #5a2808 18px 36px);
+	color: var(--tf2-gold);
+	font: 400 13rem/1 var(--tf2-display);
+}
+.tf2-poster__shade {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(30, 18, 8, 0) 32%, rgba(30, 18, 8, 0.93) 86%);
+	pointer-events: none;
+}
+.tf2-poster__tag {
+	position: absolute;
+	left: 18px;
+	top: 18px;
+	z-index: 2;
+	background: var(--tf2-gold) !important;
+	color: var(--tf2-ink) !important;
+	font-size: 12px !important;
+	padding: 6px 10px !important;
+}
+.tf2-poster__n {
+	position: absolute;
+	right: 18px;
+	top: 18px;
+	z-index: 2;
+	font: 800 13px var(--tf2-text);
+	background: rgba(30, 18, 8, 0.6);
+	border: 2px solid rgba(255, 242, 218, 0.6);
+	border-radius: 999px;
+	padding: 5px 10px;
+}
+.tf2-poster__body {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.tf2-poster__pill {
+	align-self: flex-start;
+	background: var(--tf2-hi);
+	color: var(--tf2-ink);
+	border: 2px solid var(--tf2-ink);
+	border-radius: 999px;
+	padding: 5px 12px;
+	font: 800 13px var(--tf2-text);
+}
+.tf2 .tf2-poster__name {
+	font: 400 4rem/0.92 var(--tf2-display);
+	color: var(--tf2-hi);
+	text-decoration: none;
+	text-shadow: 4px 4px 0 var(--tf2-ink);
+}
+.tf2 .tf2-poster__name:hover { color: var(--tf2-gold); }
+.tf2 .tf2-poster.is-head .tf2-poster__name { font-size: 7.5rem; }
+.tf2 .tf2-poster.is-main .tf2-poster__name { color: var(--tf2-gold); }
+.tf2-poster__blurb {
+	font-size: 0.95rem;
+	line-height: 1.45;
+	max-width: 46ch;
+}
+.tf2-poster.is-head .tf2-poster__blurb { font-size: 1.1rem; }
+.tf2-poster__acts {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 4px;
+}
+.tf2 .tf2-poster .tf-star {
+	width: 48px;
+	height: 48px;
+	border-color: var(--tf2-hi);
+}
+.tf2-poster__ico {
+	width: 48px;
+	height: 48px;
+	display: grid;
+	place-items: center;
+	border: 2px solid var(--tf2-hi);
+	border-radius: 50%;
+	background: rgba(30, 18, 8, 0.35);
+	color: var(--tf2-hi) !important;
+	flex: none;
+}
+.tf2-poster__ico .tf-icon { width: 22px; height: 22px; }
+.tf2-poster__meta { font: 700 13px var(--tf2-text); opacity: 0.85; }
+.tf2-reeldots { padding-bottom: 56px; }
+.tf2-reeldots__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 40px;
+	margin-top: 12px;
+}
+.tf2-reeldots__day { font: 800 13px var(--tf2-text); margin-bottom: 14px !important; }
+.tf2-reeldots__row {
+	display: flex;
+	border-top: 3px dashed rgba(248, 218, 165, 0.35);
+}
+.tf2 .tf2-reeldots__row a {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+	margin-top: -10px;
+	min-height: 44px;
+	text-decoration: none;
+	color: var(--tf2-paper);
+	font: 700 12px var(--tf2-text);
+}
+.tf2-reeldots__row i {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	background: var(--tf2-paper);
+	border: 3px solid var(--tf2-ink);
+	transition: transform 0.15s;
+}
+.tf2-reeldots__row a:hover i { transform: scale(1.25); }
+.tf2-reeldots__row a.is-head i { width: 22px; height: 22px; background: var(--tf2-gold); margin-top: -3px; }
+.tf2-hosts { padding-block: 24px 72px; }
+
+/* Stories viewer (phones). */
+.tf2-stories {
+	position: fixed;
+	inset: 0;
+	z-index: 300;
+	background: var(--tf2-ink);
+	color: var(--tf2-hi);
+	overflow: hidden;
+	touch-action: pan-y;
+}
+.tf2-stories[hidden] { display: none !important; }
+.tf2-stories__media { position: absolute; inset: 0; }
+.tf2-stories__media img,
+.tf2-stories__media .tf2-poster__ph {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	animation: tf2-kb 7s ease-out both;
+}
+.tf2-stories__media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(30, 18, 8, 0.65) 0, rgba(30, 18, 8, 0) 22%, rgba(30, 18, 8, 0) 42%, rgba(30, 18, 8, 0.95) 80%);
+}
+.tf2-stories__top {
+	position: absolute;
+	left: 12px;
+	right: 12px;
+	top: calc(12px + env(safe-area-inset-top, 0px));
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.tf2-stories__segs { display: flex; gap: 4px; }
+.tf2-stories__segs i {
+	flex: 1;
+	height: 4px;
+	border-radius: 2px;
+	background: rgba(255, 242, 218, 0.35);
+	overflow: hidden;
+}
+.tf2-stories__segs i.is-done { background: var(--tf2-hi); }
+.tf2-stories__segs i.is-now::before {
+	content: "";
+	display: block;
+	height: 100%;
+	background: var(--tf2-hi);
+	transform-origin: left;
+	animation: tf2-seg var(--tf2-st-ms, 7000ms) linear both;
+}
+.tf2-stories.is-paused .tf2-stories__segs i.is-now::before { animation-play-state: paused; }
+.tf2-stories__bar { display: flex; align-items: center; justify-content: space-between; }
+.tf2-stories__pos {
+	font: 800 12px var(--tf2-text);
+	background: rgba(30, 18, 8, 0.55);
+	border-radius: 999px;
+	padding: 6px 10px;
+}
+.tf2-stories__close {
+	width: 44px;
+	height: 44px;
+	display: grid;
+	place-items: center;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(30, 18, 8, 0.45);
+	color: var(--tf2-hi);
+	cursor: pointer;
+}
+.tf2-stories__close .tf-icon { width: 24px; height: 24px; }
+.tf2-stories__tap {
+	position: absolute;
+	top: 90px;
+	bottom: 320px;
+	z-index: 2;
+	background: none;
+	border: 0;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
+}
+.tf2-stories__tap.is-prev { left: 0; width: 35%; }
+.tf2-stories__tap.is-next { right: 0; width: 65%; }
+.tf2-stories__body {
+	position: absolute;
+	left: 20px;
+	right: 20px;
+	bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	animation: tf2-up 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.tf2-stories__body .tf2-tag { align-self: flex-start; background: var(--tf2-gold); color: var(--tf2-ink); }
+.tf2 .tf2-stories__name {
+	font: 400 4.5rem/0.92 var(--tf2-display);
+	color: var(--tf2-hi);
+	text-decoration: none;
+	text-shadow: 4px 4px 0 var(--tf2-ink);
+}
+.tf2 .tf2-stories__name.is-long { font-size: 3rem; }
+.tf2 .tf2-stories__name.is-main { color: var(--tf2-gold); }
+.tf2-stories__blurb { font-size: 0.95rem; line-height: 1.45; }
+.tf2-stories__acts { display: flex; gap: 10px; }
+.tf2-stories__acts .tf2-btn:first-child { flex: 1; }
+.tf2-stories__next {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px;
+	background: rgba(30, 18, 8, 0.6);
+	border: 2px solid rgba(255, 242, 218, 0.4);
+	border-radius: 8px;
+	color: var(--tf2-hi);
+	cursor: pointer;
+	text-align: left;
+	font: inherit;
+}
+.tf2-stories__next img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; border: 2px solid var(--tf2-hi); }
+.tf2-stories__next small { display: block; font: 800 11px var(--tf2-text); letter-spacing: 0.1em; color: var(--tf2-gold); }
+.tf2-stories__next b { font: 800 14px var(--tf2-text); }
+@keyframes tf2-kb { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes tf2-seg { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+html.tf2-locked, html.tf2-locked body { overflow: hidden; }
+
+@media (max-width: 700px) {
+	.tf2-show-sm { display: inline-flex !important; }
+	.tf2-hide-sm { display: none !important; }
+	.tf2-reelhead { margin-bottom: 10px; }
+	.tf2-reelnav { width: 100%; flex-wrap: nowrap; }
+	.tf2-playall { margin-left: auto; min-height: 40px !important; padding: 0 14px !important; font-size: 0.875rem !important; }
+	.tf2-reel { gap: 12px; padding-block: 8px 24px; }
+	.tf2-reeldiv { width: 190px; height: 520px; padding-bottom: 20px; }
+	.tf2-reeldiv__label { font-size: 3.25rem; }
+	.tf2-poster,
+	.tf2-poster.is-head { width: min(300px, 80vw); height: 520px; scroll-snap-align: start; cursor: pointer; }
+	.tf2 .tf2-poster__name { font-size: 2.75rem; }
+	.tf2 .tf2-poster.is-head .tf2-poster__name { font-size: 3.5rem; }
+	.tf2-poster__blurb { display: none; }
+	.tf2-poster__body { padding: 18px; }
+	.tf2-poster__ico { display: none; }
+	.tf2-poster__meta::after { content: " · tap for the story"; }
+	.tf2-hosts .tf2-auto { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.tf2-stories__media img,
+	.tf2-stories__body,
+	.tf2-stories__segs i.is-now::before { animation: none !important; }
+	.tf2-stories__segs i.is-now { background: var(--tf2-hi); }
+	.tf2-reel { scroll-behavior: auto; }
+}
+
+/* Lineup reel: cards fit the screen height; chips read as chips. */
+.tf2 a.tf2-chip { text-decoration: none; color: var(--tf2-paper); }
+.tf2 a.tf2-chip:hover { background: var(--tf2-paper); color: var(--tf2-ink); }
+.tf2-reelhead { margin-bottom: 8px; }
+.tf2-reelhead .tf2-h1--xl { font-size: clamp(3rem, 5vw, 5.5rem); }
+.tf2-poster,
+.tf2-reeldiv { height: clamp(520px, calc(100svh - 150px), 720px); }
+@media (max-width: 700px) {
+	.tf2-reelnav .tf2-chip { padding-inline: 12px; }
+	.tf2-chip__day { display: none; }
+	.tf2-poster,
+	.tf2-poster.is-head,
+	.tf2-reeldiv { height: clamp(420px, calc(100svh - 330px), 540px); }
+}
+.tf2-poster,
+.tf2-reeldiv { height: clamp(520px, calc(100svh - 330px), 720px); }
+@media (max-width: 700px) {
+	.tf2-poster,
+	.tf2-poster.is-head,
+	.tf2-reeldiv { height: clamp(420px, calc(100svh - 350px), 540px); }
+	.tf2-reeldiv { width: 116px; gap: 8px; }
+	.tf2-reeldiv__label { font-size: 2.4rem; }
+	.tf2-reeldiv__sub,
+	.tf2-reeldiv__run { font-size: 0.8rem; }
+}

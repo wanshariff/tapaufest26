@@ -1105,4 +1105,251 @@
 		} );
 	} );
 
+	/* ---------- lineup reel: arrows, jumps, and stories on phones ---------- */
+	$$( '[data-tf2-reel-root]' ).forEach( function ( root ) {
+		var reel = $( '[data-tf2-reel]', root );
+		if ( ! reel ) {
+			return;
+		}
+		var phone = window.matchMedia( '(max-width: 700px)' );
+		var arrows = $$( '[data-tf2-reel-step]', root );
+		function padLeft() {
+			return parseFloat( getComputedStyle( reel ).paddingLeft ) || 0;
+		}
+		function goTo( el ) {
+			if ( el ) {
+				reel.scrollTo( { left: el.offsetLeft - padLeft(), behavior: reduced ? 'auto' : 'smooth' } );
+			}
+		}
+		function syncArrows() {
+			var max = reel.scrollWidth - reel.clientWidth - 2;
+			arrows.forEach( function ( b ) {
+				b.disabled = b.getAttribute( 'data-tf2-reel-step' ) === '-1' ? reel.scrollLeft < 2 : reel.scrollLeft > max;
+			} );
+		}
+		arrows.forEach( function ( b ) {
+			b.addEventListener( 'click', function () {
+				var dir = parseInt( b.getAttribute( 'data-tf2-reel-step' ), 10 );
+				reel.scrollBy( { left: dir * Math.max( 300, reel.clientWidth * 0.6 ), behavior: reduced ? 'auto' : 'smooth' } );
+			} );
+		} );
+		reel.addEventListener( 'scroll', syncArrows, { passive: true } );
+		syncArrows();
+		$$( '[data-tf2-reel-jump]', root ).forEach( function ( a ) {
+			a.addEventListener( 'click', function ( e ) {
+				var el = document.getElementById( a.getAttribute( 'data-tf2-reel-jump' ) );
+				if ( el ) {
+					e.preventDefault();
+					goTo( el );
+					var top = reel.getBoundingClientRect().top;
+					if ( top < 0 || top > window.innerHeight * 0.5 ) {
+						window.scrollTo( { top: window.scrollY + top - 120, behavior: reduced ? 'auto' : 'smooth' } );
+					}
+				}
+			} );
+		} );
+		// Keyboard: arrow keys move one card while the reel has focus.
+		reel.addEventListener( 'keydown', function ( e ) {
+			if ( e.key !== 'ArrowRight' && e.key !== 'ArrowLeft' ) {
+				return;
+			}
+			e.preventDefault();
+			var cards = $$( '.tf2-poster, .tf2-reeldiv', reel );
+			var x = reel.scrollLeft + padLeft() + 4;
+			var cur = 0;
+			cards.forEach( function ( c, i ) {
+				if ( c.offsetLeft <= x ) {
+					cur = i;
+				}
+			} );
+			goTo( cards[ Math.max( 0, Math.min( cards.length - 1, cur + ( e.key === 'ArrowRight' ? 1 : -1 ) ) ) ] );
+		} );
+
+		/* Stories: full screen, one act at a time, in running order. */
+		var box = $( '[data-tf2-stories]', root );
+		var dataEl = document.getElementById( 'tf2-story-data' );
+		if ( ! box || ! dataEl ) {
+			return;
+		}
+		var acts = [];
+		try {
+			acts = JSON.parse( dataEl.textContent ) || [];
+		} catch ( e ) {}
+		if ( ! acts.length ) {
+			return;
+		}
+		var media = $( '[data-tf2-st-media]', box );
+		var body = $( '[data-tf2-st-body]', box );
+		var segs = $( '[data-tf2-st-segs]', box );
+		var pos = $( '[data-tf2-st-pos]', box );
+		var MS = 7000;
+		var idx = 0;
+		var timer = null;
+		var opener = null;
+		segs.innerHTML = acts.map( function () {
+			return '<i></i>';
+		} ).join( '' );
+		function starred( id ) {
+			return mine().indexOf( String( id ) ) !== -1;
+		}
+		function starHtml( a ) {
+			var on = starred( a.id );
+			return '<button type="button" class="tf2-btn ' + ( on ? 'tf2-btn--paper' : 'tf2-btn--cili' ) + '" data-tf-star="' + esc( a.id ) + '" data-tf-star-label aria-pressed="' + ( on ? 'true' : 'false' ) + '">' + icon( on ? 'star-filled' : 'star' ) + ' <span>' + ( on ? 'In your Jadual Aku' : 'Add to Jadual Aku' ) + '</span></button>';
+		}
+		function draw() {
+			var a = acts[ idx ];
+			var nx = acts[ idx + 1 ];
+			media.innerHTML = a.img ? '<img src="' + esc( a.img ) + '" alt="">' : '<span class="tf2-poster__ph" aria-hidden="true">?</span>';
+			body.innerHTML = ( a.label ? '<span class="tf2-tag">' + esc( a.label ) + '</span>' : '' ) +
+				'<span class="tf2-poster__pill" style="align-self:flex-start">' + esc( [ a.dayShort, a.time, a.stage ].filter( Boolean ).join( ' · ' ) ) + '</span>' +
+				'<a class="tf2-stories__name' + ( a.name.length > 16 ? ' is-long' : '' ) + ( a.main ? ' is-main' : '' ) + '" href="' + esc( a.url ) + '">' + esc( a.name ) + '</a>' +
+				( a.blurb ? '<p class="tf2-stories__blurb">' + esc( a.blurb ) + '</p>' : '' ) +
+				'<div class="tf2-stories__acts">' + ( a.id ? starHtml( a ) : '' ) +
+				( a.listen ? '<a class="tf2-btn tf2-btn--paper" href="' + esc( a.listen ) + '" target="_blank" rel="noopener" aria-label="Listen to ' + esc( a.name ) + ' (opens in a new tab)" style="padding:0 16px">' + icon( 'play' ) + '</a>' : '' ) + '</div>' +
+				( nx ? '<button type="button" class="tf2-stories__next" data-tf2-st-step="1">' + ( nx.img ? '<img src="' + esc( nx.img ) + '" alt="">' : '' ) + '<span><small>UP NEXT · ' + esc( nx.dayShort + ' ' + nx.time ) + '</small><b>' + esc( nx.name ) + '</b></span></button>' : '' );
+			body.style.animation = 'none';
+			void body.offsetWidth;
+			body.style.animation = '';
+			$$( 'i', segs ).forEach( function ( s, i ) {
+				s.className = i < idx ? 'is-done' : i === idx ? 'is-now' : '';
+			} );
+			pos.textContent = a.dayShort + ' · ' + ( idx + 1 ) + ' of ' + acts.length + ' · ' + a.name;
+			if ( nx && nx.img ) {
+				new Image().src = nx.img;
+			}
+			arm();
+		}
+		function arm() {
+			clearTimeout( timer );
+			if ( reduced || box.classList.contains( 'is-paused' ) ) {
+				return;
+			}
+			box.style.setProperty( '--tf2-st-ms', MS + 'ms' );
+			timer = setTimeout( function () {
+				step( 1 );
+			}, MS );
+		}
+		function step( d ) {
+			var n = idx + d;
+			if ( n >= acts.length ) {
+				close();
+				return;
+			}
+			idx = Math.max( 0, n );
+			draw();
+		}
+		function open( i, from ) {
+			idx = Math.max( 0, Math.min( acts.length - 1, i ) );
+			opener = from || document.activeElement;
+			box.hidden = false;
+			document.documentElement.classList.add( 'tf2-locked' );
+			box.classList.remove( 'is-paused' );
+			draw();
+			$( '[data-tf2-st-close]', box ).focus();
+		}
+		function close() {
+			clearTimeout( timer );
+			box.hidden = true;
+			document.documentElement.classList.remove( 'tf2-locked' );
+			var card = reel.querySelector( '[data-tf2-story="' + idx + '"]' );
+			if ( card && phone.matches ) {
+				goTo( card );
+			}
+			if ( opener && opener.focus ) {
+				opener.focus();
+			}
+		}
+		// Phones: tapping a card opens its story (stars and links still work).
+		reel.addEventListener( 'click', function ( e ) {
+			if ( ! phone.matches || e.target.closest( '[data-tf-star], .tf2-poster__ico' ) ) {
+				return;
+			}
+			var card = e.target.closest( '[data-tf2-story]' );
+			if ( card ) {
+				e.preventDefault();
+				open( parseInt( card.getAttribute( 'data-tf2-story' ), 10 ), card );
+			}
+		} );
+		$$( '[data-tf2-story-open]', root ).forEach( function ( b ) {
+			b.addEventListener( 'click', function () {
+				open( parseInt( b.getAttribute( 'data-tf2-story-open' ), 10 ) || 0, b );
+			} );
+		} );
+		box.addEventListener( 'click', function ( e ) {
+			var s = e.target.closest( '[data-tf2-st-step]' );
+			if ( s ) {
+				step( parseInt( s.getAttribute( 'data-tf2-st-step' ), 10 ) );
+				return;
+			}
+			if ( e.target.closest( '[data-tf2-st-close]' ) ) {
+				close();
+				return;
+			}
+			if ( e.target.closest( '[data-tf-star]' ) ) {
+				arm();
+			}
+		} );
+		// Hold to pause, like stories everywhere.
+		var holdT = null;
+		box.addEventListener( 'pointerdown', function ( e ) {
+			if ( e.target.closest( 'a, [data-tf-star], [data-tf2-st-close]' ) ) {
+				return;
+			}
+			holdT = setTimeout( function () {
+				box.classList.add( 'is-paused' );
+				clearTimeout( timer );
+			}, 250 );
+		} );
+		[ 'pointerup', 'pointercancel', 'pointerleave' ].forEach( function ( ev ) {
+			box.addEventListener( ev, function () {
+				clearTimeout( holdT );
+				if ( box.classList.contains( 'is-paused' ) ) {
+					box.classList.remove( 'is-paused' );
+					arm();
+				}
+			} );
+		} );
+		// Swipe down to close.
+		var y0 = null;
+		box.addEventListener( 'touchstart', function ( e ) {
+			y0 = e.touches[ 0 ].clientY;
+		}, { passive: true } );
+		box.addEventListener( 'touchend', function ( e ) {
+			if ( y0 !== null && e.changedTouches[ 0 ].clientY - y0 > 90 ) {
+				close();
+			}
+			y0 = null;
+		}, { passive: true } );
+		document.addEventListener( 'keydown', function ( e ) {
+			if ( box.hidden ) {
+				return;
+			}
+			if ( e.key === 'Escape' ) {
+				close();
+			} else if ( e.key === 'ArrowRight' ) {
+				step( 1 );
+			} else if ( e.key === 'ArrowLeft' ) {
+				step( -1 );
+			} else if ( e.key === 'Tab' ) {
+				var f = $$( 'button, a[href]', box ).filter( function ( n ) {
+					return n.offsetParent !== null;
+				} );
+				if ( f.length && e.shiftKey && document.activeElement === f[ 0 ] ) {
+					e.preventDefault();
+					f[ f.length - 1 ].focus();
+				} else if ( f.length && ! e.shiftKey && document.activeElement === f[ f.length - 1 ] ) {
+					e.preventDefault();
+					f[ 0 ].focus();
+				}
+			}
+		} );
+		document.addEventListener( 'visibilitychange', function () {
+			if ( document.hidden ) {
+				clearTimeout( timer );
+			} else if ( ! box.hidden ) {
+				arm();
+			}
+		} );
+	} );
+
 } )();
